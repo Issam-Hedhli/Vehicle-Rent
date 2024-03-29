@@ -1,7 +1,12 @@
+using Vehicle_Rent.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddMvc().AddRazorRuntimeCompilation();
+
 
 var app = builder.Build();
 

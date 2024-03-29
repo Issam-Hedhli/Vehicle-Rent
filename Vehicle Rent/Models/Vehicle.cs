@@ -10,5 +10,7 @@ namespace Vehicle_Rent.Models
         public decimal RentalPrice { get; set; }
         public bool IsAvailable { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<Rental> Rentals { get; set; }
+
     }
 }
