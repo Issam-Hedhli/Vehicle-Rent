@@ -6,10 +6,11 @@ namespace Vehicle_Rent.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
-        public ICollection<Vehicle> AvailableVehicles { get; set; } // Navigation property for available vehicles
+        public virtual ICollection<Vehicle> Vehicles { get; set; }
 
     }
 }

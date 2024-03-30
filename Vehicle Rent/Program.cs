@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Vehicle_Rent.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 
-
+#region DataAccess
+builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseLazyLoadingProxies().UseInMemoryDatabase("RentCar"));
+#endregion
+//builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
