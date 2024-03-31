@@ -16,8 +16,6 @@ namespace Vehicle_Rent.Data
         public DbSet<Photo> Photos { get; set; }
         public DbSet<AvailibilityStatusWrapper> AvailibilityStatuses { get; set; }
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             

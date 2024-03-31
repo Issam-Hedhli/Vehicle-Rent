@@ -9,9 +9,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 
 #region DataAccess
-builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseLazyLoadingProxies().UseInMemoryDatabase("RentCar"));
+//builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseLazyLoadingProxies().UseInMemoryDatabase("RentCar"));
+
+builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 #endregion
-//builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
