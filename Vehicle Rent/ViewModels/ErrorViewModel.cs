@@ -1,4 +1,4 @@
-namespace Vehicle_Rent.Models
+namespace Vehicle_Rent.ViewModels
 {
     public class ErrorViewModel
     {

@@ -16,6 +16,12 @@ namespace Vehicle_Rent.Controllers
             _signInManager = signInManager;
         }
 
+        public IActionResult Login()
+        {
+            var loginVM = new LoginVM();
+            return View(loginVM);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginViewModel)
         {
@@ -43,7 +49,11 @@ namespace Vehicle_Rent.Controllers
             return View(loginViewModel);
         }
 
-        [HttpPost]
+        public IActionResult Register()
+        {
+            var registerVM = new RegisterVM();
+            return View(registerVM);
+        }
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerViewModel)
         {
