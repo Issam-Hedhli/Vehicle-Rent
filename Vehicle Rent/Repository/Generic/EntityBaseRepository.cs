@@ -4,7 +4,7 @@ using System;
 using System.Linq.Expressions;
 using Vehicle_Rent.Data;
 
-namespace Vehicle_Rent.Repository
+namespace Vehicle_Rent.Repository.Generic
 {
     public class EntityBaseRepository<T> : IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {
@@ -16,7 +16,7 @@ namespace Vehicle_Rent.Repository
 
         public async Task AddAsync(T entity)
         {
-             await _context.Set<T>().AddAsync(entity);
+            await _context.Set<T>().AddAsync(entity);
         }
 
         public async Task DeleteAsync(string id)
@@ -61,7 +61,7 @@ namespace Vehicle_Rent.Repository
 
         public async Task UpdateAsync(string id, T entity)
         {
-            EntityEntry entityEntry = _context.Entry<T>(entity);
+            EntityEntry entityEntry = _context.Entry(entity);
             entityEntry.State = EntityState.Modified;
 
             await _context.SaveChangesAsync();

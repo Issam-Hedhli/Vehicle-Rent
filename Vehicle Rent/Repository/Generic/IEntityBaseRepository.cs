@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Vehicle_Rent.Repository
+namespace Vehicle_Rent.Repository.Generic
 {
     public interface IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {

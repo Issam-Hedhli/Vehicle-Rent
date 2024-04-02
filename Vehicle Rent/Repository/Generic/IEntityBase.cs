@@ -1,4 +1,4 @@
-﻿namespace Vehicle_Rent.Repository
+﻿namespace Vehicle_Rent.Repository.Generic
 {
     public interface IEntityBase
     {

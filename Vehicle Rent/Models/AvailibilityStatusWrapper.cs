@@ -1,5 +1,5 @@
 ﻿using Vehicle_Rent.Models;
-using Vehicle_Rent.Repository;
+using Vehicle_Rent.Repository.Generic;
 
 public class AvailibilityStatusWrapper : IEntityBase
 {
