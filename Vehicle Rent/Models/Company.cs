@@ -8,8 +8,8 @@ namespace Vehicle_Rent.Models
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int Id { get; set; } 
+		public string Id { get; set; } 
 		public string? Name { get; set; } 
-		public virtual ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
+		public virtual ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>(); 
 	}
 }

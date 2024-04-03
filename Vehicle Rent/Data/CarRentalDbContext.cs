@@ -9,35 +9,35 @@ namespace Vehicle_Rent.Data
         {
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<Rental> Rentals { get; set; }
-        public DbSet<Agency> Agencies { get; set; }
+		public DbSet<Company> Companies { get; set; }
+		public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleCopy> VehicleCopies { get; set; }
+        public DbSet<RentalItem> RentalItems { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<AvailibilityStatusWrapper> AvailibilityStatuses { get; set; }
-        public DbSet<Company> Companies { get; set; }
         public DbSet<VModel> VModels { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+		public DbSet<User> Users { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-            modelBuilder.Entity<Rental>()
+            modelBuilder.Entity<RentalItem>()
             .HasOne(r => r.User)
             .WithMany(u => u.Rentals)
             .HasForeignKey(r => r.UserId);
 
-            modelBuilder.Entity<Rental>()
-            .HasOne(r => r.Vehicle)
-            .WithMany(v => v.Rentals)
-            .HasForeignKey(r => r.VehicleId);
+            modelBuilder.Entity<RentalItem>()
+            .HasOne(r => r.VehicleCopy)
+            .WithMany(v => v.RentalItems)
+            .HasForeignKey(r => r.VehicleCopyId);
 
-            modelBuilder.Entity<Agency>()
-            .HasMany(a => a.Vehicles) 
-            .WithOne(v => v.Agency) 
-            .HasForeignKey(v => v.AgencyId);
+			modelBuilder.Entity<VehicleCopy>()
+                .HasOne(b => b.Vehicle)
+                .WithMany(b => b.VehicleCopies)
+                .HasForeignKey(b => b.IdVehicle);
 
-            modelBuilder.Entity<Vehicle>()
+			modelBuilder.Entity<RentalItem>()
             .Property(v => v.Status)
             .HasConversion<int>();
 
@@ -54,12 +54,12 @@ namespace Vehicle_Rent.Data
 			modelBuilder.Entity<Vehicle>()
 	        .HasOne(v => v.VModel) 
 	        .WithMany(vm => vm.Vehicles) 
-	        .HasForeignKey(v => v.VModelId);
+	        .HasForeignKey(v => v.VModelId); 
 
 			modelBuilder.Entity<Rating>()
-	        .HasOne(r => r.Vehicle)
+	        .HasOne(r => r.RentalItem)
 	        .WithMany(v => v.Ratings)
-	        .HasForeignKey(r => r.VehicleId);
+	        .HasForeignKey(r => r.RentalId);
 
 
 

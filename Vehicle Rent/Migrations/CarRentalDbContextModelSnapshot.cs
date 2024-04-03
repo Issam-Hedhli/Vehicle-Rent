@@ -27,11 +27,9 @@ namespace Vehicle_Rent.Migrations
 
             modelBuilder.Entity("AvailibilityStatusWrapper", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -41,38 +39,11 @@ namespace Vehicle_Rent.Migrations
                     b.ToTable("AvailibilityStatuses");
                 });
 
-            modelBuilder.Entity("Vehicle_Rent.Models.Agency", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Agencies");
-                });
-
             modelBuilder.Entity("Vehicle_Rent.Models.Company", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -91,15 +62,13 @@ namespace Vehicle_Rent.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
+                    b.Property<string>("VehicleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -110,91 +79,79 @@ namespace Vehicle_Rent.Migrations
 
             modelBuilder.Entity("Vehicle_Rent.Models.Rating", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Value")
-                        .HasColumnType("int");
+                    b.Property<string>("RentalId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("VehicleId")
+                    b.Property<int>("Value")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleId");
+                    b.HasIndex("RentalId");
 
                     b.ToTable("Ratings");
                 });
 
-            modelBuilder.Entity("Vehicle_Rent.Models.Rental", b =>
+            modelBuilder.Entity("Vehicle_Rent.Models.RentalItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
+                    b.Property<string>("VehicleCopyId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VehicleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
+                    b.HasIndex("VehicleCopyId");
+
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Rentals");
+                    b.ToTable("RentalItems");
                 });
 
             modelBuilder.Entity("Vehicle_Rent.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AdditionalInfo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DriverLicence")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -219,7 +176,6 @@ namespace Vehicle_Rent.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
@@ -241,11 +197,9 @@ namespace Vehicle_Rent.Migrations
 
             modelBuilder.Entity("Vehicle_Rent.Models.VModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -257,20 +211,12 @@ namespace Vehicle_Rent.Migrations
 
             modelBuilder.Entity("Vehicle_Rent.Models.Vehicle", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AgencyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("PhotoId")
                         .HasColumnType("int");
@@ -278,15 +224,10 @@ namespace Vehicle_Rent.Migrations
                     b.Property<decimal>("RentalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VModelId")
-                        .HasColumnType("int");
+                    b.Property<string>("VModelId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AgencyId");
 
                     b.HasIndex("CompanyId");
 
@@ -297,60 +238,64 @@ namespace Vehicle_Rent.Migrations
                     b.ToTable("Vehicles");
                 });
 
+            modelBuilder.Entity("Vehicle_Rent.Models.VehicleCopy", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdVehicle")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdVehicle");
+
+                    b.ToTable("VehicleCopies");
+                });
+
             modelBuilder.Entity("Vehicle_Rent.Models.Photo", b =>
                 {
                     b.HasOne("Vehicle_Rent.Models.Vehicle", "Vehicle")
                         .WithMany("Photos")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleId");
 
                     b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Vehicle_Rent.Models.Rating", b =>
                 {
-                    b.HasOne("Vehicle_Rent.Models.Vehicle", "Vehicle")
+                    b.HasOne("Vehicle_Rent.Models.RentalItem", "RentalItem")
                         .WithMany("Ratings")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RentalId");
 
-                    b.Navigation("Vehicle");
+                    b.Navigation("RentalItem");
                 });
 
-            modelBuilder.Entity("Vehicle_Rent.Models.Rental", b =>
+            modelBuilder.Entity("Vehicle_Rent.Models.RentalItem", b =>
                 {
                     b.HasOne("Vehicle_Rent.Models.User", "User")
                         .WithMany("Rentals")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("Vehicle_Rent.Models.Vehicle", "Vehicle")
+                    b.HasOne("Vehicle_Rent.Models.VehicleCopy", "VehicleCopy")
+                        .WithMany("RentalItems")
+                        .HasForeignKey("VehicleCopyId");
+
+                    b.HasOne("Vehicle_Rent.Models.Vehicle", null)
                         .WithMany("Rentals")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleId");
 
                     b.Navigation("User");
 
-                    b.Navigation("Vehicle");
+                    b.Navigation("VehicleCopy");
                 });
 
             modelBuilder.Entity("Vehicle_Rent.Models.Vehicle", b =>
                 {
-                    b.HasOne("Vehicle_Rent.Models.Agency", "Agency")
-                        .WithMany("Vehicles")
-                        .HasForeignKey("AgencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Vehicle_Rent.Models.Company", "Company")
                         .WithMany("Vehicles")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("Vehicle_Rent.Models.Photo", null)
                         .WithMany("Vehicles")
@@ -358,20 +303,20 @@ namespace Vehicle_Rent.Migrations
 
                     b.HasOne("Vehicle_Rent.Models.VModel", "VModel")
                         .WithMany("Vehicles")
-                        .HasForeignKey("VModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Agency");
+                        .HasForeignKey("VModelId");
 
                     b.Navigation("Company");
 
                     b.Navigation("VModel");
                 });
 
-            modelBuilder.Entity("Vehicle_Rent.Models.Agency", b =>
+            modelBuilder.Entity("Vehicle_Rent.Models.VehicleCopy", b =>
                 {
-                    b.Navigation("Vehicles");
+                    b.HasOne("Vehicle_Rent.Models.Vehicle", "Vehicle")
+                        .WithMany("VehicleCopies")
+                        .HasForeignKey("IdVehicle");
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Vehicle_Rent.Models.Company", b =>
@@ -382,6 +327,11 @@ namespace Vehicle_Rent.Migrations
             modelBuilder.Entity("Vehicle_Rent.Models.Photo", b =>
                 {
                     b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("Vehicle_Rent.Models.RentalItem", b =>
+                {
+                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("Vehicle_Rent.Models.User", b =>
@@ -398,9 +348,14 @@ namespace Vehicle_Rent.Migrations
                 {
                     b.Navigation("Photos");
 
-                    b.Navigation("Ratings");
-
                     b.Navigation("Rentals");
+
+                    b.Navigation("VehicleCopies");
+                });
+
+            modelBuilder.Entity("Vehicle_Rent.Models.VehicleCopy", b =>
+                {
+                    b.Navigation("RentalItems");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,16 +4,13 @@ using Vehicle_Rent.Repository.Generic;
 
 namespace Vehicle_Rent.Models
 {
-	public class Rating : IEntityBase
+	public class VehicleCopy : IEntityBase
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
-		public int Value { get; set; }
-		public string? Comment { get; set; }
-		public string? RentalId { get; set; }
-		public virtual RentalItem RentalItem { get; set; } = new RentalItem();
-
-
+		public string? IdVehicle { get; set; }
+		public virtual Vehicle Vehicle { get; set; } = new Vehicle();
+		public virtual ICollection<RentalItem> RentalItems { get; set; } = new List<RentalItem>(); 
 	}
 }

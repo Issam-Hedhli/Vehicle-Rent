@@ -49,9 +49,9 @@ namespace Vehicle_Rent.Repository.Generic
         {
             IQueryable<T> query = _context.Set<T>();
             query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-            int parsedId = int.Parse(id);
+            
 
-            return await query.FirstOrDefaultAsync(n => n.Id == parsedId);
+            return await query.FirstOrDefaultAsync(n => n.Id == id);
         }
 
         public async Task SaveChangesAsync()
