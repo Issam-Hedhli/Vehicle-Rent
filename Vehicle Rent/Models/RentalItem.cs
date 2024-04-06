@@ -16,7 +16,7 @@ namespace Vehicle_Rent.Models
         public decimal TotalCost { get; set; }
         public string? PaymentMethod { get; set; }
         public string? UserId { get; set; } 
-        public virtual User User { get; set; } 
+        public virtual User? User { get; set; } 
         public string? VehicleCopyId { get; set; } 
         public virtual VehicleCopy VehicleCopy { get; set; } = new VehicleCopy(); 
 		public string? StatusId { get; set; }
