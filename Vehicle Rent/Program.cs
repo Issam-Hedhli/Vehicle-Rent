@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Vehicle_Rent.Data;
+using Vehicle_Rent.Repository.Specific;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,17 @@ builder.Services.AddMvc().AddRazorRuntimeCompilation();
 
 builder.Services.AddMemoryCache();
 #region DataAccess
-//builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseLazyLoadingProxies().UseInMemoryDatabase("RentCar"));
-
 builder.Services.AddDbContext<CarRentalDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+#endregion
+
+#region Repository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IVehicleCopyRepository, VehicleCopyRepository>();
+builder.Services.AddScoped<IRentalItemRepository, RentalItemRepository>();
+builder.Services.AddScoped<IVModelRepository, VModelRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 #endregion
 
 
