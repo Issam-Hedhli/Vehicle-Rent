@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Vehicle_Rent.Data;
 using Vehicle_Rent.Repository.Specific;
+using Vehicle_Rent.Services.VehicleCatalogue;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,10 @@ builder.Services.AddScoped<IVehicleCopyRepository, VehicleCopyRepository>();
 builder.Services.AddScoped<IRentalItemRepository, RentalItemRepository>();
 builder.Services.AddScoped<IVModelRepository, VModelRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+#endregion
+
+#region Service
+builder.Services.AddScoped<IVehicleCatalogueService, VehicleCatalogueService>();
 #endregion
 
 

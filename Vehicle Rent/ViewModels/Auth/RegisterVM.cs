@@ -4,7 +4,9 @@ namespace Vehicle_Rent.ViewModels.Auth
 {
     public class RegisterVM
     {
-        [Required(ErrorMessage = "The Email field is required.")]
+        [Required]
+		public string? Name { get; set; }
+		[Required(ErrorMessage = "The Email field is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
