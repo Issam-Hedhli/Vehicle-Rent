@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Vehicle_Rent.Models;
-using Vehicle_Rent.ViewModels.Auth;
+using Vehicle_Rent.ViewModels.AuthVM;
 
 namespace Vehicle_Rent.Controllers
 {

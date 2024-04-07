@@ -77,25 +77,42 @@
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 								<i class="fa fa-bars"></i>
 							</button>
-							<a class="navbar-brand" href="index.html">carvilla<span></span></a>
+							<a class="navbar-brand" href="index.html">Rent Car<span></span></a>
 
 						</div><!--/.navbar-header-->
 						<!-- End Header Navigation -->
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 							<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-								<li class=" scroll active"><a href="#home">home</a></li>
-								<li class="scroll"><a href="#service">service</a></li>
-								<li class="scroll"><a href="#featured-cars">featured cars</a></li>
-								<li class="scroll"><a href="#new-cars">Login</a></li>
-								<li class="scroll"><a href="#brand">Register</a></li>
+								<li class=" scroll active"><a class="nav-link" asp-controller="Auth" asp-action="Logout">home</a></li>
+								<li class="scroll"><a class="nav-link" asp-controller="Auth" asp-action="Logout">service</a></li>
+								<li class="scroll"><a class="nav-link" asp-controller="Auth" asp-action="Logout">featured cars</a></li>
+								@if (User.Identity.IsAuthenticated)
+								{
+									<li class="nav-item ">
+										<a class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a>
+									</li>
+								}
+								else
+								{
+									<li class="nav-item ">
+										<a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
+									</li>
+									<li class="nav-item ">
+										<a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
+									</li>
+								}
+							</ul>
+						</div>
+					</div>
+				</nav>
 							</ul><!--/.nav -->
 						</div><!-- /.navbar-collapse -->
 					</div><!--/.container-->
 				</nav><!--/nav-->
 				<!-- End Navigation -->
 			</div><!--/.header-area-->
-			@RenderBody()
+			
 			<div class="clearfix"></div>
 
 		</div><!-- /.top-area-->
@@ -109,121 +126,10 @@
 				</p>
 				<button class="welcome-btn" onclick="window.location.href='#'">contact us</button>
 			</div>
+			@RenderBody()
 		</div>
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="model-search-content">
-						<div class="row">
-							<div class="col-md-offset-1 col-md-2 col-sm-12">
-								<div class="single-model-search">
-									<h2>select year</h2>
-									<div class="model-select-icon">
-										<select class="form-control">
-
-											<option value="default">year</option><!-- /.option-->
-
-											<option value="2018">2018</option><!-- /.option-->
-
-											<option value="2017">2017</option><!-- /.option-->
-											<option value="2016">2016</option><!-- /.option-->
-
-										</select><!-- /.select-->
-									</div><!-- /.model-select-icon -->
-								</div>
-								<div class="single-model-search">
-									<h2>body style</h2>
-									<div class="model-select-icon">
-										<select class="form-control">
-
-											<option value="default">style</option><!-- /.option-->
-
-											<option value="sedan">sedan</option><!-- /.option-->
-
-											<option value="van">van</option><!-- /.option-->
-											<option value="roadster">roadster</option><!-- /.option-->
-
-										</select><!-- /.select-->
-									</div><!-- /.model-select-icon -->
-								</div>
-							</div>
-							<div class="col-md-offset-1 col-md-2 col-sm-12">
-								<div class="single-model-search">
-									<h2>select make</h2>
-									<div class="model-select-icon">
-										<select class="form-control">
-
-											<option value="default">make</option><!-- /.option-->
-
-											<option value="toyota">toyota</option><!-- /.option-->
-
-											<option value="holden">holden</option><!-- /.option-->
-											<option value="maecedes-benz">maecedes-benz.</option><!-- /.option-->
-
-										</select><!-- /.select-->
-									</div><!-- /.model-select-icon -->
-								</div>
-								<div class="single-model-search">
-									<h2>car condition</h2>
-									<div class="model-select-icon">
-										<select class="form-control">
-
-											<option value="default">condition</option><!-- /.option-->
-
-											<option value="something">something</option><!-- /.option-->
-
-											<option value="something">something</option><!-- /.option-->
-											<option value="something">something</option><!-- /.option-->
-
-										</select><!-- /.select-->
-									</div><!-- /.model-select-icon -->
-								</div>
-							</div>
-							<div class="col-md-offset-1 col-md-2 col-sm-12">
-								<div class="single-model-search">
-									<h2>select model</h2>
-									<div class="model-select-icon">
-										<select class="form-control">
-
-											<option value="default">model</option><!-- /.option-->
-
-											<option value="kia-rio">kia-rio</option><!-- /.option-->
-
-											<option value="mitsubishi">mitsubishi</option><!-- /.option-->
-											<option value="ford">ford</option><!-- /.option-->
-
-										</select><!-- /.select-->
-									</div><!-- /.model-select-icon -->
-								</div>
-								<div class="single-model-search">
-									<h2>select price</h2>
-									<div class="model-select-icon">
-										<select class="form-control">
-
-											<option value="default">price</option><!-- /.option-->
-
-											<option value="$0.00">$0.00</option><!-- /.option-->
-
-											<option value="$0.00">$0.00</option><!-- /.option-->
-											<option value="$0.00">$0.00</option><!-- /.option-->
-
-										</select><!-- /.select-->
-									</div><!-- /.model-select-icon -->
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-12">
-								<div class="single-model-search text-center">
-									<button class="welcome-btn model-search-btn" onclick="window.location.href='#'">
-										search
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 
 	
 

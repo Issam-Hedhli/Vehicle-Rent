@@ -20,4 +20,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\VehicleVM\" />
+    <Folder Include="Views\VehicleCatalogue\" />
+  </ItemGroup>
+
 </Project>

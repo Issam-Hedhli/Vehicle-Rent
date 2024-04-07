@@ -1,4 +1,4 @@
-﻿namespace Vehicle_Rent.ViewModels.Auth
+﻿namespace Vehicle_Rent.ViewModels.AuthVM
 {
     public class LoginVM
     {

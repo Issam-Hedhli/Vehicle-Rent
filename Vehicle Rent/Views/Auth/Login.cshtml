@@ -1,25 +1,38 @@
-﻿@using Vehicle_Rent.ViewModels.Auth;
+﻿@using Vehicle_Rent.ViewModels.AuthVM;
 @model LoginVM;
 
-<h1>Login</h1>
+<section class="contact_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>Login</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form_container">
+                    <form asp-action="Login" method="POST">
 
-<form method="post" asp-action="Login">
-    <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" name="email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span> // Assuming you added "Email" property for validation
+                        <div class="form-group">
+                            <input asp-for="Email" type="email" placeholder="Email" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Password" type="password" placeholder="Password" class="form-control" />
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <div style="width:45px;">
+                                <input asp-for="RememberMe" type="checkbox"></img>
+                            </div>
+                            <div style="margin-left:20px;">
+                                <h5 style="margin-bottom:22px;font-family:'Franklin Gothic Medium'">Remember me</h5>
+                            </div>
+                            <div class="ml-auto">
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" name="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span> // Assuming you added "Password" property for validation
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
+</section>
 
 
