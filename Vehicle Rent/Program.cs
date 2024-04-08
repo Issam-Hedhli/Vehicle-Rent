@@ -5,6 +5,7 @@ using System;
 using Vehicle_Rent.Data;
 using Vehicle_Rent.Repository.Specific;
 using Vehicle_Rent.Services.VehicleCatalogue;
+using Vehicle_Rent.Services.VehicleRent;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 #region Service
 builder.Services.AddScoped<IVehicleCatalogueService, VehicleCatalogueService>();
+builder.Services.AddScoped<IRentalService, RentalService>();
 #endregion
 
 

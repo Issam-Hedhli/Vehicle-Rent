@@ -20,5 +20,10 @@ namespace Vehicle_Rent.Controllers
 		{
 			return View();
 		}
+
+		public IActionResult Issam()
+		{
+			return View("CarListing");
+		}
 	}
 }
