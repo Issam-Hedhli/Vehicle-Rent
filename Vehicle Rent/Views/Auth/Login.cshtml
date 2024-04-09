@@ -11,7 +11,7 @@
                     <!-- END comment-list -->
 
                     <div class="comment-form-wrap pt-5">
-                        <h2 class="mb-5">Login</h2>
+                        <h3 class="mb-5">Login</h3>
                         <form asp-action="Login" method="POST">
                             <div class="form-group">
                                 <label for="email">Email </label>
@@ -21,6 +21,13 @@
                                 <label for="password">Password </label>
                                 <input asp-for="Password" type="password" class="form-control" id="password" />
                             </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="remember_me" name="remember_me" value="true" asp-action="Remember me">
+                                    <label class="custom-control-label" for="remember_me">Remember me</label>
+                                </div>
+                            </div>
+
 
                             <div class="form-group" style="display:flex; justify-content: center; align-items: center;">
                                 <input type="submit" value="Login" class="btn btn-primary btn-md text-white">
@@ -29,9 +36,9 @@
                         </form>
                     </div>
                     <div style="display:flex; justify-content: center; align-items: center;">
-                        <h5>
+                        <h6>
                             Don't have an account?
-                        </h5>
+                        </h6>
                         <a asp-controller="Auth" asp-action="Register">
                             <h6>
                                 &nbsp;  Register
