@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Vehicle_Rent.Data;
 using Vehicle_Rent.Repository.Specific;
+using Vehicle_Rent.Services.Payment;
 using Vehicle_Rent.Services.VehicleCatalogue;
 using Vehicle_Rent.Services.VehicleRent;
 
@@ -32,7 +33,9 @@ builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 #region Service
 builder.Services.AddScoped<IVehicleCatalogueService, VehicleCatalogueService>();
 builder.Services.AddScoped<IRentalService, RentalService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 #endregion
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 
 
 #region Auth
