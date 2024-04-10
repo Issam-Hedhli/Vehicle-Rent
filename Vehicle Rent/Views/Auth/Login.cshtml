@@ -1,38 +1,59 @@
 ﻿@using Vehicle_Rent.ViewModels.AuthVM;
 @model LoginVM;
 
-<section class="contact_section layout_padding">
-    <div class="container">
-        <div class="heading_container">
-            <h2>Login</h2>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form_container">
-                    <form asp-action="Login" method="POST">
 
-                        <div class="form-group">
-                            <input asp-for="Email" type="email" placeholder="Email" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <input asp-for="Password" type="password" placeholder="Password" class="form-control" />
-                        </div>
-                        <div class="form-group d-flex align-items-center">
-                            <div style="width:45px;">
-                                <input asp-for="RememberMe" type="checkbox"></img>
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 blog-content">
+                <div class="pt-5">
+                    
+                    <!-- END comment-list -->
+
+                    <div class="comment-form-wrap pt-5">
+                        <h3 class="mb-5">Login</h3>
+                        <form asp-action="Login" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email </label>
+                                <input asp-for="Email" type="email" class="form-control" id="email">
                             </div>
-                            <div style="margin-left:20px;">
-                                <h5 style="margin-bottom:22px;font-family:'Franklin Gothic Medium'">Remember me</h5>
+                            <div class="form-group">
+                                <label for="password">Password </label>
+                                <input asp-for="Password" type="password" class="form-control" id="password" />
                             </div>
-                            <div class="ml-auto">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="remember_me" name="remember_me" value="true" asp-action="Remember me">
+                                    <label class="custom-control-label" for="remember_me">Remember me</label>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+
+
+                            <div class="form-group" style="display:flex; justify-content: center; align-items: center;">
+                                <input type="submit" value="Login" class="btn btn-primary btn-md text-white">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div style="display:flex; justify-content: center; align-items: center;">
+                        <h6>
+                            Don't have an account?
+                        </h6>
+                        <a asp-controller="Auth" asp-action="Register">
+                            <h6>
+                                &nbsp;  Register
+                            </h6>
+                        </a>
+                    </div>
                 </div>
+
             </div>
+           
         </div>
     </div>
-</section>
+</div>
+
+
+
 
 

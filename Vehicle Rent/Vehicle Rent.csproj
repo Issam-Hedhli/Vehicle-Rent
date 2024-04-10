@@ -22,10 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\VehicleVM\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\css\.DS_Store" />
     <None Include="wwwroot\fonts\.DS_Store" />
     <None Include="wwwroot\images\.DS_Store" />

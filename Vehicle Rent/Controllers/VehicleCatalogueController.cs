@@ -23,7 +23,7 @@ namespace Vehicle_Rent.Controllers
 
 		public IActionResult Issam()
 		{
-			return View("CarListing");
+			return View("vehicle");
 		}
 	}
 }
