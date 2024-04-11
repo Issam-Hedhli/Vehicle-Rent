@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe.Terminal;
 using System;
 using Vehicle_Rent.Data;
+using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
 using Vehicle_Rent.Services.Payment;
 using Vehicle_Rent.Services.VehicleCatalogue;
@@ -37,6 +39,9 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 #endregion
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 
+#region AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+#endregion
 
 #region Auth
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CarRentalDbContext>();
@@ -46,6 +51,9 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
 #endregion
+
+
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,5 +72,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+CarRentalDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+CarRentalDbInitializer.Seed(app).Wait();
+
 
 app.Run();

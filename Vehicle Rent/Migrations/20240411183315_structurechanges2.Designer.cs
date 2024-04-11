@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehicle_Rent.Data;
 
@@ -11,9 +12,11 @@ using Vehicle_Rent.Data;
 namespace Vehicle_Rent.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    partial class CarRentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411183315_structurechanges2")]
+    partial class structurechanges2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -408,6 +411,7 @@ namespace Vehicle_Rent.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdVehicle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -535,7 +539,9 @@ namespace Vehicle_Rent.Migrations
                 {
                     b.HasOne("Vehicle_Rent.Models.Vehicle", "Vehicle")
                         .WithMany("VehicleCopies")
-                        .HasForeignKey("IdVehicle");
+                        .HasForeignKey("IdVehicle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Vehicle");
                 });

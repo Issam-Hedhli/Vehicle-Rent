@@ -10,6 +10,6 @@ namespace Vehicle_Rent.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; } 
 		public string? Name { get; set; } 
-		public virtual ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>(); 
+		public virtual ICollection<Vehicle> Vehicles { get; set; }
 	}
 }

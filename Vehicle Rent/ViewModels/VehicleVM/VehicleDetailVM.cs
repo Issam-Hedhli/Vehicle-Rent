@@ -5,7 +5,8 @@ namespace Vehicle_Rent.ViewModels.VehicleVM
     public class VehicleDetailVM
     {
         public string? Id { get; set; }
-        public string? Model { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public decimal RentalPrice { get; set; }
         public int AverageRate { get; set; }
         public string? ImageUrl { get; set; }

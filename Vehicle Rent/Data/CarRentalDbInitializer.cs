@@ -41,7 +41,7 @@ namespace Vehicle_Rent.Data
 					new VModel() { Id = "1", Name = "Camry" },
 					new VModel() { Id = "2", Name = "Accord" },
 					new VModel() { Id = "3", Name = "F-150" },
-					new VModel() { Id = "3", Name = "F-150" },
+					new VModel() { Id = "6", Name = "F-150" },
 					new VModel() { Id = "4", Name = "Silverado" },
 					new VModel() { Id = "5", Name = "Altima" }
 				});
@@ -55,11 +55,11 @@ namespace Vehicle_Rent.Data
 				{
 					context.Vehicles.AddRange(new List<Vehicle>()
 				{
-					new Vehicle() { Id = "1", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1"), RentalPrice = 50.00m },
-					new Vehicle() { Id = "2", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2"), RentalPrice = 150.00m },
-					new Vehicle() { Id = "3", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3"), RentalPrice = 250.00m },
-					new Vehicle() { Id = "4", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4"), RentalPrice = 350.00m },
-					new Vehicle() { Id = "5", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5"), RentalPrice = 450.00m }
+					new Vehicle() { Id = "1",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1"), RentalPrice = 50.00m },
+					new Vehicle() { Id = "2",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2"), RentalPrice = 150.00m },
+					new Vehicle() { Id = "3",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3"), RentalPrice = 250.00m },
+					new Vehicle() { Id = "4",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4"), RentalPrice = 350.00m },
+					new Vehicle() { Id = "5",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5"), RentalPrice = 450.00m }
 				});
 					await context.SaveChangesAsync();
 				}
@@ -90,10 +90,10 @@ namespace Vehicle_Rent.Data
 					var vehicleCopy1 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "1");
 					var vehicleCopy2 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "2");
 					var vehicleCopy3 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "3");
-					var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(s => s.Id == "1").Status; // Assuming "1" represents "borrowed" status
-					var returnedStatus = context.AvailibilityStatuses.FirstOrDefault(s => s.Id == "2").Status; // Assuming "2" represents "returned" status
+					var borrowedStatus = AvailibilityStatus.Rented; 
+					var returnedStatus = AvailibilityStatus.Available;
 					var customer1 = context.Users.FirstOrDefault(r => r.Id == "1");
-					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2"); // Using "customer2" for consistency
+					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2"); 
 					var customer3 = context.Users.FirstOrDefault(r => r.Id == "3");
 
 					context.RentalItems.AddRange(new List<RentalItem>()

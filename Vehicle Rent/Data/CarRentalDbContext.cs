@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Vehicle_Rent.Models;
 
 namespace Vehicle_Rent.Data
 {
-    public class CarRentalDbContext : DbContext
+    public class CarRentalDbContext : IdentityDbContext<IdentityUser>
     {
         public CarRentalDbContext(DbContextOptions<CarRentalDbContext> options) : base(options)
         {
