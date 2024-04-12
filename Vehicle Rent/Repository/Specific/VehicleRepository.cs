@@ -15,11 +15,15 @@ namespace Vehicle_Rent.Repository.Specific
 
 		public async Task<Vehicle> GetVehicleByIdAsync(string id)
 		{
-			var vehicle = await _context.Set<Vehicle>()
+			var vehicle = await _context.Vehicles
 				.Include(v => v.Company)
 				.Include(v => v.VModel)
 				.Include(v => v.VehicleCopies)
-				.ThenInclude(ri => ri.RentalItems)
+					.ThenInclude(ri => ri.RentalItems)
+						.ThenInclude(r=> r.Ratings)
+				.Include(v => v.VehicleCopies)
+					.ThenInclude(ri => ri.RentalItems)
+						.ThenInclude(u=> u.User)
 				.FirstOrDefaultAsync(v => v.Id == id);
 
 			if (vehicle == null)

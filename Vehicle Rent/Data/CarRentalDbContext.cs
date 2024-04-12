@@ -35,9 +35,9 @@ namespace Vehicle_Rent.Data
             .HasForeignKey(r => r.VehicleCopyId);
 
 			modelBuilder.Entity<VehicleCopy>()
-                .HasOne(b => b.Vehicle)
-                .WithMany(b => b.VehicleCopies)
-                .HasForeignKey(b => b.IdVehicle);
+            .HasOne(b => b.Vehicle)
+            .WithMany(b => b.VehicleCopies)
+            .HasForeignKey(b => b.IdVehicle);
 
 			modelBuilder.Entity<RentalItem>()
             .Property(v => v.Status)
@@ -58,14 +58,12 @@ namespace Vehicle_Rent.Data
 	        .WithMany(vm => vm.Vehicles) 
 	        .HasForeignKey(v => v.VModelId); 
 
-			modelBuilder.Entity<Rating>()
-	        .HasOne(r => r.RentalItem)
-	        .WithMany(v => v.Ratings)
-	        .HasForeignKey(r => r.RentalId);
+			modelBuilder.Entity<RentalItem>()
+	        .HasOne(r => r.Ratings)
+	        .WithOne(v => v.RentalItem)
+	        .HasForeignKey<RentalItem>(ri => ri.RatingId);
 
-
-
-			base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
     

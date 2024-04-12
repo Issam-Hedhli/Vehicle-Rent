@@ -10,7 +10,7 @@ namespace Vehicle_Rent.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
         [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Now;
         [Required]
         public DateTime EndDate { get; set; }
         public decimal TotalCost { get; set; }
@@ -21,6 +21,7 @@ namespace Vehicle_Rent.Models
         public virtual VehicleCopy VehicleCopy { get; set; } = new VehicleCopy(); 
 		public string? StatusId { get; set; }
 		public virtual AvailibilityStatus Status { get; set; }
-		public virtual ICollection<Rating>? Ratings { get; set; }
+        public string? RatingId { get; set; }
+        public virtual Rating Ratings { get; set; }
 	}
 }

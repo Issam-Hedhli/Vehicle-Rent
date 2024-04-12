@@ -12,7 +12,7 @@ namespace Vehicle_Rent.Models
 		public int Value { get; set; }
 		public string? Comment { get; set; }
 		public string? RentalId { get; set; }
-		public virtual RentalItem RentalItem { get; set; } = new RentalItem();
+		public virtual RentalItem RentalItem { get; set; }
 
 
 	}

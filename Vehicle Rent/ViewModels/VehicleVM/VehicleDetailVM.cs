@@ -12,6 +12,11 @@ namespace Vehicle_Rent.ViewModels.VehicleVM
         public string? ImageUrl { get; set; }
         public bool IsAvailable { get; set; }
         public List<Rating>? Ratings { get; set; }
+        public string CompanyName { get; set; }
+        public string ModelName { get; set; }
+        public int AverageRating { get; set; }
+        public int NumberOfAvailableVehicles { get; set; }
+
     }
 
 }
