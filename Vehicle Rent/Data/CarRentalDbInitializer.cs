@@ -53,9 +53,14 @@ namespace Vehicle_Rent.Data
 
 				if (!context.Vehicles.Any())
 				{
-					context.Vehicles.AddRange(new List<Vehicle>()
+                    #region Photos
+                    // lzmnii nzid les urls taa tssawar lekraheb
+                 
+                    #endregion
+
+                    context.Vehicles.AddRange(new List<Vehicle>()
 				{
-					new Vehicle() { Id = "1",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1"), RentalPrice = 50.00m },
+					new Vehicle() { Id = "1",Name="Issam",Photo="Images/car_2.jpg" , Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1"), RentalPrice = 50.00m },
 					new Vehicle() { Id = "2",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2"), RentalPrice = 150.00m },
 					new Vehicle() { Id = "3",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3"), RentalPrice = 250.00m },
 					new Vehicle() { Id = "4",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4"), RentalPrice = 350.00m },

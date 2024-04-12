@@ -15,7 +15,6 @@ namespace Vehicle_Rent.Data
 		public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleCopy> VehicleCopies { get; set; }
         public DbSet<RentalItem> RentalItems { get; set; }
-        public DbSet<Photo> Photos { get; set; }
         public DbSet<AvailibilityStatusWrapper> AvailibilityStatuses { get; set; }
         public DbSet<VModel> VModels { get; set; }
         public DbSet<Rating> Ratings { get; set; }
@@ -42,11 +41,6 @@ namespace Vehicle_Rent.Data
 			modelBuilder.Entity<RentalItem>()
             .Property(v => v.Status)
             .HasConversion<int>();
-
-            modelBuilder.Entity<Vehicle>()
-            .HasMany(v => v.Photos)
-            .WithOne(p => p.Vehicle)
-            .HasForeignKey(p => p.VehicleId);
 
 			modelBuilder.Entity<Vehicle>()
 			.HasOne(v => v.Company) 

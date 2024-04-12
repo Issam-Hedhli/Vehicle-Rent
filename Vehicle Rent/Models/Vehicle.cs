@@ -12,7 +12,7 @@ namespace Vehicle_Rent.Models
 		public string Name { get; set; }
 		public string Description { get; set; }
         public decimal RentalPrice { get; set; }
-        public virtual ICollection<Photo>? Photos { get; set; }
+        public string? Photo { get; set; }
         public virtual ICollection<RentalItem> Rentals { get; set; } = new List<RentalItem>();
 		public string? CompanyId { get; set; } 
 		public virtual Company Company { get; set; } = new Company();
