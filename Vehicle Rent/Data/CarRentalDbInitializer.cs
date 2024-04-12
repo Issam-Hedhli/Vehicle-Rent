@@ -41,7 +41,6 @@ namespace Vehicle_Rent.Data
 					new VModel() { Id = "1", Name = "Camry" },
 					new VModel() { Id = "2", Name = "Accord" },
 					new VModel() { Id = "3", Name = "F-150" },
-					new VModel() { Id = "6", Name = "F-150" },
 					new VModel() { Id = "4", Name = "Silverado" },
 					new VModel() { Id = "5", Name = "Altima" }
 				});
@@ -60,11 +59,11 @@ namespace Vehicle_Rent.Data
 
                     context.Vehicles.AddRange(new List<Vehicle>()
 				{
-					new Vehicle() { Id = "1",Name="Issam",Photo="Images/car_2.jpg" , Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1"), RentalPrice = 50.00m },
-					new Vehicle() { Id = "2",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2"), RentalPrice = 150.00m },
-					new Vehicle() { Id = "3",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3"), RentalPrice = 250.00m },
-					new Vehicle() { Id = "4",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4"), RentalPrice = 350.00m },
-					new Vehicle() { Id = "5",Name="Issam", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5"), RentalPrice = 450.00m }
+					new Vehicle() { Id = "1", Name="Toyota Camry", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1"), RentalPrice = 50.00m },
+					new Vehicle() { Id = "2", Name="Honda Accord", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2"), RentalPrice = 150.00m },
+					new Vehicle() { Id = "3", Name="Ford F-150", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3"), RentalPrice = 250.00m },
+					new Vehicle() { Id = "4", Name="Chevrolet Silverado", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4"), RentalPrice = 350.00m },
+					new Vehicle() { Id = "5", Name="Nissan Altima", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5"), RentalPrice = 450.00m }
 				});
 					await context.SaveChangesAsync();
 				}
