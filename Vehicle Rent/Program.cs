@@ -8,6 +8,7 @@ using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
 using Vehicle_Rent.Services.Payment;
 using Vehicle_Rent.Services.VehicleCatalogue;
+using Vehicle_Rent.Services.VehicleCopyStore;
 using Vehicle_Rent.Services.VehicleRent;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,12 +31,14 @@ builder.Services.AddScoped<IVehicleCopyRepository, VehicleCopyRepository>();
 builder.Services.AddScoped<IRentalItemRepository, RentalItemRepository>();
 builder.Services.AddScoped<IVModelRepository, VModelRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+builder.Services.AddScoped<IAvailabilityStatusRepository, AvailabilityStatusRepository>();
 #endregion
 
 #region Service
 builder.Services.AddScoped<IVehicleCatalogueService, VehicleCatalogueService>();
 builder.Services.AddScoped<IRentalService, RentalService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IVehicleCopyStoreService, VehicleCopyStoreService>();
 #endregion
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 
