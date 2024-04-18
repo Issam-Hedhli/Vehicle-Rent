@@ -1,13 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Vehicle_Rent.Models;
+using Vehicle_Rent.Repository.Generic;
 
-
-namespace Vehicle_Rent.Models
+public class AvailibilityStatus : IEntityBase
 {
-    public enum AvailibilityStatus
-    {
-        Available,
-        Rented,
-        Reserved
-    }
+    [Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+	public string Id { get; set; }
+    public string name { get; set; }
+    public virtual ICollection<RentalItem> RentalItems { get; set; }
 }

@@ -59,11 +59,11 @@ namespace Vehicle_Rent.Data
 
                     context.Vehicles.AddRange(new List<Vehicle>()
 				{
-					new Vehicle() { Id = "1", Name="Toyota Camry", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1"), RentalPrice = 50.00m },
-					new Vehicle() { Id = "2", Name="Honda Accord", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2"), RentalPrice = 150.00m },
-					new Vehicle() { Id = "3", Name="Ford F-150", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3"), RentalPrice = 250.00m },
-					new Vehicle() { Id = "4", Name="Chevrolet Silverado", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4"), RentalPrice = 350.00m },
-					new Vehicle() { Id = "5", Name="Nissan Altima", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5"), RentalPrice = 450.00m }
+					new Vehicle() { Id = "1", Name="Toyota Camry", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1")},
+					new Vehicle() { Id = "2", Name="Honda Accord", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2")},
+					new Vehicle() { Id = "3", Name="Ford F-150", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3")},
+					new Vehicle() { Id = "4", Name="Chevrolet Silverado", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4") },
+					new Vehicle() { Id = "5", Name="Nissan Altima", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5") }
 				});
 					await context.SaveChangesAsync();
 				}
@@ -79,30 +79,42 @@ namespace Vehicle_Rent.Data
 						for (int j = 1; j < 3; j++)
 						{
 							k++;
-							vehicleCopies.Add(new VehicleCopy() { Id = k.ToString(), Vehicle = context.Vehicles.FirstOrDefault(v => v.Id == i.ToString()) });
+							vehicleCopies.Add(new VehicleCopy() { Id = k.ToString(), Vehicle = context.Vehicles.FirstOrDefault(v => v.Id == i.ToString()), RentalPrice=50 });
 						}
 					}
 					context.VehicleCopies.AddRange(vehicleCopies);
 					await context.SaveChangesAsync();
 				}
+                #endregion
+
+                #region availabilityStatus
+                if (!context.AvailibilityStatuses.Any())
+				{
+					context.AvailibilityStatuses.AddRange( new List<AvailibilityStatus>() 
+					{
+						new AvailibilityStatus() {Id="1",name="Borrowed"},
+						new AvailibilityStatus() {Id="2",name="Returned"}
+					});
+					context.SaveChanges();
+				}
 				#endregion
 
-				#region RentalItem
+                #region RentalItem
 
-				if (!context.RentalItems.Any())
+                if (!context.RentalItems.Any())
 				{
 					var vehicleCopy1 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "1");
 					var vehicleCopy2 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "2");
 					var vehicleCopy3 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "3");
-					var borrowedStatus = AvailibilityStatus.Rented; 
-					var returnedStatus = AvailibilityStatus.Available;
 					var customer1 = context.Users.FirstOrDefault(r => r.Id == "1");
 					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2"); 
 					var customer3 = context.Users.FirstOrDefault(r => r.Id == "3");
+					var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "1");
+					var returnedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "2");
 
-					context.RentalItems.AddRange(new List<RentalItem>()
+                    context.RentalItems.AddRange(new List<RentalItem>()
 					{
-						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status = borrowedStatus, User = customer2 }, // Using "customer" property
+						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status=  borrowedStatus, User = customer2 }, // Using "customer" property
 						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer3 },
 						new RentalItem { Id = "3", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer1 },
 						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 }

@@ -13,7 +13,6 @@ namespace Vehicle_Rent.Models
         public DateTime StartDate { get; set; } = DateTime.Now;
         [Required]
         public DateTime EndDate { get; set; }
-        public decimal TotalCost { get; set; }
         public string? PaymentMethod { get; set; }
         public string? UserId { get; set; } 
         public virtual User? User { get; set; } 
