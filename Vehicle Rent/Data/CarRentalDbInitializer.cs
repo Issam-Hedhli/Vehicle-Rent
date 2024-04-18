@@ -53,17 +53,20 @@ namespace Vehicle_Rent.Data
 				if (!context.Vehicles.Any())
 				{
                     #region Photos
-                    // lzmnii nzid les urls taa tssawar lekraheb
-                 
+                    string image1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnEMxVKJBLEPDff0bbeOtgEEaFr_CoRUGL0Q&s";
+                    string image2 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFiaQZbDwtZQxmOw2E-0MOjtZPUDEmroPv9w&s";
+                    string image3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQD5QwhxumoqAQEYazQweYLwgWeQtee2_KcA&s";
+                    string image4 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFJAZK2UkDXFB9rJ6vW6BVaGv1mcAgr2m_7Q&s";
+                    string image5 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKz4vaMQU8Xqc8fw0hd1JKKARJPWoTJFyikw&s";
                     #endregion
 
                     context.Vehicles.AddRange(new List<Vehicle>()
 				{
-					new Vehicle() { Id = "1", Name="Toyota Camry", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1")},
-					new Vehicle() { Id = "2", Name="Honda Accord", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2")},
-					new Vehicle() { Id = "3", Name="Ford F-150", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3")},
-					new Vehicle() { Id = "4", Name="Chevrolet Silverado", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4") },
-					new Vehicle() { Id = "5", Name="Nissan Altima", Description="ii", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5") }
+					new Vehicle() { Id = "1", Name="Toyota Camry", Description="a reliable and spacious sedan known for its comfortable ride and fuel efficiency. With a sleek exterior design and a reputation for longevity, the Camry offers a practical and enjoyable driving experience suitable for various needs, from daily commuting to family road trips.", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1") , Photo = image1, IsAvailable = true},
+					new Vehicle() { Id = "2", Name="Honda Accord", Description="A versatile and stylish sedan renowned for its refined performance and advanced technology features. With its spacious interior, smooth handling, and reputation for reliability, the Accord offers a comfortable and enjoyable driving experience for both daily commutes and long journeys.\r\n\r\n\r\n\r\n\r\n\r\n\r\n", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2") , Photo = image2 , IsAvailable = true},
+					new Vehicle() { Id = "3", Name="Ford F-150", Description="An iconic pickup truck celebrated for its rugged durability and impressive towing capabilities. Renowned for its versatility, it seamlessly transitions between workhorse duties and family adventures. With its powerful engine options and innovative features, the F-150 remains a top choice for those seeking strength, reliability, and versatility in a truck.", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3") , Photo = image3, IsAvailable = true},
+					new Vehicle() { Id = "4", Name="Chevrolet Silverado", Description="A robust and dependable pickup truck known for its impressive towing capacity and rugged performance. With a spacious interior and a variety of trim options, it caters to diverse needs, from everyday work tasks to off-road adventures. Renowned for its durability and advanced technology features, the Silverado offers a combination of strength and comfort that makes it a popular choice among truck enthusiasts.", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4") , Photo = image4 , IsAvailable = true},
+					new Vehicle() { Id = "5", Name="Nissan Altima", Description="A sleek and efficient sedan offering a balance of comfort, performance, and technology. With its modern design and fuel-efficient engine options, it provides a smooth and enjoyable driving experience. Renowned for its reliability and advanced safety features, the Altima is an excellent choice for those seeking a stylish and practical vehicle for daily commuting or long-distance travel.", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5") , Photo = image5 , IsAvailable = true }
 				});
 					await context.SaveChangesAsync();
 				}
