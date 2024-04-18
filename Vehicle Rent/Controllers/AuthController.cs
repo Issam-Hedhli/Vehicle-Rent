@@ -81,7 +81,7 @@ namespace Vehicle_Rent.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home", new { message = "Registration successful!" });
+                return RedirectToAction("Index", "Home");  
             }
             else
             {
@@ -93,11 +93,10 @@ namespace Vehicle_Rent.Controllers
 
             return View(registerViewModel); 
         }
-
-        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+
             return RedirectToAction("Index", "Home");
         }
 
