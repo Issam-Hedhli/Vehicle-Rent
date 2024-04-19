@@ -8,7 +8,7 @@ namespace Vehicle_Rent.Repository.Generic
 {
     public class EntityBaseRepository<T> : IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {
-        private readonly CarRentalDbContext _context;
+        protected readonly CarRentalDbContext _context;
         public EntityBaseRepository(CarRentalDbContext context)
         {
             _context = context;
