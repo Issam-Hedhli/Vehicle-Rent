@@ -6,6 +6,7 @@ using System;
 using Vehicle_Rent.Data;
 using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
+using Vehicle_Rent.Services.EmailSender;
 using Vehicle_Rent.Services.Payment;
 using Vehicle_Rent.Services.VehicleCatalogue;
 using Vehicle_Rent.Services.VehicleCopyStore;
@@ -39,7 +40,10 @@ builder.Services.AddScoped<IVehicleCatalogueService, VehicleCatalogueService>();
 builder.Services.AddScoped<IRentalService, RentalService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IVehicleCopyStoreService, VehicleCopyStoreService>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 #endregion
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 
 #region AutoMapper

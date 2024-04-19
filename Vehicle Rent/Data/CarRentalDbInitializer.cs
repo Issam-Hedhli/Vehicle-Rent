@@ -53,7 +53,7 @@ namespace Vehicle_Rent.Data
 				if (!context.Vehicles.Any())
 				{
                     #region Photos
-                    string image1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnEMxVKJBLEPDff0bbeOtgEEaFr_CoRUGL0Q&s";
+                    string image1 = "https://th.bing.com/th/id/R.2290c0734b0e128758268904b0354ef3?rik=99EUYUkZEODAqg&pid=ImgRaw&r=0";
                     string image2 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFiaQZbDwtZQxmOw2E-0MOjtZPUDEmroPv9w&s";
                     string image3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQD5QwhxumoqAQEYazQweYLwgWeQtee2_KcA&s";
                     string image4 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFJAZK2UkDXFB9rJ6vW6BVaGv1mcAgr2m_7Q&s";
