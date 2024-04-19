@@ -9,7 +9,7 @@ namespace Vehicle_Rent.ViewModels.VehicleVM
         public string Description { get; set; }
         public decimal RentalPrice { get; set; }
         public int AverageRate { get; set; }
-        public string? ImageUrl { get; set; }
+        public string? Photo { get; set; }
         public bool IsAvailable { get; set; }
         public List<Rating>? Ratings { get; set; }
         public string CompanyName { get; set; }
