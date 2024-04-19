@@ -20,10 +20,6 @@ namespace Vehicle_Rent.Repository.Specific
 				.Include(v => v.VModel)
 				.Include(v => v.VehicleCopies)
 					.ThenInclude(ri => ri.RentalItems)
-						.ThenInclude(r=> r.Ratings)
-				.Include(v => v.VehicleCopies)
-					.ThenInclude(ri => ri.RentalItems)
-						.ThenInclude(u=> u.User)
 				.FirstOrDefaultAsync(v => v.Id == id);
 
 			if (vehicle == null)
@@ -40,8 +36,10 @@ namespace Vehicle_Rent.Repository.Specific
 		{
 			var vehicles = await _context.Set<Vehicle>()
 				.Include(v => v.Company)
+				.Include(v=>v.VModel)
 				.Include(v => v.VehicleCopies)
-				.ThenInclude(ri => ri.RentalItems)
+					.ThenInclude(ri => ri.RentalItems)
+						.ThenInclude(ri=>ri.Status)
 				.ToListAsync();
 			return vehicles;
 		}
