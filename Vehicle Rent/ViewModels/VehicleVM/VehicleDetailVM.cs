@@ -1,4 +1,5 @@
 ﻿using Vehicle_Rent.Models;
+using Vehicle_Rent.ViewModels.VehicleCopyVM;
 
 namespace Vehicle_Rent.ViewModels.VehicleVM
 {
@@ -17,6 +18,7 @@ namespace Vehicle_Rent.ViewModels.VehicleVM
         public int AverageRating { get; set; }
         public int NumberOfCopies { get; set; }
         public int NumberOfAvailableVehicles { get; set; }
+        public List<VehicleCopyReadVM> VehicleCopyReadVMs { get; set; }
 
     }
 

@@ -24,25 +24,6 @@ namespace Vehicle_Rent.Controllers
             _emailSender = emailSender;
 
 		}
-		public async Task<IActionResult> Vehicle(string VehicleId)
-		{
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Invalid VehicleId: " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage))));
-            }
-
-            var vehicleDetails = await _vehicleCatalogueService.GetVehicleByIdAsync(VehicleId);
-
-            if (vehicleDetails == null)
-            {
-                return NotFound();
-            }
-
-            var viewModel = _mapper.Map<VehicleDetailVM>(vehicleDetails);
-
-            return View(viewModel);
-
-        }
         public async Task<IActionResult> Vehicles(string searchString, string company, string model, int rentalPrice , int minRentalPrice , int maxRentalPrice)
         {
             await _emailSender.SendEmailAsync("Customer@carrental.com", "testsubject", "testmessage");
@@ -113,7 +94,7 @@ namespace Vehicle_Rent.Controllers
             }
             return View(vehicleCopyReadVM);
         }
-        public async Task<IActionResult> VehicleCopiesByBook(string vehicleId)
+        public async Task<IActionResult> Vehicle(string vehicleId)
         {
             List<VehicleCopy> vehicleCopies = await _vehicleCatalogueService.GetVehiclesCopiesByVehicleId(vehicleId);
             List<VehicleCopyReadVM> vehicleCopyReadVms = new List<VehicleCopyReadVM>();
@@ -143,7 +124,10 @@ namespace Vehicle_Rent.Controllers
             {
                 vehicleCopyReadVms = _mapper.Map<List<VehicleCopyReadVM>>(vehicleCopies);
             }
-            return View("VehicleCopies",vehicleCopyReadVms);
+            var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
+            var vehicleReadVM = _mapper.Map<VehicleDetailVM>(vehicle);
+            vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
+            return View("Vehicle",vehicleReadVM);
         }
     }
 }

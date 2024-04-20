@@ -14,6 +14,8 @@ namespace Vehicle_Rent.Profiles
 
         private object AverageRating(ICollection<RentalItem> rentalItems)
         {
+            if (rentalItems.Count == 0)
+            { return 5; }
             var ratings = rentalItems.Select(ri => ri.Ratings.Value).ToList();
             return (int)ratings.Average();
         }

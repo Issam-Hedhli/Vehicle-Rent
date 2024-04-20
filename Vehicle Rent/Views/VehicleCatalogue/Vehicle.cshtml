@@ -2,8 +2,9 @@
 @model VehicleDetailVM;
 
 <div class="site-section bg-light" >
+
     <div class="container" style="margin-top:80px;">
-        <h3 style="margin-bottom:40px;"><strong>@ViewBag.Title</strong></h3>
+        <h3 style="margin-bottom:40px;"><strong>@(Model.CompanyName +" " + Model.ModelName) </strong></h3>
         <div class="row">
             <div class="col-md-12 mb-4">
                 <div class="listing d-flex align-items-stretch">
@@ -20,6 +21,53 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div asp-controller="VehicleCatalogue" class="col-lg-7">
+                <h2 class="section-heading"><strong>@ViewBag.Title</strong></h2>
+            </div>
+        </div>
+        <h3 style="margin-bottom:40px;"><strong>Ratings </strong></h3>
+            <div class="row" style="margin-top:50px;">
+                @foreach (var vehiclecopy in Model.VehicleCopyReadVMs)
+                {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="listing d-block align-items-stretch">
+                    <div class="listing-contents h-100">
+                        <div style="display:flex; justify-content:space-between;">
+                            <h3>Vehicle Copy @vehiclecopy.Id</h3>
+                                <h3 style="text-align:right;color:gold;">
+                                @for (int i = 0; i < vehiclecopy.AverageRating; i++)
+                                {
+                                    <span>★</span>
+                                }
+                                </h3>
+                            </div>
+                        <div style="display:flex; justify-content:space-between">
+
+                        @if ( vehiclecopy.WasAlreadyRented)
+                        {
+                        <p>
+                            You rented this before
+                        </p>
+                        }
+                        else
+                        {
+                        <p>
+
+                        </p>      
+                        }
+
+                            <p> @vehiclecopy.RentalItems.Count</p>
+                        </div>
+                        <div style="text-align:center;">
+                            <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Go to Vehicle Copy Page</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                }
+            </div>
     </div>
 </div>
 
