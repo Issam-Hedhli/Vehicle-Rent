@@ -8,7 +8,6 @@ using Vehicle_Rent.Services.EmailSender;
 using Vehicle_Rent.Services.Payment;
 using Vehicle_Rent.Services.Profile;
 using Vehicle_Rent.Services.VehicleCatalogue;
-using Vehicle_Rent.Services.VehicleCopyStore;
 using Vehicle_Rent.Services.VehicleRent;
 using Stripe;
 
@@ -41,7 +40,6 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 builder.Services.AddScoped<IVehicleCatalogueService, VehicleCatalogueService>();
 builder.Services.AddScoped<IRentalService, RentalService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddScoped<IVehicleCopyStoreService, VehicleCopyStoreService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 #endregion

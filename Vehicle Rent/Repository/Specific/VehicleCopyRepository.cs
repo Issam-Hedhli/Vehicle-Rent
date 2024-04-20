@@ -12,20 +12,12 @@ namespace Vehicle_Rent.Repository.Specific
 		{
 		}
 
-        //public async Task<VehicleCopy> GetEagerVehicleCopyById(string id)
-        //{
-        //    var vehiclecopy = await _context.VehicleCopies
-        //        .Include(vc => vc.Vehicle)
-        //        // zid includet
-        //        .FirstOrDefaultAsync(vc => vc.Id == id);
-        //    if (vehiclecopy == null)
-        //    {
-        //        throw new Exception();
-        //    }
-        //    else
-        //    {
-        //        return vehiclecopy;
-        //    }
-        //}
+        public async Task<List<VehicleCopy>> GetVehiclesCopiesByVehicleCopy(string vehicleId)
+        {
+            var vehicleCopies = await _context.Set<VehicleCopy>()
+                .Where(vc => vc.IdVehicle.Equals(vehicleId))
+                .ToListAsync();
+            return vehicleCopies;
+        }
     }
 }

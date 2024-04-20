@@ -8,14 +8,16 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
 		private readonly IVehicleRepository _vehicleRepository;
 		private readonly IRentalItemRepository _ItemRepository;
 		private readonly IUserRepository _userRepository;
+        private readonly IVehicleCopyRepository _vehicleCopyRepository;
 
-		public VehicleCatalogueService(IVehicleRepository vehicleRepository, IRentalItemRepository itemRepository, IUserRepository userRepository)
-		{
-			_vehicleRepository = vehicleRepository;
-			_ItemRepository = itemRepository;
-			_userRepository = userRepository;
-		}
-		public async Task<List<Vehicle>> GetAllVehiclesAsync()
+        public VehicleCatalogueService(IVehicleRepository vehicleRepository, IRentalItemRepository itemRepository, IUserRepository userRepository, IVehicleCopyRepository vehicleCopyRepository)
+        {
+            _vehicleRepository = vehicleRepository;
+            _ItemRepository = itemRepository;
+            _userRepository = userRepository;
+            _vehicleCopyRepository = vehicleCopyRepository;
+        }
+        public async Task<List<Vehicle>> GetAllVehiclesAsync()
 		{
 			var allVehiclesAsync = await _vehicleRepository.GetVehiclesAsync();
 			return allVehiclesAsync.ToList();
@@ -60,5 +62,14 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
 			return await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
 		}
 
-	}
+        public async Task<VehicleCopy> GetVehicleCopyByIdAsync(string vehicleCopyId)
+        {
+            return await _vehicleCopyRepository.GetByIdAsync(vehicleCopyId,vc=>vc.RentalItems);
+        }
+
+        public async Task<List<VehicleCopy>> GetVehiclesCopiesByVehicleId(string vehicleId)
+        {
+            return await _vehicleCopyRepository.GetVehiclesCopiesByVehicleCopy(vehicleId);
+        }
+    }
 }

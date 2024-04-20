@@ -6,6 +6,7 @@ using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
 using Vehicle_Rent.Services.EmailSender;
 using Vehicle_Rent.Services.VehicleCatalogue;
+using Vehicle_Rent.ViewModels.VehicleCopyVM;
 using Vehicle_Rent.ViewModels.VehicleVM;
 
 namespace Vehicle_Rent.Controllers
@@ -13,14 +14,12 @@ namespace Vehicle_Rent.Controllers
     public class VehicleCatalogueController : Controller
 	{
 		private IVehicleCatalogueService _vehicleCatalogueService;
-		private IVehicleRepository _vehicleRepository;
         private readonly IMapper _mapper;
         private readonly IEmailSender _emailSender;
 
-		public VehicleCatalogueController (IVehicleCatalogueService vehicleCatalogueService , IVehicleRepository vehicleRepository, IMapper mapper , IEmailSender emailSender)
+		public VehicleCatalogueController (IVehicleCatalogueService vehicleCatalogueService , IMapper mapper , IEmailSender emailSender)
 		{
 			_vehicleCatalogueService = vehicleCatalogueService;
-			_vehicleRepository = vehicleRepository;
             _mapper = mapper;
             _emailSender = emailSender;
 
@@ -91,13 +90,60 @@ namespace Vehicle_Rent.Controllers
 
             return VehicleDetailVMs;
         }
-        public async Task<IActionResult> VehicleCopy()
+        public async Task<IActionResult> VehicleCopy(string VehicleCopyId)
         {
-            return View();
+            VehicleCopy vehicleCopy = await _vehicleCatalogueService.GetVehicleCopyByIdAsync(VehicleCopyId);
+            var vehicleCopyReadVM = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
+            string Id = User.FindFirstValue("Id");
+            if (!string.IsNullOrEmpty(Id))
+            {
+                //WasAlreadyRented
+                var rentalItems = vehicleCopy.RentalItems;
+                var previousRentalItemsByUser = rentalItems
+                    .Where(ri => ri.UserId == Id)
+                    .Where(ri => ri.StatusId == "2")
+                    .ToList();
+                vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
+                //IsBeingRented
+                var actualRentalItemsByUser = rentalItems
+                    .Where(ri => ri.UserId == Id)
+                    .Where(ri => ri.StatusId == "1")
+                    .ToList();  
+                vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
+            }
+            return View(vehicleCopyReadVM);
         }
-        public async Task<IActionResult> VehicleCopies()
+        public async Task<IActionResult> VehicleCopiesByBook(string vehicleId)
         {
-            return View();
+            List<VehicleCopy> vehicleCopies = await _vehicleCatalogueService.GetVehiclesCopiesByVehicleId(vehicleId);
+            List<VehicleCopyReadVM> vehicleCopyReadVms = new List<VehicleCopyReadVM>();
+            string Id = User.FindFirstValue("Id");
+            if (!string.IsNullOrEmpty(Id))
+            {
+                foreach (var vehicleCopy in vehicleCopies) 
+                {
+                    var vehicleCopyReadVM = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
+                    //WasAlreadyRented
+                    var rentalItems = vehicleCopy.RentalItems;
+                    var previousRentalItemsByUser = rentalItems
+                        .Where(ri => ri.UserId == Id)
+                        .Where(ri => ri.StatusId == "2")
+                        .ToList();
+                    vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
+                    //IsBeingRented
+                    var actualRentalItemsByUser = rentalItems
+                        .Where(ri => ri.UserId == Id)
+                        .Where(ri => ri.StatusId == "1")
+                        .ToList();
+                    vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
+                    vehicleCopyReadVms.Add(vehicleCopyReadVM);
+                }
+            }
+            else
+            {
+                vehicleCopyReadVms = _mapper.Map<List<VehicleCopyReadVM>>(vehicleCopies);
+            }
+            return View("VehicleCopies",vehicleCopyReadVms);
         }
     }
 }

@@ -8,8 +8,14 @@ namespace Vehicle_Rent.Profiles
     {
         public VehicleCopyProfile()
         {
-            CreateMap<VehicleCopy, VehicleCopyReadVM>();
-            CreateMap<VehicleCopy, VehicleCopyDetailVM>();
+            CreateMap<VehicleCopy, VehicleCopyReadVM>()
+                .ForMember(dest => dest.AverageRating, opt => opt.MapFrom(src => AverageRating(src.RentalItems)));
+        }
+
+        private object AverageRating(ICollection<RentalItem> rentalItems)
+        {
+            var ratings = rentalItems.Select(ri => ri.Ratings.Value).ToList();
+            return (int)ratings.Average();
         }
     }
 }
