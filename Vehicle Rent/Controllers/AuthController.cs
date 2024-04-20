@@ -76,7 +76,7 @@ namespace Vehicle_Rent.Controllers
                 return View(registerViewModel);
             }
 
-            var newUser = new User { UserName = registerViewModel.Email, Email = registerViewModel.Email };
+            var newUser = new User { UserName = registerViewModel.Email, Email = registerViewModel.Email ,Name=registerViewModel.Name};
             var result = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 
             if (result.Succeeded)

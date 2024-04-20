@@ -30,6 +30,7 @@ namespace Vehicle_Rent.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -240,7 +241,9 @@ namespace Vehicle_Rent.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RentalPrice = table.Column<int>(type: "int", nullable: false),
-                    IdVehicle = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    IdVehicle = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UnavailabilityStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UnavailabilityEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,4 @@
-﻿@model List<VehicleCopyReadVM>;
+﻿@model VehicleCopyReadVM;
 @using Vehicle_Rent.ViewModels.VehicleCopyVM;
 
 <div class="site-section bg-light">
@@ -19,30 +19,40 @@
         <div class="row">
             <div class="col-lg-7" style="margin-top:30px;">
                 <h3 class="mb-5"><strong>Ratings</strong></h3>
-@*                 <p class="mb-5">Ratings</p>
- *@            </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-4 mb-4">
+                @foreach ( var rentalItem in Model.RentalItems )
+                {
+                @if (rentalItem.Ratings!=null)
+                {
                 <div class="testimonial-2">
                     <blockquote class="mb-4">
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, deserunt eveniet veniam. Ipsam, nam, voluptatum"</p>
+                        <p>" @rentalItem.Ratings.Comment "</p>
                     </blockquote>
                     <div style="display:flex; justify-content:space-between;">
                         <div class="d-flex v-card align-items-center">
-                            <img src="/images/person_1.jpg" alt="Image" class="img-fluid mr-3">
+                            <img src=@rentalItem.User.Image alt="Image" class="img-fluid mr-3">
                             <div class="author-name" >
                                 <div style="flex-grow: 1;">
-                                    <span class="d-block">Mike Fisher</span>
-                                    <span>Owner, Ford</span>
+                                    <span class="d-block">@rentalItem.User.Name</span>
+                                    <span>@rentalItem.User.UserName</span>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <span style="color:gold;">★★★★★</span>
+                            <h7 style="white-space: nowrap;">
+                                @for (int i = 0; i < rentalItem.Ratings.Value; i++)
+                                {
+                                    <span style="color:gold;  letter-spacing: 1px;">★</span>
+                                }
+                            </h7>
                         </div>
                     </div>
                 </div>
+                }
+                }
             </div>
         </div>
     </div>

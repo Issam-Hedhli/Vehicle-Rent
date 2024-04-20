@@ -7,6 +7,7 @@ namespace Vehicle_Rent.Models
 {
     public class User : IdentityUser, IEntityBase
     {
+        public string Name { get;set; }
         public string? Image { get; set; }
         public virtual ICollection<RentalItem>? Rentals { get; set; }
     }

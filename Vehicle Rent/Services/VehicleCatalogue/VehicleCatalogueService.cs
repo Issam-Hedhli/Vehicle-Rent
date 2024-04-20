@@ -64,7 +64,7 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
 
         public async Task<VehicleCopy> GetVehicleCopyByIdAsync(string vehicleCopyId)
         {
-            return await _vehicleCopyRepository.GetByIdAsync(vehicleCopyId,vc=>vc.RentalItems);
+            return await _vehicleCopyRepository.GetVehicleCopyByIdAsync(vehicleCopyId);
         }
 
         public async Task<List<VehicleCopy>> GetVehiclesCopiesByVehicleId(string vehicleId)

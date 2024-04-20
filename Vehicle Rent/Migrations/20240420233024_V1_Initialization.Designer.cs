@@ -12,7 +12,7 @@ using Vehicle_Rent.Data;
 namespace Vehicle_Rent.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    [Migration("20240420155817_V1_Initialization")]
+    [Migration("20240420233024_V1_Initialization")]
     partial class V1_Initialization
     {
         /// <inheritdoc />
@@ -279,6 +279,10 @@ namespace Vehicle_Rent.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -379,6 +383,12 @@ namespace Vehicle_Rent.Migrations
 
                     b.Property<int>("RentalPrice")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("UnavailabilityEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UnavailabilityStart")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

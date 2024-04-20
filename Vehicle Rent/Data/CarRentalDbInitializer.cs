@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Vehicle_Rent.Models;
+using static System.Net.WebRequestMethods;
 
 
 namespace Vehicle_Rent.Data
@@ -114,13 +115,23 @@ namespace Vehicle_Rent.Data
 					var customer3 = context.Users.FirstOrDefault(r => r.Id == "3");
 					var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "1");
 					var returnedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "2");
+					var rating2 = new Rating()
+					{
+						Value = 5,
+						Comment = "Enjoyed its rides"
+					};
+					var rating4 = new Rating()
+					{
+						Value = 1,
+						Comment = "didn't really like it"
+					};
 
                     context.RentalItems.AddRange(new List<RentalItem>()
 					{
 						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status=  borrowedStatus, User = customer2 }, 
-						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer3 },
+						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer3 ,Ratings=rating2},
 						new RentalItem { Id = "3", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer1 },
-						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 }
+						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 ,Ratings = rating4}
 					});
 					await context.SaveChangesAsync();
 				}
@@ -128,9 +139,6 @@ namespace Vehicle_Rent.Data
 				#endregion
 
 			}
-			
-
-
 		}
 
 
@@ -155,7 +163,7 @@ namespace Vehicle_Rent.Data
 				var customer = await userManager.FindByEmailAsync(customerEmail);
 				if (customer == null)
 				{
-					User newCustomer = new User { Id = "1", UserName = customerEmail, Email = customerEmail };
+					User newCustomer = new User { Id = "1", UserName = customerEmail, Email = customerEmail,Name="Sami", Image= "https://scontent.ftun5-1.fna.fbcdn.net/v/t1.6435-9/120645766_3263034770470903_6610932504759370937_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=zfsHXV9ToLYAb6cQ9ho&_nc_ht=scontent.ftun5-1.fna&oh=00_AfAr5QEPUSx6fbsyFmRhKf1a4WBFnugVku-lt_fJN-M05A&oe=664BB337" };
 					await userManager.CreateAsync(newCustomer, "Customer123!"); 
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
 				}
@@ -163,9 +171,9 @@ namespace Vehicle_Rent.Data
 				// Second Customer
 				string secondaryCustomerEmail = "secondCustomer@carrental.com";
 				var secondaryCustomer = await userManager.FindByEmailAsync(secondaryCustomerEmail);
-				if (secondaryCustomer == null)
-				{
-					User newCustomer = new User { Id = "2", UserName = secondaryCustomerEmail, Email = secondaryCustomerEmail };
+                if (secondaryCustomer == null)
+                {
+					User newCustomer = new User { Id = "2", UserName = secondaryCustomerEmail, Email = secondaryCustomerEmail,Name="Issam",Image= "https://scontent.ftun5-1.fna.fbcdn.net/v/t39.30808-6/289057250_4012267192331843_3921978455873349113_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=l5mTzPaYOg8Ab69hAbh&_nc_ht=scontent.ftun5-1.fna&oh=00_AfD8S_CuzLyQ1IAeCTx2bqsqm-rTakYe_u7pc3D4L2D-nA&oe=662A2AA0" };
 					await userManager.CreateAsync(newCustomer, "Customer123!");
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
 				}

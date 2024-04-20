@@ -5,6 +5,8 @@ namespace Vehicle_Rent.Repository.Specific
 {
     public interface IVehicleCopyRepository : IEntityBaseRepository<VehicleCopy>
     {
+        Task<VehicleCopy> GetVehicleCopyByIdAsync(string vehicleCopyId);
+
         //public Task<VehicleCopy> GetEagerVehicleCopyById(string id);
         Task<List<VehicleCopy>> GetVehiclesCopiesByVehicleCopy(string vehicleId);
     }
