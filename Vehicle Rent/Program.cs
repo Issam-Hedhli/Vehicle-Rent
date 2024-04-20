@@ -52,7 +52,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 #endregion
 
 #region Auth
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CarRentalDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CarRentalDbContext>();
 builder.Services.AddSession();
 builder.Services.AddAuthentication(options =>
 {

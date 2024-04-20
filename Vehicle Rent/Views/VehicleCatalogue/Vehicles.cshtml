@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div asp-controller="VehicleCatalogue" class="col-lg-7" >
-                <h2 class="section-heading"><strong>Vehicles</strong></h2>
+                <h2 class="section-heading"><strong>@ViewBag.Title</strong></h2>
             </div>
         </div>
 
@@ -13,9 +13,9 @@
         <div class="row" style="margin-top:50px;">
             @foreach (var item in Model)
             {
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="listing d-block align-items-stretch">
-                        <div class="listing-img h-100 mr-4" style="width:300px; height:400px;">
+                <div class="col-md-6 col-lg-4 mb-4" >
+                    <div class="listing d-block align-items-stretch" >
+                        <div class="listing-img h-100 mr-4" style="width:300px; height:600px;">
                                 <img src="@item.Photo" alt="Image" class="img-fluid">
                         </div>
                         <div class="listing-contents h-100">

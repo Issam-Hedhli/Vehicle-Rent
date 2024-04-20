@@ -13,7 +13,5 @@ namespace Vehicle_Rent.Models
 		public string? Comment { get; set; }
 		public string? RentalId { get; set; }
 		public virtual RentalItem RentalItem { get; set; }
-
-
 	}
 }

@@ -7,10 +7,10 @@ namespace Vehicle_Rent.Controllers
 {
     public class AuthController : Controller 
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;   
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;   
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

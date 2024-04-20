@@ -44,7 +44,6 @@ namespace Vehicle_Rent.Controllers
             return View(viewModel);
 
         }
-
         public async Task<IActionResult> Vehicles(string searchString, string company, string model, int rentalPrice , int minRentalPrice , int maxRentalPrice)
         {
             await _emailSender.SendEmailAsync("Customer@carrental.com", "testsubject", "testmessage");
@@ -71,8 +70,6 @@ namespace Vehicle_Rent.Controllers
 
             return View(vehicledetailVms);
         }
-
-
         public List<VehicleDetailVM> Filter(List<VehicleDetailVM> VehicleDetailVMs, string searchString, string company, string model,int rentalPrice, int minRentalPrice, int maxRentalPrice)
         {
             if (!searchString.IsNullOrEmpty())
@@ -93,6 +90,14 @@ namespace Vehicle_Rent.Controllers
             }
 
             return VehicleDetailVMs;
+        }
+        public async Task<IActionResult> VehicleCopy()
+        {
+            return View();
+        }
+        public async Task<IActionResult> VehicleCopies()
+        {
+            return View();
         }
     }
 }

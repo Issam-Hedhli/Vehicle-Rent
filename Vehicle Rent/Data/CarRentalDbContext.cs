@@ -5,7 +5,7 @@ using Vehicle_Rent.Models;
 
 namespace Vehicle_Rent.Data
 {
-    public class CarRentalDbContext : IdentityDbContext<IdentityUser>
+    public class CarRentalDbContext : IdentityDbContext<User>
     {
         public CarRentalDbContext(DbContextOptions<CarRentalDbContext> options) : base(options)
         {

@@ -147,7 +147,7 @@ namespace Vehicle_Rent.Data
 				}
 				#endregion
 
-				var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+				var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
 				#region Users
 				// First Customer
