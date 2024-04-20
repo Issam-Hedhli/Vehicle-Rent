@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Stripe.Terminal;
-using System;
 using Vehicle_Rent.Data;
 using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
 using Vehicle_Rent.Services.EmailSender;
 using Vehicle_Rent.Services.Payment;
+using Vehicle_Rent.Services.Profile;
 using Vehicle_Rent.Services.VehicleCatalogue;
 using Vehicle_Rent.Services.VehicleCopyStore;
 using Vehicle_Rent.Services.VehicleRent;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,16 +35,17 @@ builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IAvailabilityStatusRepository, AvailabilityStatusRepository>();
 #endregion
 
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
 #region Service
 builder.Services.AddScoped<IVehicleCatalogueService, VehicleCatalogueService>();
 builder.Services.AddScoped<IRentalService, RentalService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IVehicleCopyStoreService, VehicleCopyStoreService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 #endregion
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
-builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 
 #region AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -59,6 +60,23 @@ builder.Services.AddAuthentication(options =>
 });
 #endregion
 
+
+#region Authorization
+builder.Services.AddAuthorization(options =>
+{
+
+    options.AddPolicy("User",
+        authBuilder =>
+        {
+            authBuilder.RequireRole("Customer");
+        });
+
+});
+#endregion
+
+#region Claims
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ApplicationUserClaimsPrincipalFactory>();
+#endregion
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 var app = builder.Build();

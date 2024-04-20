@@ -7,11 +7,13 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
 	{
 		private readonly IVehicleRepository _vehicleRepository;
 		private readonly IRentalItemRepository _ItemRepository;
+		private readonly IUserRepository _userRepository;
 
-		public VehicleCatalogueService(IVehicleRepository vehicleRepository, IRentalItemRepository itemRepository)
+		public VehicleCatalogueService(IVehicleRepository vehicleRepository, IRentalItemRepository itemRepository, IUserRepository userRepository)
 		{
 			_vehicleRepository = vehicleRepository;
 			_ItemRepository = itemRepository;
+			_userRepository = userRepository;
 		}
 		public async Task<List<Vehicle>> GetAllVehiclesAsync()
 		{
@@ -25,7 +27,35 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
 			return allVehicles.Where(v => v.IsAvailable).ToList();
 		}
 
-		public async Task<Vehicle> GetVehicleByIdAsync(string vehicleId)
+        public async Task<List<Vehicle>> GetRentedVehiclesByCustomerIdAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentException("Customer is NULL or EMPTY", nameof(id));
+
+            var customer = await _userRepository.GetEagerCustomerByIdAsync(id);
+            var vehicles = customer?.Rentals
+                .Where(bi => bi.StatusId == "1")
+                .Select(r => r.VehicleCopy?.Vehicle)
+                .ToList() ?? new List<Vehicle>();
+
+            return vehicles;
+        }
+
+        public async Task<List<Vehicle>> GetReturnedVehiclesByCustomerIdAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentException("Reader ID cannot be null or empty", nameof(id));
+
+            var user = await _userRepository.GetEagerCustomerByIdAsync(id);
+            var vehicles = user?.Rentals
+                .Where(bi => bi.StatusId == "1")
+                .Select(r => r.VehicleCopy?.Vehicle)
+                .ToList() ?? new List<Vehicle>();
+
+            return vehicles;
+        }
+
+        public async Task<Vehicle> GetVehicleByIdAsync(string vehicleId)
 		{
 			return await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
 		}
