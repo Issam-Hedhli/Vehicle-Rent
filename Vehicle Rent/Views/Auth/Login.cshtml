@@ -1,6 +1,7 @@
 ﻿@using Vehicle_Rent.ViewModels.AuthVM;
-@model LoginVM;
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
 
+@model LoginVM
 
 <div class="hero" style="background-color: #f0f0f0;">
     <div class="container">
@@ -8,25 +9,33 @@
             <div class="col-md-8 blog-content" style="margin-bottom:150px;">
                 <div class="pt-5">
                     <!-- END comment-list -->
-
                     <div class="comment-form-wrap pt-5">
                         <h3 class="mb-5">Login</h3>
                         <form asp-action="Login" method="POST">
                             <div class="form-group">
                                 <label for="email">Email </label>
                                 <input asp-for="Email" type="email" class="form-control" id="email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password </label>
                                 <input asp-for="Password" type="password" class="form-control" id="password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
+                            @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["ErrorMessage"]
+                                </div>
+                            }
+
+
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="remember_me" name="remember_me" value="true" asp-action="Remember me">
+                                    <input type="checkbox" class="custom-control-input" id="remember_me" name="remember_me" value="true">
                                     <label class="custom-control-label" for="remember_me">Remember me</label>
                                 </div>
                             </div>
-
                             <div style="display:flex;">
                                 <div style="margin-top:20px; display:flex;">
                                     <h6>
@@ -38,25 +47,17 @@
                                         </h6>
                                     </a>
                                 </div>
-
-
-
                                 <div class="form-group" style="display:flex; justify-content: center; align-items: center;">
                                     <input type="submit" value="Login" class="btn btn-primary btn-md text-white" style="margin-left:350px;">
                                 </div>
                             </div>
                         </form>
                     </div>
-                    
-                </div>
 
+                </div>
             </div>
-           
         </div>
     </div>
 </div>
-
-
-
 
 

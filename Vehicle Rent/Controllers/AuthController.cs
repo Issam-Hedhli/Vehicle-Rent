@@ -21,39 +21,39 @@ namespace Vehicle_Rent.Controllers
             var loginVM = new LoginVM();
             return View(loginVM);
         }
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
-                if (user != null)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, loginViewModel.RememberMe, false);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Home");  
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                }
+                return View(loginViewModel);
             }
 
+            var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = "Account not found.";
+                return View(loginViewModel);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, loginViewModel.RememberMe, false);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.ErrorMessage = "Invalid email or password.";
             return View(loginViewModel);
         }
+
+
 
         public IActionResult Register()
         {
             var registerVM = new RegisterVM();
             return View(registerVM);
         }
+ 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerViewModel)
         {
@@ -76,23 +76,22 @@ namespace Vehicle_Rent.Controllers
                 return View(registerViewModel);
             }
 
-            var newUser = new User { UserName = registerViewModel.Email, Email = registerViewModel.Email ,Name=registerViewModel.Name};
+            var newUser = new User { UserName = registerViewModel.Email, Email = registerViewModel.Email, Name = registerViewModel.Name };
             var result = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");  
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                return RedirectToAction("Index", "Home");
             }
 
-            return View(registerViewModel); 
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(registerViewModel);
         }
+
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
