@@ -1,22 +1,31 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using Vehicle_Rent.Models;
+using Vehicle_Rent.Services.VehicleCatalogue;
 using Vehicle_Rent.ViewModels;
+using Vehicle_Rent.ViewModels.VehicleVM;
 
 namespace Vehicle_Rent.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IMapper _mapper;
+        private readonly IVehicleCatalogueService _vehicleCatalogueService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IMapper mapper, IVehicleCatalogueService vehicleCatalogueService)
         {
-            _logger = logger;
+            _mapper = mapper;
+            _vehicleCatalogueService = vehicleCatalogueService;
         }
 
-        public IActionResult Index()
+        public async Task< IActionResult> Index()
         {
+            var vehicles = await _vehicleCatalogueService.GetAllVehiclesAsync();
+            var vehicledetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
+            ViewBag.Models = vehicledetailVms.Select(m => m.ModelName).Distinct().ToList();
+            ViewBag.Companies = vehicledetailVms.Select(c => c.CompanyName).Distinct().ToList();
             return View();
         }
 
