@@ -13,17 +13,17 @@
 
                         <div class="mb-3 mb-md-0 col-md-4">
                             <select name="Company" class="custom-select form-control">
-                                <option value ="">Company</option>
+                                <option value="">Company</option>
                                 @foreach (var company in ViewBag.Companies)
                                 {
-                                @if (ViewBag.CompanyValue != null && company== ViewBag.CompanyValue)
-                                {
+                                    @if (ViewBag.CompanyValue != null && company == ViewBag.CompanyValue)
+                                    {
                                         <option value="@company" selected>@company</option>
-                                }
-                                else
-                                {
-                                       <option value="@company">@company</option> 
-                                }
+                                    }
+                                    else
+                                    {
+                                        <option value="@company">@company</option>
+                                    }
 
                                 }
                             </select>
@@ -44,17 +44,17 @@
                                 }
                             </select>
                         </div>
-                        
 
-@*                         <div class="mb-3 mb-md-0 col-md-2">
-                            <input name="minPrice" type="number" class="form-control" placeholder="↓ Min Price">
-                            </input>
+
+                        @*                         <div class="mb-3 mb-md-0 col-md-2">
+                        <input name="minPrice" type="number" class="form-control" placeholder="↓ Min Price">
+                        </input>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-2">
-                            <input name="maxPrice" type="number" class="form-control" placeholder="↑ Max Price">
-                            </input>
+                        <input name="maxPrice" type="number" class="form-control" placeholder="↑ Max Price">
+                        </input>
                         </div> *@
-                        <div class="mb-3 mb-md-0 col-md-4" >
+                        <div class="mb-3 mb-md-0 col-md-4">
                             <input type="submit" value="Search" class="btn btn-primary btn-block py-3">
                         </div>
                     </div>
