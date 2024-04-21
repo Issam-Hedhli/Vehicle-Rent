@@ -111,7 +111,6 @@ namespace Vehicle_Rent.Controllers
                 }
             }
         }
-
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
