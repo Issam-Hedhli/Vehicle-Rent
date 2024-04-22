@@ -26,6 +26,40 @@
                 <h2 class="section-heading"><strong>@ViewBag.Title</strong></h2>
             </div>
         </div>
+        <div class="row align-items-center justify-content-center" style="margin-bottom:20px;">
+            <div class="col-lg-10">
+
+                <form asp-controller="VehicleCatalogue" asp-action="Vehicles" class="trip-form">
+
+                    <div class="row align-items-center">
+                        <div class="mb-3 mb-md-0 col-md-2">
+                            <input name="minPrice" type="number" class="form-control" placeholder="↓">
+                            </input>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-2">
+                            <input name="maxPrice" type="number" class="form-control" placeholder="↑">
+                            </input>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="form-control-wrap">
+                                <input type="text" id="cf-4" placeholder="Since" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-3">
+                            <div class="form-control-wrap">
+                                <input type="text" id="cf-4" placeholder="To" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-2">
+                            <input type="submit" value="Search" class="btn btn-primary btn-block py-3">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
         <h3 style="margin-bottom:40px;"><strong>Ratings </strong></h3>
             <div class="row" style="margin-top:50px;">
                 @foreach (var vehiclecopy in Model.VehicleCopyReadVMs)
@@ -58,6 +92,16 @@
                         }
 
                             <p> reviewed @vehiclecopy.RentalItems.Where(ri=>ri.StatusId=="2").ToList().Count times</p>
+                        </div>
+                        <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                            <div class="listing-feature pr-4">
+                                <span class="caption">Year:</span>
+                                <span class="number">@vehiclecopy.Year</span>
+                            </div>
+                            <div class="listing-feature pr-4">
+                                <span class="caption">Mileage:</span>
+                                <span class="number">@vehiclecopy.Mileage</span>
+                            </div>
                         </div>
                         <div style="text-align:center;">
                             <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Go to Vehicle Copy Page</a></p>

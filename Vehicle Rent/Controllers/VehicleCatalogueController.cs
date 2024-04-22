@@ -111,5 +111,18 @@ namespace Vehicle_Rent.Controllers
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
         }
+
+        public List<VehicleCopyReadVM> Filter(List<VehicleCopyReadVM> vehicleCopyReadVMs, int minRentalPrice, int maxRentalPrice, DateTime startDate, DateTime endDate)
+        {
+            if (!minRentalPrice.ToString().IsNullOrEmpty())
+            {
+                vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc => vc.RentalPrice >= minRentalPrice).ToList();
+            }
+            if (!maxRentalPrice.ToString().IsNullOrEmpty())
+            {
+                vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc => vc.RentalPrice <= maxRentalPrice).ToList();
+            }
+            return vehicleCopyReadVMs;
+        }
     }
 }
