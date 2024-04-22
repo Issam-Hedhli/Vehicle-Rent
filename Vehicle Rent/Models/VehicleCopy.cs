@@ -15,5 +15,7 @@ namespace Vehicle_Rent.Models
 		public virtual ICollection<RentalItem> RentalItems { get; set; } = new List<RentalItem>(); 
 		public DateTime UnavailabilityStart { get; set; }
 		public DateTime UnavailabilityEnd { get; set;}
-	}
+        public int Mileage { get; set; }
+        public int Year { get; set; }
+    }
 }

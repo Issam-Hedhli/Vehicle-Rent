@@ -20,11 +20,14 @@
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
 
+                            
+
                             <div class="form-group">
                                 <label for="password">Password </label>
                                 <input asp-for="Password" type="password" class="form-control" id="password" />
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
+
 
                             <div class="form-group">
                                 <label for="ConfirmationPassword">Confirmation Password </label>
@@ -32,11 +35,19 @@
                                 <span asp-validation-for="ConfirmationPassword" class="text-danger"></span>
                             </div>
                             <div class="form-group">
+                                <label for="image">Image URL </label>
+                                <input asp-for="ImageUrl" type="file" class="form-control-file" id="ImageUrl" />
+                                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="remember_me" name="remember_me" value="true" asp-action="Remember me">
+                                    <input type="checkbox" class="custom-control-input" asp-for="RememberMe" id="remember_me" name="remember_me" value="true" asp-action="Remember me">
                                     <label class="custom-control-label" for="remember_me">Remember me</label>
                                 </div>
                             </div>
+
+                            
+
                             @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
                             {
                                 <div class="alert alert-danger" role="alert">

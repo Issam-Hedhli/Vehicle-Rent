@@ -19,5 +19,10 @@ namespace Vehicle_Rent.ViewModels.AuthVM
         [Required(ErrorMessage = "Confirmation password is required")]
         [Compare("Password", ErrorMessage = "Password and confirmation password do not match")]
         public string ConfirmationPassword { get; set; }
+
+        [Url(ErrorMessage = "Invalid Image URL")]
+        public IFormFile ImageUrl { get; set; }
+
+        public bool RememberMe { get; set; }
     }
 }

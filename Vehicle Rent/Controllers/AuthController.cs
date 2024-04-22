@@ -66,6 +66,19 @@ namespace Vehicle_Rent.Controllers
             }
             else
             {
+
+                if (registervm.ImageUrl != null && registervm.ImageUrl.Length > 0)
+                {
+                    // Récupérer le nom du fichier
+                    var fileName = Path.GetFileName(registervm.ImageUrl.FileName);
+                    // Sauvegarder l'image dans un répertoire sur le serveur
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await registervm.ImageUrl.CopyToAsync(stream);
+                    }
+                    // Assigner le chemin de l'image à une propriété du modèle ou sauvegarder le chemin dans la base de données
+                }
                 var user = await _userManager.FindByEmailAsync(registervm.Email);
                 if (user != null)
                 {
@@ -91,7 +104,7 @@ namespace Vehicle_Rent.Controllers
                         if (newUserResponse.Succeeded)
                         {
                             await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
-                            var result = await _signInManager.PasswordSignInAsync(newUser, registervm.Password, false, false);
+                            var result = await _signInManager.PasswordSignInAsync(newUser, registervm.Password, registervm.RememberMe, false);
                             if (result.Succeeded)
                             {
                                 return RedirectToAction("Index", "Home");
