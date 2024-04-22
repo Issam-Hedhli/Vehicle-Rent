@@ -9,7 +9,6 @@ using Vehicle_Rent.Services.Payment;
 using Vehicle_Rent.Services.Profile;
 using Vehicle_Rent.Services.VehicleCatalogue;
 using Vehicle_Rent.Services.VehicleRent;
-using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 

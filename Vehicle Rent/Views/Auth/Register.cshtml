@@ -4,7 +4,7 @@
 <div class="hero" style="background-color: #f0f0f0;">
     <div class="container">
         <div class="row align-items-center justify-content-center">
-            <div class="col-md-8 blog-content" style="margin-bottom:100px; height:600px;">
+            <div class="col-md-8 blog-content" style="margin-bottom:100px; height:1200px;">
                 <div class="pt-5">
                     <div class="comment-form-wrap pt-5">
                         <h3 class="mb-5">Register</h3>
@@ -12,20 +12,24 @@
                             <div class="form-group">
                                 <label for="Name">Name </label>
                                 <input asp-for="Name" type="text" class="form-control" id="name">
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email </label>
                                 <input asp-for="Email" type="email" class="form-control" id="email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="password">Password </label>
                                 <input asp-for="Password" type="password" class="form-control" id="password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="ConfirmationPassword">Confirmation Password </label>
                                 <input asp-for="ConfirmationPassword" type="password" class="form-control" id="ConfirmationPassword" />
+                                <span asp-validation-for="ConfirmationPassword" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
@@ -33,8 +37,14 @@
                                     <label class="custom-control-label" for="remember_me">Remember me</label>
                                 </div>
                             </div>
+                            @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["ErrorMessage"]
+                                </div>
+                            }
                             <div style="display:flex;">
-                                <div style="margin-top:20px; display:flex; ">
+                                <div style="display:flex; ">
                                     <h6>
                                         Already have an account?
                                     </h6>
@@ -55,4 +65,3 @@
         </div>
     </div>
 </div>
-

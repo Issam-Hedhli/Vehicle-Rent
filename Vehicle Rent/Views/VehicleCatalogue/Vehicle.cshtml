@@ -57,7 +57,7 @@
                         </p>      
                         }
 
-                            <p> @vehiclecopy.RentalItems.Count</p>
+                            <p> reviewed @vehiclecopy.RentalItems.Where(ri=>ri.StatusId=="2").ToList().Count times</p>
                         </div>
                         <div style="text-align:center;">
                             <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Go to Vehicle Copy Page</a></p>

@@ -12,34 +12,55 @@
         <div class="row align-items-center justify-content-center" style="margin-bottom:20px;">
             <div class="col-lg-10">
 
-                <form class="trip-form">
+                <form asp-controller="VehicleCatalogue" asp-action="Vehicles" class="trip-form">
 
                     <div class="row align-items-center">
 
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <select name="" id="" class="custom-select form-control">
-                                <option value="">Select Type</option>
-                                <option value="">Ferrari</option>
-                                <option value="">Toyota</option>
-                                <option value="">Ford</option>
-                                <option value="">Lamborghini</option>
+                        <div class="mb-3 mb-md-0 col-md-4">
+                            <select name="Company" class="custom-select form-control">
+                                <option value ="">Company</option>
+                                @foreach (var company in ViewBag.Companies)
+                                {
+                                @if (ViewBag.CompanyValue != null && company== ViewBag.CompanyValue)
+                                {
+                                        <option value="@company" selected>@company</option>
+                                }
+                                else
+                                {
+                                       <option value="@company">@company</option> 
+                                }
+
+                                }
                             </select>
                         </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <div class="form-control-wrap">
-                                <input type="text" id="cf-3" placeholder="Pick up" class="form-control datepicker px-3">
-                                <span class="icon icon-date_range"></span>
+                        <div class="mb-3 mb-md-0 col-md-4">
+                            <select name="Model" class="custom-select form-control">
+                                <option value="">Model</option>
+                                @foreach (var modell in ViewBag.Models)
+                                {
+                                    @if (ViewBag.ModelValue != null && modell == ViewBag.ModelValue)
+                                    {
+                                        <option value="@modell" selected>@modell</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@modell">@modell</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        
 
-                            </div>
+@*                         <div class="mb-3 mb-md-0 col-md-2">
+                            <input name="minPrice" type="number" class="form-control" placeholder="↓ Min Price">
+                            </input>
                         </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <div class="form-control-wrap">
-                                <input type="text" id="cf-4" placeholder="Drop off" class="form-control datepicker px-3">
-                                <span class="icon icon-date_range"></span>
-                            </div>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-3">
-                            <input type="submit" value="Search Now" class="btn btn-primary btn-block py-3">
+                        <div class="mb-3 mb-md-0 col-md-2">
+                            <input name="maxPrice" type="number" class="form-control" placeholder="↑ Max Price">
+                            </input>
+                        </div> *@
+                        <div class="mb-3 mb-md-0 col-md-4" >
+                            <input type="submit" value="Search" class="btn btn-primary btn-block py-3">
                         </div>
                     </div>
 

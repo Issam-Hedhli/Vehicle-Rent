@@ -23,33 +23,20 @@ namespace Vehicle_Rent.Controllers
             _emailSender = emailSender;
 
 		}
-        public async Task<IActionResult> Vehicles(string searchString, string company, string model, int rentalPrice , int minRentalPrice , int maxRentalPrice)
+        public async Task<IActionResult> Vehicles(string searchString, string company, string model, int rentalPrice , int minPrice , int maxPrice)
         {
-            await _emailSender.SendEmailAsync("Customer@carrental.com", "testsubject", "testmessage");
+            //await _emailSender.SendEmailAsync("Customer@carrental.com", "testsubject", "testmessage");
             string id = User.FindFirstValue("Id");
             var vehicles = await _vehicleCatalogueService.GetAllVehiclesAsync();
-            var vehicledetailVms = new List<VehicleDetailVM>();
-            if(id == null)
-            {
-                vehicledetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
-            }
-            else
-            {
-                foreach (Vehicle vehicle in vehicles)
-                {
-                    var VehicledetailVm = _mapper.Map<VehicleDetailVM>(vehicle);
-                    vehicledetailVms.Add(VehicledetailVm);
-                }
-            }
-            vehicledetailVms = Filter(vehicledetailVms, searchString, company, model, rentalPrice , minRentalPrice , maxRentalPrice);
+            var vehicledetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
+            vehicledetailVms = Filter(vehicledetailVms, searchString, company, model);
             ViewBag.Title = "Browse vehicles";
-            ViewBag.Redirect = "vehicles";
             ViewBag.Models = vehicledetailVms.Select(m => m.ModelName).Distinct().ToList();
             ViewBag.Companies = vehicledetailVms.Select(c => c.CompanyName).Distinct().ToList();
-
+            //ViewBag.Redirect = "vehicles";
             return View(vehicledetailVms);
         }
-        public List<VehicleDetailVM> Filter(List<VehicleDetailVM> VehicleDetailVMs, string searchString, string company, string model,int rentalPrice, int minRentalPrice, int maxRentalPrice)
+        public List<VehicleDetailVM> Filter(List<VehicleDetailVM> VehicleDetailVMs, string searchString, string company, string model)
         {
             if (!searchString.IsNullOrEmpty())
             {
@@ -62,10 +49,6 @@ namespace Vehicle_Rent.Controllers
             if (!model.IsNullOrEmpty())
             {
                 VehicleDetailVMs = VehicleDetailVMs.Where(m => m.ModelName == model).ToList();
-            }
-            if (minRentalPrice > 0 || maxRentalPrice > 0)
-            {
-                VehicleDetailVMs = VehicleDetailVMs.Where(v => v.RentalPrice >= minRentalPrice && v.RentalPrice <= maxRentalPrice).ToList();
             }
 
             return VehicleDetailVMs;
