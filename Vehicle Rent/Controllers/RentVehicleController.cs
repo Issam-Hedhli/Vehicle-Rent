@@ -43,10 +43,10 @@ namespace Vehicle_Rent.Controllers
                 return View(rentVM);
             }
             //nchouf el availability mtaa lvehicle copy
-            if (rentVM.startDate>rentVM.vehicleCopyReadVM.UnavailabilityStart || rentVM.endDate<rentVM.vehicleCopyReadVM.UnavailabilityEnd)
-            {
-                return View(rentVM);
-            }
+            //if (rentVM.startDate>rentVM.vehicleCopyReadVM.UnavailabilityStart || rentVM.endDate<rentVM.vehicleCopyReadVM.UnavailabilityEnd)
+            //{
+            //    return View(rentVM);
+            //}
             //n3addih lecheckout
             var duration = (rentVM.endDate - rentVM.startDate).Days;
             var amount = duration * rentVM.vehicleCopyReadVM.RentalPrice;

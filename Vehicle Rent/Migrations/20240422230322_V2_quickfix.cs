@@ -5,7 +5,7 @@
 namespace Vehicle_Rent.Migrations
 {
     /// <inheritdoc />
-    public partial class partial : Migration
+    public partial class V2_quickfix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

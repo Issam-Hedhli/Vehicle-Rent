@@ -11,7 +11,8 @@ namespace Vehicle_Rent.Profiles
         {
             CreateMap<VehicleCopy, VehicleCopyReadVM>()
                 .ForMember(dest => dest.AverageRating, opt => opt.MapFrom(src => AverageRating(src.RentalItems)))
-                .ForMember(dest=>dest.RentalItems,opt=>opt.MapFrom(src=>src.RentalItems.ToList()));
+                .ForMember(dest=>dest.RentalItems,opt=>opt.MapFrom(src=>src.RentalItems.ToList()))
+                .ForMember(dest=>dest.Unavailabilities,opt=>opt.MapFrom(src=>src.Unavailabilities.ToList()));
         }
 
         private object AverageRating(ICollection<RentalItem> rentalItems)

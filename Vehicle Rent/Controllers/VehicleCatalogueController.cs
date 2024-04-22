@@ -122,6 +122,7 @@ namespace Vehicle_Rent.Controllers
             {
                 vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc => vc.RentalPrice <= maxRentalPrice).ToList();
             }
+            //unvailability implementation
             return vehicleCopyReadVMs;
         }
     }

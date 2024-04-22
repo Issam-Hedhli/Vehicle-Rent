@@ -11,8 +11,7 @@ namespace Vehicle_Rent.ViewModels.VehicleCopyVM
         public bool WasAlreadyRented { get; set; }
         public bool IsBeingRented { get; set; }
         public List<RentalItem> RentalItems { get; set; }
-        public DateTime UnavailabilityStart { get; set; }
-        public DateTime UnavailabilityEnd { get; set; }
+        public List<Unavailability> Unavailabilities { get; set; }
         public int Year { get; set; }
         public int Mileage { get; set; }
     }

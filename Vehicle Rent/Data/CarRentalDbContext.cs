@@ -15,10 +15,11 @@ namespace Vehicle_Rent.Data
 		public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleCopy> VehicleCopies { get; set; }
         public DbSet<RentalItem> RentalItems { get; set; }
+        public DbSet<Unavailability> Unavailabilities { get; set; }
         public DbSet<AvailibilityStatus> AvailibilityStatuses { get; set; }
         public DbSet<VModel> VModels { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-		public DbSet<User> Users { get; set; }
+		public override DbSet<User> Users { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,6 +57,11 @@ namespace Vehicle_Rent.Data
 	        .HasOne(r => r.Ratings)
 	        .WithOne(v => v.RentalItem)
 	        .HasForeignKey<RentalItem>(ri => ri.RatingId);
+
+            modelBuilder.Entity<Unavailability>()
+                .HasOne(u => u.VehicleCopy)
+                .WithMany(vc => vc.Unavailabilities)
+                .HasForeignKey(u => u.vehicleCopyId);
 
             base.OnModelCreating(modelBuilder);
         }

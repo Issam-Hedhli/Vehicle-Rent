@@ -31,6 +31,7 @@ builder.Services.AddScoped<IRentalItemRepository, RentalItemRepository>();
 builder.Services.AddScoped<IVModelRepository, VModelRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IAvailabilityStatusRepository, AvailabilityStatusRepository>();
+builder.Services.AddScoped<IUnavailabilityRepository, UnavailabilityRepository>();
 #endregion
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));

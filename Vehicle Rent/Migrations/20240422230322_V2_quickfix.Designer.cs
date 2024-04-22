@@ -12,8 +12,8 @@ using Vehicle_Rent.Data;
 namespace Vehicle_Rent.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    [Migration("20240421140307_partial")]
-    partial class partial
+    [Migration("20240422230322_V2_quickfix")]
+    partial class V2_quickfix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -251,6 +251,28 @@ namespace Vehicle_Rent.Migrations
                     b.ToTable("RentalItems");
                 });
 
+            modelBuilder.Entity("Vehicle_Rent.Models.Unavailability", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("endDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("startDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("vehicleCopyId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("vehicleCopyId");
+
+                    b.ToTable("Unavailabilities");
+                });
+
             modelBuilder.Entity("Vehicle_Rent.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -381,14 +403,14 @@ namespace Vehicle_Rent.Migrations
                     b.Property<string>("IdVehicle")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("Mileage")
+                        .HasColumnType("int");
+
                     b.Property<int>("RentalPrice")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UnavailabilityEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UnavailabilityStart")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -479,6 +501,15 @@ namespace Vehicle_Rent.Migrations
                     b.Navigation("VehicleCopy");
                 });
 
+            modelBuilder.Entity("Vehicle_Rent.Models.Unavailability", b =>
+                {
+                    b.HasOne("Vehicle_Rent.Models.VehicleCopy", "VehicleCopy")
+                        .WithMany("Unavailabilities")
+                        .HasForeignKey("vehicleCopyId");
+
+                    b.Navigation("VehicleCopy");
+                });
+
             modelBuilder.Entity("Vehicle_Rent.Models.Vehicle", b =>
                 {
                     b.HasOne("Vehicle_Rent.Models.Company", "Company")
@@ -539,6 +570,8 @@ namespace Vehicle_Rent.Migrations
             modelBuilder.Entity("Vehicle_Rent.Models.VehicleCopy", b =>
                 {
                     b.Navigation("RentalItems");
+
+                    b.Navigation("Unavailabilities");
                 });
 #pragma warning restore 612, 618
         }

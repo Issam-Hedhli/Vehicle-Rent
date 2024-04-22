@@ -125,7 +125,23 @@ namespace Vehicle_Rent.Data
                     return totalRentalPrice;
                 }
 
+                #region Unavailability
+                if (!context.Unavailabilities.Any())
+                {
+                    var vehicleCopy1 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "1");
+                    var vehicleCopy2 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "2");
+                    var vehicleCopy3 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "3");
+                    context.Unavailabilities.AddRange(new List<Unavailability>()
+                    {
+                        new Unavailability() { Id="2", startDate= DateTime.Now.AddDays(1), endDate = DateTime.Now.AddDays(3),VehicleCopy=vehicleCopy1 },
+                        new Unavailability() { Id="3", startDate= DateTime.Now.AddDays(5), endDate = DateTime.Now.AddDays(8),VehicleCopy=vehicleCopy1 },
+                        new Unavailability() { Id="4", startDate= DateTime.Now.AddDays(10), endDate = DateTime.Now.AddDays(12),VehicleCopy = vehicleCopy2 },
+                        new Unavailability() { Id="5", startDate= DateTime.Now.AddDays(15), endDate = DateTime.Now.AddDays(17),VehicleCopy=vehicleCopy3 }
 
+                    });
+                    context.SaveChanges();
+                }
+                #endregion
 
 
                 #region availabilityStatus

@@ -242,8 +242,8 @@ namespace Vehicle_Rent.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RentalPrice = table.Column<int>(type: "int", nullable: false),
                     IdVehicle = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UnavailabilityStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UnavailabilityEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Mileage = table.Column<int>(type: "int", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -295,6 +295,25 @@ namespace Vehicle_Rent.Migrations
                         name: "FK_RentalItems_Vehicles_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Unavailabilities",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    startDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    endDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    vehicleCopyId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Unavailabilities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Unavailabilities_VehicleCopies_vehicleCopyId",
+                        column: x => x.vehicleCopyId,
+                        principalTable: "VehicleCopies",
                         principalColumn: "Id");
                 });
 
@@ -365,6 +384,11 @@ namespace Vehicle_Rent.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Unavailabilities_vehicleCopyId",
+                table: "Unavailabilities",
+                column: "vehicleCopyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VehicleCopies_IdVehicle",
                 table: "VehicleCopies",
                 column: "IdVehicle");
@@ -400,6 +424,9 @@ namespace Vehicle_Rent.Migrations
 
             migrationBuilder.DropTable(
                 name: "RentalItems");
+
+            migrationBuilder.DropTable(
+                name: "Unavailabilities");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

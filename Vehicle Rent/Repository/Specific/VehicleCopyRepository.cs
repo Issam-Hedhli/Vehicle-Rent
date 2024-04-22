@@ -19,6 +19,7 @@ namespace Vehicle_Rent.Repository.Specific
                     .ThenInclude(ri => ri.User)
                 .Include(vc => vc.RentalItems)
                     .ThenInclude(ri => ri.Ratings)
+                .Include(vc=>vc.Unavailabilities)
                 .FirstOrDefaultAsync(vc=>vc.Id==vehicleCopyId);
             return vehicleCopy;
         }
@@ -31,6 +32,7 @@ namespace Vehicle_Rent.Repository.Specific
                     .ThenInclude(ri=>ri.User)
                 .Include(vc=>vc.RentalItems)
                     .ThenInclude(ri=>ri.Ratings)
+                .Include(vc=>vc.Unavailabilities)
                 .ToListAsync();
             return vehicleCopies;
         }
