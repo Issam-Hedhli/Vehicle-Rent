@@ -71,25 +71,62 @@ namespace Vehicle_Rent.Data
 				});
 					await context.SaveChangesAsync();
 				}
-				#endregion
-
-				#region VehicleCopy
-				if (!context.VehicleCopies.Any())
-				{
-					List<VehicleCopy> vehicleCopies = new List<VehicleCopy>();
-					int k = 0;
-					for (int i = 1; i < 10; i++)
-					{
-						for (int j = 1; j < 3; j++)
-						{
-							k++;
-							vehicleCopies.Add(new VehicleCopy() { Id = k.ToString(), Vehicle = context.Vehicles.FirstOrDefault(v => v.Id == i.ToString()), RentalPrice=50 });
-						}
-					}
-					context.VehicleCopies.AddRange(vehicleCopies);
-					await context.SaveChangesAsync();
-				}
                 #endregion
+
+                #region VehicleCopy
+                if (!context.VehicleCopies.Any())
+                {
+                    List<VehicleCopy> vehicleCopies = new List<VehicleCopy>();
+                    int k = 0;
+                    for (int i = 1; i < 10; i++)
+                    {
+                        for (int j = 1; j < 3; j++)
+                        {
+                            k++;
+                            var vehicle = context.Vehicles.FirstOrDefault(v => v.Id == i.ToString());
+                            if (vehicle != null)
+                            {
+                                // Calculate rental price based on mileage and year
+                                int mileage = 5000 * i;   // Example mileage calculation
+                                int year = 2020 + i;      // Example year calculation
+                                int rentalPrice = CalculateRentalPrice(mileage, year);
+
+                                vehicleCopies.Add(new VehicleCopy()
+                                {
+                                    Id = k.ToString(),
+                                    Vehicle = vehicle,
+                                    RentalPrice = rentalPrice,
+                                    Mileage = mileage,
+                                    Year = year
+                                });
+                            }
+                        }
+                    }
+                    context.VehicleCopies.AddRange(vehicleCopies);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                // Function to calculate rental price based on mileage and year
+                int CalculateRentalPrice(int mileage, int year)
+                {
+                    // Example calculation logic
+                    int basePrice = 50;   // Base rental price
+                    int mileageRate = 2; // Rate per mile (in cents)
+                    int ageRate = 10;   // Rate per year of age (in cents)
+
+                    // Calculate additional charges based on mileage and year
+                    int mileageCharge = mileage * mileageRate;
+                    int ageCharge = (DateTime.Now.Year - year) * ageRate;
+
+                    // Total rental price
+                    int totalRentalPrice = basePrice + mileageCharge + ageCharge;
+
+                    return totalRentalPrice;
+                }
+
+
+
 
                 #region availabilityStatus
                 if (!context.AvailibilityStatuses.Any())
