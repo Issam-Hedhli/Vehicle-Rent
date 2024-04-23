@@ -12,8 +12,8 @@ using Vehicle_Rent.Data;
 namespace Vehicle_Rent.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    [Migration("20240422230322_V2_quickfix")]
-    partial class V2_quickfix
+    [Migration("20240423202254_V1")]
+    partial class V1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -199,7 +199,7 @@ namespace Vehicle_Rent.Migrations
                     b.Property<string>("RentalId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Value")
+                    b.Property<int?>("Value")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -371,9 +371,6 @@ namespace Vehicle_Rent.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

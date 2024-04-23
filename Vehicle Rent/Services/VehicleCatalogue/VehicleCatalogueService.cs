@@ -23,11 +23,6 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
 			return allVehiclesAsync.ToList();
 		}
 
-		public async Task<List<Vehicle>> GetAvailableVehiclesAsync()
-		{
-			var allVehicles = await _vehicleRepository.GetVehiclesAsync();
-			return allVehicles.Where(v => v.IsAvailable).ToList();
-		}
 
         public async Task<List<Vehicle>> GetRentedVehiclesByCustomerIdAsync(string id)
         {

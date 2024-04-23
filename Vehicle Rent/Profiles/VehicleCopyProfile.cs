@@ -18,10 +18,10 @@ namespace Vehicle_Rent.Profiles
         private object AverageRating(ICollection<RentalItem> rentalItems)
         {
             
-            var ratings = rentalItems.Select(ri => ri.Ratings).Where(r=>r!=null).Select(r=>r.Value).ToList();
+            var ratings = rentalItems.Select(ri => ri.Ratings).Where(r=>r!=null).Select(r=>r.Value).Where(v=>v.Value!=null).ToList();
             if (ratings.IsNullOrEmpty() )
             {
-                return 5;
+                return null;
             }
             return (int)ratings.Average();
         }

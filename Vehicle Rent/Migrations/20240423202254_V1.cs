@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Vehicle_Rent.Migrations
 {
     /// <inheritdoc />
-    public partial class V1_Initialization : Migration
+    public partial class V1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -81,7 +81,7 @@ namespace Vehicle_Rent.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<int>(type: "int", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RentalId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -217,8 +217,7 @@ namespace Vehicle_Rent.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    VModelId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IsAvailable = table.Column<bool>(type: "bit", nullable: false)
+                    VModelId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {

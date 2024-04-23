@@ -196,7 +196,7 @@ namespace Vehicle_Rent.Migrations
                     b.Property<string>("RentalId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Value")
+                    b.Property<int?>("Value")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -368,9 +368,6 @@ namespace Vehicle_Rent.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

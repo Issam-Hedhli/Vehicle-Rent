@@ -16,7 +16,6 @@ namespace Vehicle_Rent.Models
 		public string? CompanyId { get; set; } 
 		public virtual Company Company { get; set; } = new Company();
 		public string? VModelId { get; set; }
-		public bool IsAvailable { get; set; }
 		public virtual VModel VModel { get; set;} = new VModel();
 		public virtual ICollection<VehicleCopy> VehicleCopies { get; set; } = new List<VehicleCopy>();
 

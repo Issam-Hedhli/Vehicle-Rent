@@ -14,13 +14,15 @@ namespace Vehicle_Rent.Services.VehicleRent
 		private readonly IRentalItemRepository _rentalItemRepository;
 		private readonly IUserRepository _userRepository;
         private readonly IAvailabilityStatusRepository _availabilityStatusRepository;
-        public RentalService(IVehicleRepository vehicleRepository, IRentalItemRepository rentalItemRepository, IUserRepository userRepository, IVehicleCopyRepository vehicleCopyRepository, IAvailabilityStatusRepository availabilityStatusRepository)
+        private readonly IUnavailabilityRepository _unavailabilityRepository;
+        public RentalService(IVehicleRepository vehicleRepository, IRentalItemRepository rentalItemRepository, IUserRepository userRepository, IVehicleCopyRepository vehicleCopyRepository, IAvailabilityStatusRepository availabilityStatusRepository, IUnavailabilityRepository unavailabilityRepository)
         {
             _vehicleRepository = vehicleRepository;
             _rentalItemRepository = rentalItemRepository;
             _userRepository = userRepository;
             _vehicleCopyRepository = vehicleCopyRepository;
             _availabilityStatusRepository = availabilityStatusRepository;
+            _unavailabilityRepository = unavailabilityRepository;
         }
         public async Task RentVehicleCopy(string vehicleCopyId, string userId,DateTime startDate,DateTime endDate)
         {
@@ -39,8 +41,6 @@ namespace Vehicle_Rent.Services.VehicleRent
             var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleCopy.IdVehicle);
             var vehiclecopies = vehicle.VehicleCopies;
             var validvehiclecopies = vehiclecopies.Where(vc => !vc.RentalItems.Any(ri => ri.StatusId == "1")).ToList();
-            var isAvailable = validvehiclecopies.Any();
-            vehicle.IsAvailable = isAvailable;
             await _vehicleRepository.UpdateAsync(vehicleCopy.IdVehicle, vehicle);
 
         }
@@ -55,7 +55,7 @@ namespace Vehicle_Rent.Services.VehicleRent
 
             // Retrieve the vehicle copy based on the information provided in ReturnVehicleVM
             var vehicleCopyId = returnVehicleVM.VehicleDetailVM?.Id;
-            var vehicleCopy = await _vehicleCopyRepository.GetByIdAsync(vehicleCopyId);
+            var vehicleCopy = await _vehicleCopyRepository.GetVehicleCopyByIdAsync(vehicleCopyId);
 
             if (vehicleCopy == null)
                 throw new InvalidOperationException($"Vehicle copy with ID '{vehicleCopyId}' not found.");
@@ -68,29 +68,83 @@ namespace Vehicle_Rent.Services.VehicleRent
             }
 
             rentalItem.EndDate = DateTime.Now;
-            rentalItem.StatusId = "2"; 
+            rentalItem.Status = await _availabilityStatusRepository.GetByIdAsync("2");
 
             await _rentalItemRepository.UpdateAsync(rentalItem.Id, rentalItem);
 
-            var vehicleId = vehicleCopy.IdVehicle;
-            var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
+            //fazet el unavailability
+            await UpdateVehicleCopy(vehicleCopyId);
 
-            var activeRentalsExist = vehicle.VehicleCopies.Any(vc => vc.Id != vehicleCopyId && vc.RentalItems.Any(ri => ri.StatusId == "1"));
 
-            vehicle.IsAvailable = !activeRentalsExist;
 
-            await _vehicleRepository.UpdateAsync(vehicleCopyId, vehicle);
+
+            //var vehicleId = vehicleCopy.IdVehicle;
+            //var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
+
+            //var activeRentalsExist = vehicle.VehicleCopies.Any(vc => vc.Id != vehicleCopyId && vc.RentalItems.Any(ri => ri.StatusId == "1"));
+
+            //vehicle.IsAvailable = !activeRentalsExist;
+
+            //await _vehicleRepository.UpdateAsync(vehicleId, vehicle);
 
             if (!string.IsNullOrEmpty(returnVehicleVM.Review))
             {
                 var rating = new Rating
                 {
-                    Value = returnVehicleVM.Rating ?? 0,
+                    Value = returnVehicleVM.Rating ?? null,
                     Comment = returnVehicleVM.Review,
                 };
             }
         }
 
+        private async Task UpdateVehicleCopy(string vehicleCopyId)
+        {
+            var vehiclecopy = await _vehicleCopyRepository.GetVehicleCopyByIdAsync(vehicleCopyId);
+            List<(DateTime, DateTime)> periods = vehiclecopy.RentalItems.Where(ri=>ri.StatusId=="1").Select(item => (item.StartDate, item.EndDate)).ToList();
+            // Merge overlapping periods
+            List<(DateTime, DateTime)> mergedPeriods = MergePeriods(periods);
+
+            // Persist merged periods into the database
+            await PersistMergedPeriods(mergedPeriods, vehicleCopyId);
+        }
+
+        private async Task PersistMergedPeriods(List<(DateTime, DateTime)> mergedPeriods, string vehicleCopyId)
+        {
+            var vehicleCopy = await _vehicleCopyRepository.GetVehicleCopyByIdAsync(vehicleCopyId);
+            foreach (Unavailability unavailability in vehicleCopy.Unavailabilities)
+            {
+                await _unavailabilityRepository.DeleteAsync(unavailability.Id);
+            }
+            foreach (var unav in mergedPeriods)
+            {
+                var unavailability = new Unavailability() { startDate = unav.Item1, endDate = unav.Item2,VehicleCopy=vehicleCopy };
+                await _unavailabilityRepository.AddAsync(unavailability);
+            }
+        }
+
+        private List<(DateTime, DateTime)> MergePeriods(List<(DateTime, DateTime)> periods)
+        {
+            var sortedPeriods = periods.OrderBy(p => p.Item1).ToList();
+            var mergedPeriods = new List<(DateTime, DateTime)>();
+
+            var currentPeriod = sortedPeriods[0];
+            foreach (var period in sortedPeriods.Skip(1))
+            {
+                if (period.Item1 <= currentPeriod.Item2)
+                {
+                    // Merge overlapping periods
+                    currentPeriod = (currentPeriod.Item1, period.Item2 > currentPeriod.Item2 ? period.Item2 : currentPeriod.Item2);
+                }
+                else
+                {
+                    // Add non-overlapping periods
+                    mergedPeriods.Add(currentPeriod);
+                    currentPeriod = period;
+                }
+            }
+            mergedPeriods.Add(currentPeriod); // Add the last period
+            return mergedPeriods;
+        }
     }
 }
 
