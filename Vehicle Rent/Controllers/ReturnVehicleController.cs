@@ -22,7 +22,6 @@ namespace Vehicle_Rent.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles ="User")]
         public async Task<IActionResult> ReturnVehicle(string vehicleId)
         {
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
@@ -33,7 +32,6 @@ namespace Vehicle_Rent.Controllers
         }
 
 
-        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> Returnvehicle(ReturnVehicleVM returnVehicleVM)
         {
@@ -51,7 +49,7 @@ namespace Vehicle_Rent.Controllers
                 if (returnVehicleVM.Confirmation)
                 {
                     await _rentalService.ReturnVehicleCopy(returnVehicleVM, Id);
-                    return RedirectToAction("rentVehicles", "VehicleCatalogue");
+                    return RedirectToAction("RentedVehicles", "VehicleCatalogue");
                 }
                 else
                 {

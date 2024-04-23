@@ -11,6 +11,8 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
         public Task<List<Vehicle>> GetReturnedVehiclesByCustomerIdAsync(string id);
         Task<VehicleCopy> GetVehicleCopyByIdAsync(string vehicleCopyId);
         Task<List<VehicleCopy>> GetVehiclesCopiesByVehicleId(string vehicleId);
+        bool IsCurrentlyRented(Vehicle vehicle, string id);
+        public bool IsAlreadyRented(Vehicle vehicle, string userId);
     }
 }
 

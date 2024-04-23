@@ -71,5 +71,33 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
         {
             return await _vehicleCopyRepository.GetVehiclesCopiesByVehicleCopy(vehicleId);
         }
+
+        public bool IsAlreadyRented(Vehicle vehicle, string userId)
+        {
+            if (vehicle == null)
+                throw new ArgumentNullException(nameof(vehicle));
+
+            var userIds = vehicle.VehicleCopies
+                .SelectMany(bc => bc.RentalItems)
+                .Where(bi => bi.StatusId == "1")
+                .Select(bi => bi.UserId)
+                .ToList();
+
+            return userIds.Contains(userId);
+        }
+
+        public bool IsCurrentlyRented(Vehicle vehicle, string id)
+        {
+            if (vehicle == null)
+                throw new ArgumentNullException(nameof(vehicle));
+
+            var userIds = vehicle.VehicleCopies
+                .SelectMany(bc => bc.RentalItems)
+                .Where(bi => bi.StatusId == "1")
+                .Select(bi => bi.UserId)
+            .ToList();
+
+            return userIds.Contains(id);
+        }
     }
 }
