@@ -1,8 +1,10 @@
 ﻿
 using Stripe;
 using Stripe.Terminal;
+using System.Security.Policy;
 using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
+using Vehicle_Rent.Services.EmailSender;
 using Vehicle_Rent.ViewModels.ReturnVehicle;
 
 namespace Vehicle_Rent.Services.VehicleRent
@@ -15,7 +17,8 @@ namespace Vehicle_Rent.Services.VehicleRent
 		private readonly IUserRepository _userRepository;
         private readonly IAvailabilityStatusRepository _availabilityStatusRepository;
         private readonly IUnavailabilityRepository _unavailabilityRepository;
-        public RentalService(IVehicleRepository vehicleRepository, IRentalItemRepository rentalItemRepository, IUserRepository userRepository, IVehicleCopyRepository vehicleCopyRepository, IAvailabilityStatusRepository availabilityStatusRepository, IUnavailabilityRepository unavailabilityRepository)
+        private readonly IEmailSender _emailSender;
+        public RentalService(IVehicleRepository vehicleRepository, IRentalItemRepository rentalItemRepository, IUserRepository userRepository, IVehicleCopyRepository vehicleCopyRepository, IAvailabilityStatusRepository availabilityStatusRepository, IUnavailabilityRepository unavailabilityRepository, IEmailSender emailSender)
         {
             _vehicleRepository = vehicleRepository;
             _rentalItemRepository = rentalItemRepository;
@@ -23,6 +26,7 @@ namespace Vehicle_Rent.Services.VehicleRent
             _vehicleCopyRepository = vehicleCopyRepository;
             _availabilityStatusRepository = availabilityStatusRepository;
             _unavailabilityRepository = unavailabilityRepository;
+            _emailSender = emailSender;
         }
         public async Task RentVehicleCopy(string vehicleCopyId, string userId,DateTime startDate,DateTime endDate)
         {
@@ -42,6 +46,8 @@ namespace Vehicle_Rent.Services.VehicleRent
             var vehiclecopies = vehicle.VehicleCopies;
             var validvehiclecopies = vehiclecopies.Where(vc => !vc.RentalItems.Any(ri => ri.StatusId == "1")).ToList();
             await _vehicleRepository.UpdateAsync(vehicleCopy.IdVehicle, vehicle);
+            //update availability
+            await UpdateVehicleCopy(vehicleCopyId);
 
         }
 
