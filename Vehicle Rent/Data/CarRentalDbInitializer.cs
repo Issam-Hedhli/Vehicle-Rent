@@ -143,7 +143,6 @@ namespace Vehicle_Rent.Data
                 }
                 #endregion
 
-
                 #region availabilityStatus
                 if (!context.AvailibilityStatuses.Any())
 				{

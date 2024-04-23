@@ -29,7 +29,7 @@
         <div class="row align-items-center justify-content-center" style="margin-bottom:20px;">
             <div class="col-lg-10">
 
-                <form asp-controller="VehicleCatalogue" asp-action="Vehicles" class="trip-form">
+                <form asp-controller="VehicleCatalogue" asp-action="Vehicle" class="trip-form">
 
                     <div class="row align-items-center">
                         <div class="mb-3 mb-md-0 col-md-2">
@@ -42,13 +42,13 @@
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
                             <div class="form-control-wrap">
-                                <input type="text" id="cf-4" placeholder="Since" class="form-control datepicker px-3">
+                                <input name="startDate" type="text" id="cf-4" placeholder="Since" class="form-control datepicker px-3">
                                 <span class="icon icon-date_range"></span>
                             </div>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
                             <div class="form-control-wrap">
-                                <input type="text" id="cf-4" placeholder="To" class="form-control datepicker px-3">
+                                <input name="endDate" type="text" id="cf-4" placeholder="To" class="form-control datepicker px-3">
                                 <span class="icon icon-date_range"></span>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                     <div class="listing d-block align-items-stretch">
                     <div class="listing-contents h-100">
                         <div style="display:flex; justify-content:space-between;">
-                            <h3>Vehicle Copy @vehiclecopy.Id</h3>
+                            <h3>Rental Price: @vehiclecopy.RentalPrice</h3>
                                 <h3 style="text-align:right;color:gold;">
                                 @for (int i = 0; i < vehiclecopy.AverageRating; i++)
                                 {
@@ -92,6 +92,13 @@
                         }
 
                             <p> reviewed @vehiclecopy.RentalItems.Where(ri=>ri.StatusId=="2").ToList().Count times</p>
+                        </div>
+                        <div>
+
+                            @foreach (var unavailability in vehiclecopy.Unavailabilities)
+                            {
+                                <p>Unav from @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-mm-dd")</p>
+                            }
                         </div>
                         <div class="d-block d-md-flex mb-3 border-bottom pb-3">
                             <div class="listing-feature pr-4">

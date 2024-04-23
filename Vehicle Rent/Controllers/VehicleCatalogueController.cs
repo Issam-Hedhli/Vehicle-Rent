@@ -76,9 +76,14 @@ namespace Vehicle_Rent.Controllers
             }
             return View(vehicleCopyReadVM);
         }
-        public async Task<IActionResult> Vehicle(string vehicleId)
+        public async Task<IActionResult> Vehicle(string vehicleId, int minPrice, int maxPrice, DateTime startDate, DateTime endDate)
         {
+            if (vehicleId == null)
+            {
+                vehicleId = HttpContext.Session.GetString("vehicleId");
+            }
             List<VehicleCopy> vehicleCopies = await _vehicleCatalogueService.GetVehiclesCopiesByVehicleId(vehicleId);
+            HttpContext.Session.SetString("vehicleId",vehicleId);
             List<VehicleCopyReadVM> vehicleCopyReadVms = new List<VehicleCopyReadVM>();
             string Id = User.FindFirstValue("Id");
             if (!string.IsNullOrEmpty(Id))
@@ -108,21 +113,27 @@ namespace Vehicle_Rent.Controllers
             }
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
             var vehicleReadVM = _mapper.Map<VehicleDetailVM>(vehicle);
+            vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice,startDate,endDate);
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
         }
 
         public List<VehicleCopyReadVM> Filter(List<VehicleCopyReadVM> vehicleCopyReadVMs, int minRentalPrice, int maxRentalPrice, DateTime startDate, DateTime endDate)
         {
-            if (!minRentalPrice.ToString().IsNullOrEmpty())
+            // Filter by rental price
+            if (minRentalPrice > 0)
             {
                 vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc => vc.RentalPrice >= minRentalPrice).ToList();
             }
-            if (!maxRentalPrice.ToString().IsNullOrEmpty())
+            if (maxRentalPrice > 0)
             {
                 vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc => vc.RentalPrice <= maxRentalPrice).ToList();
             }
-            //unvailability implementation
+
+            // Filter by availability
+            vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc =>
+                vc.Unavailabilities.All(u => u.endDate < startDate || u.startDate > endDate)).ToList();
+
             return vehicleCopyReadVMs;
         }
     }
