@@ -87,8 +87,8 @@ namespace Vehicle_Rent.Data
                             if (vehicle != null)
                             {
                                 // Calculate rental price based on mileage and year
-                                int mileage = 5000 * i;   // Example mileage calculation
-                                int year = 2020 + i;      // Example year calculation
+                                int mileage = 5000 * j;   // Example mileage calculation
+                                int year = 2019 + j;      // Example year calculation
                                 int rentalPrice = CalculateRentalPrice(mileage, year);
 
                                 vehicleCopies.Add(new VehicleCopy()
@@ -107,20 +107,23 @@ namespace Vehicle_Rent.Data
                 }
                 #endregion
 
-                // Function to calculate rental price based on mileage and year
+                // Fonction pour calculer le prix de location en fonction du kilométrage et de l'année
                 int CalculateRentalPrice(int mileage, int year)
                 {
-                    // Example calculation logic
-                    int basePrice = 50;   // Base rental price
-                    int mileageRate = 2; // Rate per mile (in cents)
-                    int ageRate = 10;   // Rate per year of age (in cents)
+                    // Logique de calcul d'exemple
+                    int prixBase = 50;   // Prix de location de base
+                    int tauxKilometrage = 5; // Taux par kilomètre (en centimes)
+                    int tauxAge = 2;   // Taux par année d'âge (en centimes)
 
-                    // Calculate additional charges based on mileage and year
-                    int mileageCharge = mileage * mileageRate;
-                    int ageCharge = (DateTime.Now.Year - year) * ageRate;
+                    // Calcul des frais supplémentaires basés sur le kilométrage et l'année
+                    int fraisKilometrage = mileage * tauxKilometrage;
+                    int fraisAge = (DateTime.Now.Year - year) * tauxAge;
 
-                    // Total rental price
-                    int totalRentalPrice = basePrice + mileageCharge + ageCharge;
+                    // Calcul du prix de location total en mille
+                    int totalRentalPrice = prixBase + fraisKilometrage + fraisAge;
+
+                    // Convertir le prix en mille (1 mille = 1000 centimes)
+                    totalRentalPrice /= 1000;
 
                     return totalRentalPrice;
                 }
