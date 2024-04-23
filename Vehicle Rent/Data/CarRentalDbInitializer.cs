@@ -167,7 +167,6 @@ namespace Vehicle_Rent.Data
 					var vehicleCopy3 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "3");
 					var customer1 = context.Users.FirstOrDefault(r => r.Id == "1");
 					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2"); 
-					var customer3 = context.Users.FirstOrDefault(r => r.Id == "3");
 					var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "1");
 					var returnedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "2");
 					var rating2 = new Rating()
@@ -184,7 +183,7 @@ namespace Vehicle_Rent.Data
                     context.RentalItems.AddRange(new List<RentalItem>()
 					{
 						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status=  borrowedStatus, User = customer2 }, 
-						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer3 ,Ratings=rating2},
+						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer2 ,Ratings=rating2},
 						new RentalItem { Id = "3", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer1 },
 						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 ,Ratings = rating4}
 					});
