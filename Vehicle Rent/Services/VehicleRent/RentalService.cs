@@ -1,6 +1,9 @@
 ﻿
+using Stripe;
+using Stripe.Terminal;
 using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
+using Vehicle_Rent.ViewModels.ReturnVehicle;
 
 namespace Vehicle_Rent.Services.VehicleRent
 {
@@ -42,10 +45,52 @@ namespace Vehicle_Rent.Services.VehicleRent
 
         }
 
-        public Task ReturnVehicleCopy(string rentalId, string userId)
+        public async Task ReturnVehicleCopy(ReturnVehicleVM returnVehicleVM, string userId)
         {
-            throw new NotImplementedException();
+            if (returnVehicleVM == null)
+                throw new ArgumentNullException(nameof(returnVehicleVM));
+
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentException("User ID cannot be null or empty.", nameof(userId));
+
+            // Retrieve the vehicle copy based on the information provided in ReturnVehicleVM
+            var vehicleCopyId = returnVehicleVM.VehicleDetailVM?.Id;
+            var vehicleCopy = await _vehicleCopyRepository.GetByIdAsync(vehicleCopyId);
+
+            if (vehicleCopy == null)
+                throw new InvalidOperationException($"Vehicle copy with ID '{vehicleCopyId}' not found.");
+
+            var rentalItem = vehicleCopy.RentalItems.FirstOrDefault(ri => ri.UserId == userId && ri.StatusId == "1"); 
+
+            if (rentalItem == null)
+            {
+                throw new InvalidOperationException("No active rental found for the specified vehicle copy and user.");
+            }
+
+            rentalItem.EndDate = DateTime.Now;
+            rentalItem.StatusId = "2"; 
+
+            await _rentalItemRepository.UpdateAsync(rentalItem.Id, rentalItem);
+
+            var vehicleId = vehicleCopy.IdVehicle;
+            var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
+
+            var activeRentalsExist = vehicle.VehicleCopies.Any(vc => vc.Id != vehicleCopyId && vc.RentalItems.Any(ri => ri.StatusId == "1"));
+
+            vehicle.IsAvailable = !activeRentalsExist;
+
+            await _vehicleRepository.UpdateAsync(vehicleCopyId, vehicle);
+
+            if (!string.IsNullOrEmpty(returnVehicleVM.Review))
+            {
+                var rating = new Rating
+                {
+                    Value = returnVehicleVM.Rating ?? 0,
+                    Comment = returnVehicleVM.Review,
+                };
+            }
         }
+
     }
 }
 

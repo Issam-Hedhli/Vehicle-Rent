@@ -87,8 +87,8 @@ namespace Vehicle_Rent.Data
                             if (vehicle != null)
                             {
                                 // Calculate rental price based on mileage and year
-                                int mileage = 5000 * i;   // Example mileage calculation
-                                int year = 2020 + i;      // Example year calculation
+                                int mileage = 5000 * j;   // Example mileage calculation
+                                int year = 2019 + j;      // Example year calculation
                                 int rentalPrice = CalculateRentalPrice(mileage, year);
 
                                 vehicleCopies.Add(new VehicleCopy()
@@ -111,9 +111,9 @@ namespace Vehicle_Rent.Data
                 int CalculateRentalPrice(int mileage, int year)
                 {
                     // Example calculation logic
-                    int basePrice = 50;   // Base rental price
+                    int basePrice = 10;   // Base rental price
                     int mileageRate = 2; // Rate per mile (in cents)
-                    int ageRate = 10;   // Rate per year of age (in cents)
+                    int ageRate = 2;   // Rate per year of age (in cents)
 
                     // Calculate additional charges based on mileage and year
                     int mileageCharge = mileage * mileageRate;
