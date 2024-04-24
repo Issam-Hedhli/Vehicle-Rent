@@ -21,7 +21,7 @@ namespace Vehicle_Rent.Controllers
             _vehicleCatalogueService = vehicleCatalogueService;
             _mapper = mapper;
         }
-
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> ReturnVehicle(string vehicleId)
         {
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
@@ -31,9 +31,9 @@ namespace Vehicle_Rent.Controllers
             return View(returnVehicleVM);
         }
 
-
+        [Authorize(Roles = "User")]
         [HttpPost]
-        public async Task<IActionResult> Returnvehicle(ReturnVehicleVM returnVehicleVM)
+        public async Task<IActionResult> ReturnVehicle(ReturnVehicleVM returnVehicleVM)
         {
             var vehicleId = HttpContext.Session.GetString("VehicleId");
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);

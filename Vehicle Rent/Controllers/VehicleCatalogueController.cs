@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -165,6 +166,37 @@ namespace Vehicle_Rent.Controllers
             ViewBag.ModelValue = model;
             ViewBag.CompanyValue = company;
             return View("vehicles",vehicleDetailVms);
+        }
+
+
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> ReturnedVehicles(string searchString, string company, string model)
+        {
+            string Id = User.FindFirstValue("Id");
+            var vehicles = await _vehicleCatalogueService.GetReturnedVehiclesByCustomerIdAsync(Id);
+            var vehicleDetailVms = new List<VehicleDetailVM>();
+            if (Id == null)
+            {
+                vehicleDetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
+            }
+            else
+            {
+                foreach (Vehicle vehicle in vehicles)
+                {
+                    var vehicleDetailVm = _mapper.Map<VehicleDetailVM>(vehicle);
+                    vehicleDetailVm.isAlreadyRented = _vehicleCatalogueService.IsAlreadyRented(vehicle, Id);
+                    vehicleDetailVm.isCurrentlyrented = _vehicleCatalogueService.IsCurrentlyRented(vehicle, Id);
+                    vehicleDetailVms.Add(vehicleDetailVm);
+                }
+            }
+            vehicleDetailVms = Filter(vehicleDetailVms, searchString, company, model);
+            ViewBag.Name = "Returned Vehicles";
+            ViewBag.Redirect = "ReturnedVehicles";
+            ViewBag.Models = vehicleDetailVms.Select(b => b.ModelName).Distinct().ToList();
+            ViewBag.Companies = vehicleDetailVms.Select(b => b.CompanyName).Distinct().ToList();
+            ViewBag.ModelValue = model;
+            ViewBag.CompanyValue = company;
+            return View("Vehicles", vehicleDetailVms);
         }
     }
 }
