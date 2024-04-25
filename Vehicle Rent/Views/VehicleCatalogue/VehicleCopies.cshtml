@@ -1,0 +1,76 @@
+﻿@using Vehicle_Rent.ViewModels.VehicleCopyVM;
+@model List<VehicleCopyReadVM>;
+
+<div class="site-section bg-light">
+
+    <div class="container" style="margin-top:80px;">
+        <div class="row">
+            <div asp-controller="VehicleCatalogue" class="col-lg-7">
+                <h2 class="section-heading"><strong>@ViewBag.Title</strong></h2>
+            </div>
+        </div>
+       
+        <h3 style="margin-bottom:40px;"><strong>Rented Vehicle Copies </strong></h3>
+        <div class="row" style="margin-top:60px;">
+            @foreach (var vehiclecopy in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="listing d-block align-items-stretch">
+                        <div class="listing-contents h-100">
+                            <div style="display:flex; justify-content:space-between;">
+                                <h3>Rental Price: @vehiclecopy.RentalPrice</h3>
+                                <h3 style="text-align:right;color:gold;">
+                                    @if (vehiclecopy.AverageRating != null)
+                                    {
+                                        @for (int i = 0; i < vehiclecopy.AverageRating; i++)
+                                        {
+                                            <span>★</span>
+                                        }
+                                    }
+                                </h3>
+                            </div>
+                            <div style="display:flex; justify-content:space-between">
+
+                                @if (vehiclecopy.WasAlreadyRented)
+                                {
+                                    <p>
+                                        You rented this before
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>
+
+                                    </p>
+                                }
+
+                                <p> reviewed @vehiclecopy.RentalItems.Where(ri => ri.StatusId == "2").ToList().Count times</p>
+                            </div>
+                            <div>
+
+                                @foreach (var unavailability in vehiclecopy.Unavailabilities)
+                                {
+                                    <p>Unav from @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-mm-dd")</p>
+                                }
+                            </div>
+                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Year:</span>
+                                    <span class="number">@vehiclecopy.Year</span>
+                                </div>
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Mileage:</span>
+                                    <span class="number">@vehiclecopy.Mileage</span>
+                                </div>
+                            </div>
+                            <div style="text-align:center;">
+                                <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Go to Vehicle Copy Page</a></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

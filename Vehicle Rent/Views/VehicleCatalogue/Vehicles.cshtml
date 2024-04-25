@@ -2,34 +2,29 @@
 @model List<VehicleDetailVM>;
 
 <div class="site-section bg-light" style="margin-top:80px;">
-
     <div class="container">
         <div class="row" style="margin-bottom:20px;">
-            <div asp-controller="VehicleCatalogue" class="col-lg-7" >
+            <div asp-controller="VehicleCatalogue" class="col-lg-7">
                 <h2 class="section-heading"><strong>@ViewBag.Title</strong></h2>
             </div>
         </div>
         <div class="row align-items-center justify-content-center" style="margin-bottom:20px;">
             <div class="col-lg-10">
-
                 <form asp-controller="VehicleCatalogue" asp-action="Vehicles" class="trip-form">
-
                     <div class="row align-items-center">
-
                         <div class="mb-3 mb-md-0 col-md-4">
                             <select name="Company" class="custom-select form-control">
-                                <option value ="">Company</option>
+                                <option value="">Company</option>
                                 @foreach (var company in ViewBag.Companies)
                                 {
-                                @if (ViewBag.CompanyValue != null && company== ViewBag.CompanyValue)
-                                {
+                                    @if (ViewBag.CompanyValue != null && company == ViewBag.CompanyValue)
+                                    {
                                         <option value="@company" selected>@company</option>
-                                }
-                                else
-                                {
-                                       <option value="@company">@company</option> 
-                                }
-
+                                    }
+                                    else
+                                    {
+                                        <option value="@company">@company</option>
+                                    }
                                 }
                             </select>
                         </div>
@@ -49,24 +44,20 @@
                                 }
                             </select>
                         </div>
-                        <div class="mb-3 mb-md-0 col-md-4" >
+                        <div class="mb-3 mb-md-0 col-md-4">
                             <input type="submit" value="Search" class="btn btn-primary btn-block py-3">
                         </div>
                     </div>
-
                 </form>
-
             </div>
         </div>
-
-        
         <div class="row" style="margin-top:50px;">
             @foreach (var item in Model)
             {
-                <div class="col-md-6 col-lg-4 mb-4" >
-                    <div class="listing d-block align-items-stretch" >
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="listing d-block align-items-stretch">
                         <div class="listing-img h-100 mr-4" style="width:300px; height:600px;">
-                                <img src="@item.Photo" alt="Image" class="img-fluid">
+                            <img src="@item.Photo" alt="Image" class="img-fluid">
                         </div>
                         <div class="listing-contents h-100">
                             <h3>@item.Name</h3>
@@ -79,7 +70,26 @@
                                 {
                                     <p>No description available</p>
                                 }
-                                <p><a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId=@item.Id class="btn btn-primary btn-sm">Rent Now</a></p>
+                                @if (item.isCurrentlyrented)
+                                {
+                                    <p>
+
+                                    <a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId="@item.Id" class="btn btn-primary btn-sm">
+                                            Return Vehicle 
+                                    </a>
+                                    </p>
+
+                                }
+                                else
+                                {
+                                    <p>
+
+                                        <a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId="@item.Id" class="btn btn-primary btn-sm">
+                                                Rent Now
+                                        </a>
+                                    </p>
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -88,4 +98,3 @@
         </div>
     </div>
 </div>
-

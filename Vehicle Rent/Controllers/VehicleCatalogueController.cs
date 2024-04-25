@@ -139,34 +139,13 @@ namespace Vehicle_Rent.Controllers
         }
 
 
-        public async Task<IActionResult> RentedVehicles(string searchString, string company , string model)
+        public async Task<IActionResult> RentedVehicles()
         {
             string Id = User.FindFirstValue("Id");
-            var vehicles = await _vehicleCatalogueService.GetRentedVehiclesByCustomerIdAsync(Id);
-            var vehicleDetailVms = new List<VehicleDetailVM>();
-            if (Id == null)
-            {
-                vehicleDetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
-            }
-            else
-            {
-                foreach (Vehicle vehicle in vehicles)
-                {
-                    var vehicleDetailVm = _mapper.Map<VehicleDetailVM>(vehicle);
-                    vehicleDetailVm.isAlreadyRented = _vehicleCatalogueService.IsAlreadyRented(vehicle, Id);
-                    vehicleDetailVm.isCurrentlyrented = _vehicleCatalogueService.IsCurrentlyRented(vehicle, Id);
-                    vehicleDetailVms.Add(vehicleDetailVm);
-                }
-            }
-            vehicleDetailVms = Filter(vehicleDetailVms, searchString, company, model);
-            ViewBag.Name = "Rented vehicles";
-            ViewBag.Redirect = "Rentedvehicles";
-            ViewBag.Models = vehicleDetailVms.Select(b => b.CompanyName).Distinct().ToList();
-            ViewBag.Companies = vehicleDetailVms.Select(b => b.ModelName).Distinct().ToList();
-            ViewBag.ModelValue = model;
-            ViewBag.CompanyValue = company;
-            return View("vehicles",vehicleDetailVms);
-        }
+            var vehiclecopies = await _vehicleCatalogueService.GetRentedVehicleCopiesByUserIdAsync(Id);
+            var vehiclecopyvms = _mapper.Map<List<VehicleCopyReadVM>>(vehiclecopies);
+        
+            return View("vehiclecopies", vehiclecopyvms);       }
 
 
         [Authorize(Roles = "User")]
