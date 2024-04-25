@@ -61,7 +61,7 @@ namespace Vehicle_Rent.Controllers
             var duration = (rentVM.endDate - rentVM.startDate).Days;
             var amount = duration * rentVM.vehicleCopyReadVM.RentalPrice;
             var successUrl = Url.Action("StepUpRentVehicle", "RentVehicle", rentVM, Request.Scheme);
-            var cancelUrl = Url.Action("Index","Home", new {message = "You cancelled you rental"},Request.Scheme);
+            var cancelUrl = Url.Action("Index","Home", null,Request.Scheme);
             var currency = "usd";
             var session = _paymentService.CreateCheckOutSession(amount.ToString(), currency, successUrl, cancelUrl);
             return Redirect(session);
@@ -84,7 +84,8 @@ namespace Vehicle_Rent.Controllers
                 + rentVM.startDate.ToString("yyyy-mm-dd") 
                 + " and " 
                 + rentVM.endDate.ToString("yyyy-mm-dd")
-                + $" < a href =\"{callbackUrl}\">tıklayınız</a>.");
+                + " "
+                + $" < a href =\"{callbackUrl}\">Rented Vechiles</a>.");
 
             return RedirectToAction("RentedVehicles", "VehicleCatalogue");
         }
