@@ -10,22 +10,20 @@
         </div>
         <div class="row">
             <div class="col-lg-8 mb-5">
-                <form action="#" method="post">
-
-
+                <form asp-action="Rent" method="post">
                     <div class="row align-items-center">
-
                         <div class="mb-3 mb-md-0 col-md-5">
                             <div class="form-control-wrap">
-                                <input type="text" id="cf-3" placeholder="Pick up" class="form-control datepicker px-3">
+                                <input asp-for="startDate" class="form-control datepicker px-3">
                                 <span class="icon icon-date_range"></span>
-
+                                <span asp-validation-for="startDate" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-5">
                             <div class="form-control-wrap">
-                                <input type="text" id="cf-4" placeholder="Drop off" class="form-control datepicker px-3">
+                                <input asp-for="endDate" class="form-control datepicker px-3">
                                 <span class="icon icon-date_range"></span>
+                                <span asp-validation-for="endDate" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -37,7 +35,6 @@
                             <input type="submit" class="btn btn-block btn-brown text-white py-3 px-5" value="Go To CheckOut">
                         </div>
                     </div>
-                    
                 </form>
             </div>
             <div class="col-lg-4 ml-auto">
@@ -49,7 +46,6 @@
                                 <h5>Total $</h5>
                             </div>
                         </div>
-                       
                     </ul>
                 </div>
             </div>
@@ -64,3 +60,19 @@
         /* Add any other styles you need */
     }
 </style>
+
+
+@section Scripts {
+<script>
+    // Custom JavaScript validation
+    document.getElementById('rentForm').addEventListener('submit', function (event) {
+        var pickupDate = document.getElementById('cf-3').value;
+        var dropOffDate = document.getElementById('cf-4').value;
+
+        if (!pickupDate || !dropOffDate) {
+            alert('Please fill out all required fields.');
+            event.preventDefault();
+        }
+    });
+</script>
+}

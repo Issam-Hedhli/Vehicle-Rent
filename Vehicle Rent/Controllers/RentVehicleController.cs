@@ -81,9 +81,9 @@ namespace Vehicle_Rent.Controllers
                 "Here is a mail confirming the rental of vehicle copy "
                 + rentVM.vehicleCopyReadVM.Id 
                 + "between the date " 
-                + rentVM.startDate.ToString("yyyy-mm-dd") 
+                + rentVM.startDate.ToString("yyyy-MM-dd") 
                 + " and " 
-                + rentVM.endDate.ToString("yyyy-mm-dd")
+                + rentVM.endDate.ToString("yyyy-MM-dd")
                 + " "
                 + $" < a href =\"{callbackUrl}\">Rented Vechiles</a>.");
 
