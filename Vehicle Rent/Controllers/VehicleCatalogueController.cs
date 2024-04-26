@@ -24,7 +24,7 @@ namespace Vehicle_Rent.Controllers
             _emailSender = emailSender;
 
 		}
-        public async Task<IActionResult> Vehicles(string searchString, string company, int rentalPrice , int minPrice , int maxPrice)
+        public async Task<IActionResult> Vehicles(string searchString, string company)
         {
             //await _emailSender.SendEmailAsync("Customer@carrental.com", "testsubject", "testmessage");
             string id = User.FindFirstValue("Id");
@@ -119,7 +119,6 @@ namespace Vehicle_Rent.Controllers
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
         }
-
         public List<VehicleCopyReadVM> Filter(List<VehicleCopyReadVM> vehicleCopyReadVMs, int minRentalPrice, int maxRentalPrice, DateTime startDate, DateTime endDate)
         {
             // Filter by rental price
@@ -138,8 +137,6 @@ namespace Vehicle_Rent.Controllers
 
             return vehicleCopyReadVMs;
         }
-
-
         public async Task<IActionResult> RentedVehicles()
         {
             string Id = User.FindFirstValue("Id");
@@ -173,10 +170,9 @@ namespace Vehicle_Rent.Controllers
                 vehiclecopyvms = _mapper.Map<List<VehicleCopyReadVM>>(vehiclecopies);
 
             }
+            ViewBag.Title = "Rented Vehicle Copies";
             return View("vehiclecopies", vehiclecopyvms);       
         }
-
-
         public async Task<IActionResult> ReturnedVehicles(string searchString, string company)
         {
             string Id = User.FindFirstValue("Id");

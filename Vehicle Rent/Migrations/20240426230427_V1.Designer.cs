@@ -12,8 +12,8 @@ using Vehicle_Rent.Data;
 namespace Vehicle_Rent.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    [Migration("20240426225617_initializ")]
-    partial class initializ
+    [Migration("20240426230427_V1")]
+    partial class V1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
