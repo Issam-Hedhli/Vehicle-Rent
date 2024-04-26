@@ -36,8 +36,8 @@ namespace Vehicle_Rent.Controllers
         public async Task<IActionResult> RentVehicleCopy (string vehicleCopyId)
         {
             // review men houni
-            var vehicle = await _vehicleCatalogueService.GetVehicleCopyByIdAsync(vehicleCopyId);
-            var vehicleReadVM = _mapper.Map<VehicleDetailVM>(vehicle);
+            var vehicleCopy = await _vehicleCatalogueService.GetVehicleCopyByIdAsync(vehicleCopyId);
+            var vehicleCopyReadVM = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
             var rentVM = new RentVM(); 
             HttpContext.Session.SetString("vehicleCopyId", vehicleCopyId);
             return View(rentVM);

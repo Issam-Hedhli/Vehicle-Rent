@@ -1,1 +1,66 @@
-﻿
+﻿@using Vehicle_Rent.ViewModels.Rent;
+@model RentVM;
+
+<div class="site-section bg-light" id="contact-section">
+    <div class="container">
+        <div class="row justify-content-left text-center">
+            <div class="col-7 text-left mb-5" style="margin-top:80px">
+                <h4><strong>Great Choice, Please Use This Form To Rent This Car</strong></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mb-5">
+                <form action="#" method="post">
+
+
+                    <div class="row align-items-center">
+
+                        <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="form-control-wrap">
+                                <input type="text" id="cf-3" placeholder="Pick up" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+
+                            </div>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="form-control-wrap">
+                                <input type="text" id="cf-4" placeholder="Drop off" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listing-img mr-4" style="width:1000px; margin-top:30px;">
+                        <img src="~/images/car_7.jpg" alt="Image" height="300px">
+                    </div>
+                    <div class="form-group row" style="margin-top:50px;">
+                        <div class="col-md-6 mr-auto">
+                            <input type="submit" class="btn btn-block btn-brown text-white py-3 px-5" value="Go To CheckOut">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="col-lg-4 ml-auto">
+                <div class="bg-white p-3 p-md-5">
+                    <h3 class="text-black mb-4">Rent Details</h3>
+                    <ul class="list-unstyled footer-link">
+                        <div class="form-group row">
+                            <div id="totalDiv">
+                                <h5>Total $</h5>
+                            </div>
+                        </div>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-brown {
+        background-color: #8B4513; /* Brown color */
+        color: #fff; /* White text color */
+        /* Add any other styles you need */
+    }
+</style>

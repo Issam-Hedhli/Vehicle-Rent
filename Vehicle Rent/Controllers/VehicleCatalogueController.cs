@@ -148,7 +148,6 @@ namespace Vehicle_Rent.Controllers
             return View("vehiclecopies", vehiclecopyvms);       }
 
 
-        [Authorize(Roles = "User")]
         public async Task<IActionResult> ReturnedVehicles(string searchString, string company, string model)
         {
             string Id = User.FindFirstValue("Id");

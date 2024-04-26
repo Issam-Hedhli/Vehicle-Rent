@@ -2,15 +2,14 @@
 @using Vehicle_Rent.ViewModels.VehicleCopyVM;
 
 <div class="site-section bg-light">
-    <div class="site-section bg-primary py-5">
+    <div class="site-section bg-primary py-5" style="margin-top:50px;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-4 mb-md-0">
                     <h2 class="mb-0 text-white">Vehicle Copy of Chevrolet Camaro</h2>
-                    <p class="mb-0 opa-7">Vehicle Copy Id: fhqsfbqsfbbfjbccfbjdcubh</p>
                 </div>
                 <div class="col-lg-5 text-md-right">
-                    <a href="#" class="btn btn-primary btn-white">Rent this car</a>
+                    <a asp-action="RentVehicleCopy" asp-controller="RentVehicle" asp-route-vehicleCopyId =@Model.Id class="btn btn-primary btn-white">Rent this car</a>
                 </div>
             </div>
         </div>

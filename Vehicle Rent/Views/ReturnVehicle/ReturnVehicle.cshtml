@@ -1,124 +1,18 @@
 ﻿@using Vehicle_Rent.ViewModels.ReturnVehicle;
 @model ReturnVehicleVM;
 
-<section class="contact_section layout_padding">
-    <div class="container">
-        <div class="heading_container" style="display: flex;">
-            <h2>Return Book @Model.VehicleDetailVM.Name</h2>
-            <img src="@Model.VehicleDetailVM.Photo" style="max-width: 100px; max-height: 100px; margin-left: auto;">
-        </div>
+<div class="site-section bg-light">
 
-
-
-
-
+    <div class="container" style="margin-top:80px;">
         <div class="row">
-            <div class="col-md-12">
-                <h5>Enjoyed the book? give it a rating and a review.</h5>
-                <div class="form_container">
-
-                    <form asp-action="ReturnVehicle" method="POST">
-                        <div class="rating">
-                            <input type="radio" id="star5" name="rating" value="5">
-                            <label for="star5"></label>
-                            <input type="radio" id="star4" name="rating" value="4">
-                            <label for="star4"></label>
-                            <input type="radio" id="star3" name="rating" value="3">
-                            <label for="star3"></label>
-                            <input type="radio" id="star2" name="rating" value="2">
-                            <label for="star2"></label>
-                            <input type="radio" id="star1" name="rating" value="1">
-                            <label for="star1"></label>
-                        </div>
-
-                        <div class="form-group">
-                            <input asp-for="Review" type="" placeholder="Review" class="form-control" />
-                        </div>
-                        <div class="form-group d-flex align-items-center">
-                            <div style="width:45px;">
-                                <input asp-for="Confirmation" type="checkbox" />
-                            </div>
-                            <div style="margin-left:20px;">
-                                <h5 style="margin-bottom:22px;font-family:'Franklin Gothic Medium'">I confirm my returning</h5>
-                            </div>
-                            <div class="ml-auto">
-                                <button type="submit" class="btn btn-primary">Return Book</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div style="display:flex; justify-content: center; align-items: center;">
-                    <h6>
-                        Want to borrow another one?
-                    </h6>
-                    <a asp-controller="VehicleCatalogue" asp-action="Vehicles">
-                        <h6>
-                            &nbsp;  Browse Books
-                        </h6>
-                    </a>
-                </div>
+            <div asp-controller="VehicleCatalogue" class="col-lg-7">
+                <h2 class="section-heading"><strong>@ViewBag.Title</strong></h2>
             </div>
         </div>
+
+        <h3 style="margin-bottom:40px;"><strong>Return Vehicle @Model.VehicleDetailVM.Name </strong></h3>
+
     </div>
-</section>
 
-<style>
-    .rating {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 
-        .rating input {
-            display: none;
-        }
-
-        .rating label {
-            cursor: pointer;
-            font-size: 30px;
-            color: #ccc;
-        }
-
-            .rating label:before {
-                content: '☆'; /* Empty star */
-                padding: 5px;
-            }
-
-        .rating input:checked ~ label {
-            color: #f39c12;
-        }
-
-        .rating label {
-            opacity: 1; /* Show all labels */
-        }
-
-        .rating input:checked ~ label:before {
-            content: '★'; /* Filled star for checked input */
-        }
-</style>
-
-@* For comment  *@
-<div class="comment-form-wrap pt-5">
-    <h3 class="mb-5">Leave a comment</h3>
-    <form action="#" class="">
-        <div class="form-group">
-            <label for="name">Name *</label>
-            <input type="text" class="form-control" id="name">
-        </div>
-        <div class="form-group">
-            <label for="email">Email *</label>
-            <input type="email" class="form-control" id="email">
-        </div>
-     
-
-        <div class="form-group">
-            <label for="message">Message</label>
-            <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Post Comment" class="btn btn-primary btn-md text-white">
-        </div>
-
-    </form>
 </div>
-
