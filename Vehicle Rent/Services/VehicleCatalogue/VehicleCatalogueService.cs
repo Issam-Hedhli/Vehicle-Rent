@@ -45,6 +45,14 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
             return vehicles;
         }
 
+        public async Task<List<VehicleCopy>> GetReturnedVehicleCopiesByCustomerIdAsync(string? id)
+        {
+            User user = await _userRepository.GetEagerCustomerByIdAsync(id);
+            var rentalItems = user.Rentals;
+            var vehicleCopies = rentalItems.Select(ri => ri.VehicleCopy).ToList();
+            return vehicleCopies.Where(vc => vc.RentalItems.Any(ri => ri.StatusId == "2")).ToList();
+        }
+
         public async Task<List<Vehicle>> GetReturnedVehiclesByCustomerIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id))

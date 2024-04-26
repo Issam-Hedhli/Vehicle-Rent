@@ -137,7 +137,7 @@ namespace Vehicle_Rent.Controllers
 
             return vehicleCopyReadVMs;
         }
-        public async Task<IActionResult> RentedVehicleCopies()
+        public async Task<IActionResult> RentedVehicleCopies(int minPrice, int maxPrice, DateTime startDate, DateTime endDate)
         {
             string Id = User.FindFirstValue("Id");
             var vehiclecopies = await _vehicleCatalogueService.GetCurrentlyRentedVehicleCopiesByUserIdAsync(Id);
@@ -170,35 +170,46 @@ namespace Vehicle_Rent.Controllers
                 vehiclecopyvms = _mapper.Map<List<VehicleCopyReadVM>>(vehiclecopies);
 
             }
+            vehiclecopyvms = Filter(vehiclecopyvms, minPrice, maxPrice, startDate, endDate);
             ViewBag.Title = "Rented Vehicle Copies";
             return View("vehiclecopies", vehiclecopyvms);       
         }
-        public async Task<IActionResult> ReturnedVehicleCopies(string searchString, string company)
+        public async Task<IActionResult> ReturnedVehicleCopies(int minPrice, int maxPrice, DateTime startDate, DateTime endDate)
         {
             string Id = User.FindFirstValue("Id");
-            var vehicles = await _vehicleCatalogueService.GetReturnedVehiclesByCustomerIdAsync(Id);
-            var vehicleDetailVms = new List<VehicleReadVM>();
-            if (Id == null)
+            var vehiclecopies = await _vehicleCatalogueService.GetReturnedVehicleCopiesByCustomerIdAsync(Id);
+            var vehiclecopyvms = new List<VehicleCopyReadVM>();
+            if (!string.IsNullOrEmpty(Id))
             {
-                vehicleDetailVms = _mapper.Map<List<VehicleReadVM>>(vehicles);
+                foreach (var vehicleCopy in vehiclecopies)
+                {
+                    var vehicleCopyReadVM = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
+                    //WasAlreadyRented
+                    var rentalItems = vehicleCopy.RentalItems;
+                    var previousRentalItemsByUser = rentalItems
+                        .Where(ri => ri.UserId == Id)
+                        .Where(ri => ri.StatusId == "2")
+                        .ToList();
+                    vehicleCopyReadVM.RentalItems = previousRentalItemsByUser;
+                    vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
+                    //IsBeingRented
+                    var actualRentalItemsByUser = rentalItems
+                        .Where(ri => ri.UserId == Id)
+                        .Where(ri => ri.StatusId == "1")
+                        .ToList();
+                    vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
+                    vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
+                    vehiclecopyvms.Add(vehicleCopyReadVM);
+                }
             }
             else
             {
-                foreach (Vehicle vehicle in vehicles)
-                {
-                    var vehicleDetailVm = _mapper.Map<VehicleReadVM>(vehicle);
-                    vehicleDetailVm.isAlreadyRented = _vehicleCatalogueService.IsAlreadyRented(vehicle, Id);
-                    vehicleDetailVm.isCurrentlyrented = _vehicleCatalogueService.IsCurrentlyRented(vehicle, Id);
-                    vehicleDetailVms.Add(vehicleDetailVm);
-                }
+                vehiclecopyvms = _mapper.Map<List<VehicleCopyReadVM>>(vehiclecopies);
+
             }
-            vehicleDetailVms = Filter(vehicleDetailVms, searchString, company);
-            ViewBag.Name = "Returned Vehicles";
-            ViewBag.Redirect = "ReturnedVehicleCopies";
-            ViewBag.Models = vehicleDetailVms.Select(b => b.ModelName).Distinct().ToList();
-            ViewBag.Companies = vehicleDetailVms.Select(b => b.CompanyName).Distinct().ToList();
-            ViewBag.CompanyValue = company;
-            return View("Vehicles", vehicleDetailVms);
+            vehiclecopyvms = Filter(vehiclecopyvms, minPrice, maxPrice, startDate, endDate);
+            ViewBag.Title = "Returned Vehicle Copies";
+            return View("vehiclecopies", vehiclecopyvms);
         }
     }
 }

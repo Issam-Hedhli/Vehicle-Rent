@@ -13,7 +13,7 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
         bool IsCurrentlyRented(Vehicle vehicle, string id);
         public bool IsAlreadyRented(Vehicle vehicle, string userId);
         public Task<List<Vehicle>> GetRentedVehiclesByCustomerIdAsync(string id);
-
+        Task<List<VehicleCopy>> GetReturnedVehicleCopiesByCustomerIdAsync(string id);
     }
 }
 
