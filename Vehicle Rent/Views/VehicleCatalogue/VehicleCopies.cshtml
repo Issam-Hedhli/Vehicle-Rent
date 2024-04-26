@@ -18,7 +18,7 @@
                     <div class="listing d-block align-items-stretch">
                         <div class="listing-contents h-100">
                             <div style="display:flex; justify-content:space-between;">
-                                <h3>Rental Price: @vehiclecopy.RentalPrice</h3>
+                                <h3>Last Rented @vehiclecopy.RentalItems.Select(ri=>ri.StartDate).ToList().Max().ToString("yyyy-MM-dd")</h3>
                                 <h3 style="text-align:right;color:gold;">
                                     @if (vehiclecopy.AverageRating != null)
                                     {
@@ -28,6 +28,7 @@
                                         }
                                     }
                                 </h3>
+                                <img src=@vehiclecopy.Vehicle.Photo style="width:50px;height:35px;" />
                             </div>
                             <div style="display:flex; justify-content:space-between">
 
@@ -50,7 +51,7 @@
 
                                 @foreach (var unavailability in vehiclecopy.Unavailabilities)
                                 {
-                                    <p>Unav from @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-mm-dd")</p>
+                                    <p>Unav from @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd")</p>
                                 }
                             </div>
                             <div class="d-block d-md-flex mb-3 border-bottom pb-3">
