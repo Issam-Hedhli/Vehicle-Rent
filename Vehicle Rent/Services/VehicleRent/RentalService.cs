@@ -60,7 +60,7 @@ namespace Vehicle_Rent.Services.VehicleRent
                 throw new ArgumentException("User ID cannot be null or empty.", nameof(userId));
 
             // Retrieve the vehicle copy based on the information provided in ReturnVehicleVM
-            var vehicleCopyId = returnVehicleVM.VehicleDetailVM?.Id;
+            var vehicleCopyId = returnVehicleVM.VehicleCopyReadVM.Id;
             var vehicleCopy = await _vehicleCopyRepository.GetVehicleCopyByIdAsync(vehicleCopyId);
 
             if (vehicleCopy == null)
@@ -74,6 +74,11 @@ namespace Vehicle_Rent.Services.VehicleRent
             }
 
             rentalItem.EndDate = DateTime.Now;
+            rentalItem.Ratings = new Rating()
+            {
+                Value = returnVehicleVM.Rating,
+                Comment = returnVehicleVM.Review
+            };
             rentalItem.Status = await _availabilityStatusRepository.GetByIdAsync("2");
 
             await _rentalItemRepository.UpdateAsync(rentalItem.Id, rentalItem);
@@ -120,16 +125,24 @@ namespace Vehicle_Rent.Services.VehicleRent
             foreach (Unavailability unavailability in vehicleCopy.Unavailabilities)
             {
                 await _unavailabilityRepository.DeleteAsync(unavailability.Id);
+
             }
-            foreach (var unav in mergedPeriods)
+            if (mergedPeriods.Count > 0)
             {
-                var unavailability = new Unavailability() { startDate = unav.Item1, endDate = unav.Item2,VehicleCopy=vehicleCopy };
-                await _unavailabilityRepository.AddAsync(unavailability);
+                foreach (var unav in mergedPeriods)
+                {
+                    var unavailability = new Unavailability() { startDate = unav.Item1, endDate = unav.Item2, VehicleCopy = vehicleCopy };
+                    await _unavailabilityRepository.AddAsync(unavailability);
+                }
             }
         }
 
         private List<(DateTime, DateTime)> MergePeriods(List<(DateTime, DateTime)> periods)
         {
+            if (periods.Count == 0)
+            {
+                return periods;
+            }
             var sortedPeriods = periods.OrderBy(p => p.Item1).ToList();
             var mergedPeriods = new List<(DateTime, DateTime)>();
 

@@ -1,0 +1,69 @@
+﻿@using Vehicle_Rent.ViewModels.ReturnVehicle;
+@model ReturnVehicleVM;
+
+<div class="site-section bg-light">
+    <div class="container" style="margin-top:80px;">
+
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center order-lg-2">
+                <p class="mb-5">We hope that you liked riding our car. To improve our services and our transparency, we ask our customers to give the experience a rating and a review.</p>
+                <form asp-action="ReturnVehicleCopy" asp-controller="ReturnVehicle">
+                    <div class="form-group row" style="display:flex;">
+                        <div class="col-md-12" style="display:flex; align-items:center;">
+                            <label for="rating">Rating:</label>
+                            <div class="rating" style="margin-left:auto; margin-right:auto;">
+                                <span class="star" data-value="1">&#9734;</span>
+                                <span class="star" data-value="2">&#9734;</span>
+                                <span class="star" data-value="3">&#9734;</span>
+                                <span class="star" data-value="4">&#9734;</span>
+                                <span class="star" data-value="5">&#9734;</span>
+                                <input asp-for="Rating" type="hidden"  id="rating-value">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" asp-for="Review" placeholder="Write your review." rows="2"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="checkbox" asp-for="Confirmation" placeholder="Confirmation"/> Confirm the return
+                        </div>
+                    </div>
+                
+                    <p>
+                        <button type="submit" class="btn btn-primary">
+                            Return the car
+                        </button>
+                    </p>
+                    @Html.ValidationMessageFor(model => model.Confirmation, "", new { @class = "text-danger" })
+                </form>
+            </div>
+            <div class="col-lg-6 ml-auto order-lg-1">
+                <h3 class="mb-4 section-heading"><strong>Return the car @Model.VehicleCopyReadVM.Vehicle.Name</strong></h3>
+                <div class="img-wrap-1 mb-5">
+                    <img src=@Model.VehicleCopyReadVM.Vehicle.Photo alt="Image" class="img-fluid" style="border-radius: 20px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const stars = document.querySelectorAll('.star');
+
+        stars.forEach((star) => {
+            star.addEventListener('click', () => {
+                const value = star.getAttribute('data-value');
+                document.getElementById('rating-value').value = value;
+                stars.forEach((s) => {
+                    if (s.getAttribute('data-value') <= value) {
+                        s.innerHTML = '&#9733;';
+                    } else {
+                        s.innerHTML = '&#9734;';
+                    }
+                });
+            });
+        });
+    </script>
+}

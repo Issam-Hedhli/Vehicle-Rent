@@ -3,7 +3,7 @@ using Vehicle_Rent.ViewModels.VehicleCopyVM;
 
 namespace Vehicle_Rent.ViewModels.VehicleVM
 {
-    public class VehicleDetailVM
+    public class VehicleReadVM
     {
         public string? Id { get; set; }
         public string Name { get; set; }

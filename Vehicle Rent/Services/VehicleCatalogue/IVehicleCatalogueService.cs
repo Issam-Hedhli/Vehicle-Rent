@@ -9,7 +9,7 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
         public Task<List<Vehicle>> GetReturnedVehiclesByCustomerIdAsync(string id);
         Task<VehicleCopy> GetVehicleCopyByIdAsync(string vehicleCopyId);
         Task<List<VehicleCopy>> GetVehiclesCopiesByVehicleId(string vehicleId);
-        public Task<List<VehicleCopy>> GetRentedVehicleCopiesByUserIdAsync(string id);
+        public Task<List<VehicleCopy>> GetCurrentlyRentedVehicleCopiesByUserIdAsync(string id);
         bool IsCurrentlyRented(Vehicle vehicle, string id);
         public bool IsAlreadyRented(Vehicle vehicle, string userId);
         public Task<List<Vehicle>> GetRentedVehiclesByCustomerIdAsync(string id);

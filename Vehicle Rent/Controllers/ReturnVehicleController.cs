@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Vehicle_Rent.Services.VehicleCatalogue;
 using Vehicle_Rent.Services.VehicleRent;
 using Vehicle_Rent.ViewModels.ReturnVehicle;
+using Vehicle_Rent.ViewModels.VehicleCopyVM;
 using Vehicle_Rent.ViewModels.VehicleVM;
 
 namespace Vehicle_Rent.Controllers
@@ -21,31 +22,51 @@ namespace Vehicle_Rent.Controllers
             _vehicleCatalogueService = vehicleCatalogueService;
             _mapper = mapper;
         }
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> ReturnVehicle(string vehicleId)
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> ReturnVehicleCopy(string vehicleCopyId)
         {
-            var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
-            var vehicleDetailVM = _mapper.Map<VehicleDetailVM>(vehicle);
-            ReturnVehicleVM returnVehicleVM = new ReturnVehicleVM() { VehicleDetailVM = vehicleDetailVM, Confirmation = false };
-            HttpContext.Session.SetString("VehicleId", vehicleId );
+            var vehicleCopy = await _vehicleCatalogueService.GetVehicleCopyByIdAsync(vehicleCopyId);
+            var vehicleCopyVM = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
+            ReturnVehicleVM returnVehicleVM = new ReturnVehicleVM()
+            {
+                VehicleCopyReadVM=vehicleCopyVM,
+                Confirmation = false
+            };
+            HttpContext.Session.SetString("VehicleCopyId", vehicleCopyId );
             return View(returnVehicleVM);
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Customer")]
         [HttpPost]
-        public async Task<IActionResult> ReturnVehicle(ReturnVehicleVM returnVehicleVM)
+        public async Task<IActionResult> ReturnVehicleCopy(ReturnVehicleVM returnVehicleVM)
         {
-            var vehicleId = HttpContext.Session.GetString("VehicleId");
-            var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
-            var vehicleVm = _mapper.Map<VehicleDetailVM>(vehicle);
-            returnVehicleVM.VehicleDetailVM = vehicleVm;
+            var vehicleCopyId = HttpContext.Session.GetString("VehicleCopyId");
+            var vehicleCopy = await _vehicleCatalogueService.GetVehicleCopyByIdAsync(vehicleCopyId);
+            var vehicleCopyVm = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
+            var Id = User.FindFirstValue("Id");
+            if (!string.IsNullOrEmpty(Id))
+            {
+                //WasAlreadyRented
+                var rentalItems = vehicleCopy.RentalItems;
+                var previousRentalItemsByUser = rentalItems
+                    .Where(ri => ri.UserId == Id)
+                    .Where(ri => ri.StatusId == "2")
+                    .ToList();
+                vehicleCopyVm.WasAlreadyRented = previousRentalItemsByUser.Any();
+                //IsBeingRented
+                var actualRentalItemsByUser = rentalItems
+                    .Where(ri => ri.UserId == Id)
+                    .Where(ri => ri.StatusId == "1")
+                    .ToList();
+                vehicleCopyVm.IsBeingRented = actualRentalItemsByUser.Any();
+            }
+            returnVehicleVM.VehicleCopyReadVM = vehicleCopyVm;
             if (!ModelState.IsValid)
             {
                 return View(returnVehicleVM);
             }
             else
             {
-                string Id = User.FindFirstValue("Id");
                 if (returnVehicleVM.Confirmation)
                 {
                     await _rentalService.ReturnVehicleCopy(returnVehicleVM, Id);

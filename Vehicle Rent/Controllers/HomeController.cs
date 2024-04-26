@@ -23,7 +23,7 @@ namespace Vehicle_Rent.Controllers
         public async Task< IActionResult> Index()
         {
             var vehicles = await _vehicleCatalogueService.GetAllVehiclesAsync();
-            var vehicledetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
+            var vehicledetailVms = _mapper.Map<List<VehicleReadVM>>(vehicles);
             ViewBag.Models = vehicledetailVms.Select(m => m.ModelName).Distinct().ToList();
             ViewBag.Companies = vehicledetailVms.Select(c => c.CompanyName).Distinct().ToList();
             return View();

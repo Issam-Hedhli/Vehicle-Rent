@@ -12,7 +12,7 @@ using Vehicle_Rent.Data;
 namespace Vehicle_Rent.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    [Migration("20240423202254_V1")]
+    [Migration("20240426204548_V1")]
     partial class V1
     {
         /// <inheritdoc />

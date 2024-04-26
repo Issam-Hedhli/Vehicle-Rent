@@ -27,7 +27,7 @@ namespace Vehicle_Rent.Controllers
             var Customer = await _profileService.GetCustomerByIdAsync(Id);
             var profile = _mapper.Map<ProfileDetailVM>(Customer);
             var returnedvehicles = await _vehicleCatalogueService.GetReturnedVehiclesByCustomerIdAsync(Id);
-            profile.Images = _mapper.Map<List<VehicleDetailVM>>(returnedvehicles.Take(5).ToList());
+            profile.Images = _mapper.Map<List<VehicleReadVM>>(returnedvehicles.Take(5).ToList());
             var currentlyBorrowedvehicles = await _vehicleCatalogueService.GetRentedVehiclesByCustomerIdAsync(Id);
             profile.numberOfvehiclesInposession = currentlyBorrowedvehicles.Count;
             ViewBag.Title = "My Profile";

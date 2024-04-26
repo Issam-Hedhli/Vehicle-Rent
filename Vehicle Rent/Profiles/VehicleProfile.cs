@@ -8,7 +8,7 @@ namespace Vehicle_Rent.Profiles
     {
         public VehicleProfile()
         {
-            CreateMap<Vehicle, VehicleDetailVM>()
+            CreateMap<Vehicle, VehicleReadVM>()
             .ForMember(dest => dest.NumberOfAvailableVehicles, opt => opt.MapFrom(src => AvailableVehicles(src)))
             .ForMember(dest => dest.AverageRating, opt => opt.MapFrom(src => AverageRating(src)))
             .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Company.Name))

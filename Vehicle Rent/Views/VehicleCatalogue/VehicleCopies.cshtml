@@ -63,9 +63,19 @@
                                     <span class="number">@vehiclecopy.Mileage</span>
                                 </div>
                             </div>
-                            <div style="text-align:center;">
-                                <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Rent a Vehicle Copy</a></p>
-                            </div>
+                            @if (vehiclecopy.IsBeingRented)
+                            {
+                                <div style="text-align:center;">
+                                    <p><a asp-controller="ReturnVehicle" asp-action="ReturnVehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" >Return Vehicle</a></p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="text-align:center;">
+                                    <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Rent Vehicle </a></p>
+                                </div>
+                            }
+
                         </div>
 
                     </div>

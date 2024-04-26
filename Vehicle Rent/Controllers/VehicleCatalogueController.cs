@@ -29,7 +29,7 @@ namespace Vehicle_Rent.Controllers
             //await _emailSender.SendEmailAsync("Customer@carrental.com", "testsubject", "testmessage");
             string id = User.FindFirstValue("Id");
             var vehicles = await _vehicleCatalogueService.GetAllVehiclesAsync();
-            var vehicledetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
+            var vehicledetailVms = _mapper.Map<List<VehicleReadVM>>(vehicles);
             vehicledetailVms = Filter(vehicledetailVms, searchString, company, model);
             ViewBag.Title = "Browse vehicles";
             ViewBag.Models = vehicledetailVms.Select(m => m.ModelName).Distinct().ToList();
@@ -37,7 +37,7 @@ namespace Vehicle_Rent.Controllers
             //ViewBag.Redirect = "vehicles";
             return View(vehicledetailVms);
         }
-        public List<VehicleDetailVM> Filter(List<VehicleDetailVM> VehicleDetailVMs, string searchString, string company, string model)
+        public List<VehicleReadVM> Filter(List<VehicleReadVM> VehicleDetailVMs, string searchString, string company, string model)
         {
             if (!searchString.IsNullOrEmpty())
             {
@@ -113,7 +113,7 @@ namespace Vehicle_Rent.Controllers
                 vehicleCopyReadVms = _mapper.Map<List<VehicleCopyReadVM>>(vehicleCopies);
             }
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
-            var vehicleReadVM = _mapper.Map<VehicleDetailVM>(vehicle);
+            var vehicleReadVM = _mapper.Map<VehicleReadVM>(vehicle);
             vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice,startDate,endDate);
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
@@ -142,26 +142,52 @@ namespace Vehicle_Rent.Controllers
         public async Task<IActionResult> RentedVehicles()
         {
             string Id = User.FindFirstValue("Id");
-            var vehiclecopies = await _vehicleCatalogueService.GetRentedVehicleCopiesByUserIdAsync(Id);
-            var vehiclecopyvms = _mapper.Map<List<VehicleCopyReadVM>>(vehiclecopies);
-        
-            return View("vehiclecopies", vehiclecopyvms);       }
+            var vehiclecopies = await _vehicleCatalogueService.GetCurrentlyRentedVehicleCopiesByUserIdAsync(Id);
+            var vehiclecopyvms = new List<VehicleCopyReadVM>();
+            if (!string.IsNullOrEmpty(Id))
+            {
+                foreach (var vehicleCopy in vehiclecopies)
+                {
+                    var vehicleCopyReadVM = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
+                    //WasAlreadyRented
+                    var rentalItems = vehicleCopy.RentalItems;
+                    var previousRentalItemsByUser = rentalItems
+                        .Where(ri => ri.UserId == Id)
+                        .Where(ri => ri.StatusId == "2")
+                        .ToList();
+                    vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
+                    //IsBeingRented
+                    var actualRentalItemsByUser = rentalItems
+                        .Where(ri => ri.UserId == Id)
+                        .Where(ri => ri.StatusId == "1")
+                        .ToList();
+                    vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
+                    vehiclecopyvms.Add(vehicleCopyReadVM);
+                }
+            }
+            else
+            {
+                vehiclecopyvms = _mapper.Map<List<VehicleCopyReadVM>>(vehiclecopies);
+
+            }
+            return View("vehiclecopies", vehiclecopyvms);       
+        }
 
 
         public async Task<IActionResult> ReturnedVehicles(string searchString, string company, string model)
         {
             string Id = User.FindFirstValue("Id");
             var vehicles = await _vehicleCatalogueService.GetReturnedVehiclesByCustomerIdAsync(Id);
-            var vehicleDetailVms = new List<VehicleDetailVM>();
+            var vehicleDetailVms = new List<VehicleReadVM>();
             if (Id == null)
             {
-                vehicleDetailVms = _mapper.Map<List<VehicleDetailVM>>(vehicles);
+                vehicleDetailVms = _mapper.Map<List<VehicleReadVM>>(vehicles);
             }
             else
             {
                 foreach (Vehicle vehicle in vehicles)
                 {
-                    var vehicleDetailVm = _mapper.Map<VehicleDetailVM>(vehicle);
+                    var vehicleDetailVm = _mapper.Map<VehicleReadVM>(vehicle);
                     vehicleDetailVm.isAlreadyRented = _vehicleCatalogueService.IsAlreadyRented(vehicle, Id);
                     vehicleDetailVm.isCurrentlyrented = _vehicleCatalogueService.IsCurrentlyRented(vehicle, Id);
                     vehicleDetailVms.Add(vehicleDetailVm);
