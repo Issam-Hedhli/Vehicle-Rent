@@ -12,7 +12,7 @@
             <div class="col-lg-10">
                 <form asp-controller="VehicleCatalogue" asp-action="Vehicles" class="trip-form">
                     <div class="row align-items-center">
-                        <div class="mb-3 mb-md-0 col-md-4">
+                        <div class="mb-3 mb-md-0 col-md-6">
                             <select name="Company" class="custom-select form-control">
                                 <option value="">Company</option>
                                 @foreach (var company in ViewBag.Companies)
@@ -28,23 +28,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="mb-3 mb-md-0 col-md-4">
-                            <select name="Model" class="custom-select form-control">
-                                <option value="">Model</option>
-                                @foreach (var modell in ViewBag.Models)
-                                {
-                                    @if (ViewBag.ModelValue != null && modell == ViewBag.ModelValue)
-                                    {
-                                        <option value="@modell" selected>@modell</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@modell">@modell</option>
-                                    }
-                                }
-                            </select>
-                        </div>
-                        <div class="mb-3 mb-md-0 col-md-4">
+                        <div class="mb-3 mb-md-0 col-md-6">
                             <input type="submit" value="Search" class="btn btn-primary btn-block py-3">
                         </div>
                     </div>
@@ -55,16 +39,16 @@
             @foreach (var item in Model)
             {
                 <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="listing d-block align-items-stretch">
+                    <div class="listing d-block align-items-stretch" >
                         <div class="listing-img h-100 mr-4" style="width:300px; height:600px;">
-                            <img src="@item.Photo" alt="Image" class="img-fluid">
+                            <img src="@item.Photo" style="height:180px;" alt="Image" class="img-fluid">
                         </div>
                         <div class="listing-contents h-100">
                             <h3>@item.Name</h3>
-                            <div>
+                            <div >
                                 @if (!string.IsNullOrEmpty(item.Description))
                                 {
-                                    <p>@item.Description</p>
+                                    <p style ="height:220px;">@item.Description</p>
                                 }
                                 else
                                 {
@@ -83,7 +67,6 @@
                                 else
                                 {
                                     <p>
-
                                         <a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId="@item.Id" class="btn btn-primary btn-sm">
                                                 Rent Now
                                         </a>

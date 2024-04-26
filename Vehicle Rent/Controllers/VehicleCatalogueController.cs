@@ -24,20 +24,20 @@ namespace Vehicle_Rent.Controllers
             _emailSender = emailSender;
 
 		}
-        public async Task<IActionResult> Vehicles(string searchString, string company, string model, int rentalPrice , int minPrice , int maxPrice)
+        public async Task<IActionResult> Vehicles(string searchString, string company, int rentalPrice , int minPrice , int maxPrice)
         {
             //await _emailSender.SendEmailAsync("Customer@carrental.com", "testsubject", "testmessage");
             string id = User.FindFirstValue("Id");
             var vehicles = await _vehicleCatalogueService.GetAllVehiclesAsync();
             var vehicledetailVms = _mapper.Map<List<VehicleReadVM>>(vehicles);
-            vehicledetailVms = Filter(vehicledetailVms, searchString, company, model);
+            vehicledetailVms = Filter(vehicledetailVms, searchString, company);
             ViewBag.Title = "Browse vehicles";
             ViewBag.Models = vehicledetailVms.Select(m => m.ModelName).Distinct().ToList();
             ViewBag.Companies = vehicledetailVms.Select(c => c.CompanyName).Distinct().ToList();
             //ViewBag.Redirect = "vehicles";
             return View(vehicledetailVms);
         }
-        public List<VehicleReadVM> Filter(List<VehicleReadVM> VehicleDetailVMs, string searchString, string company, string model)
+        public List<VehicleReadVM> Filter(List<VehicleReadVM> VehicleDetailVMs, string searchString, string company)
         {
             if (!searchString.IsNullOrEmpty())
             {
@@ -46,10 +46,6 @@ namespace Vehicle_Rent.Controllers
             if (!company.IsNullOrEmpty())
             {
                 VehicleDetailVMs = VehicleDetailVMs.Where(c => c.CompanyName == company).ToList();
-            }
-            if (!model.IsNullOrEmpty())
-            {
-                VehicleDetailVMs = VehicleDetailVMs.Where(m => m.ModelName == model).ToList();
             }
 
             return VehicleDetailVMs;
@@ -181,7 +177,7 @@ namespace Vehicle_Rent.Controllers
         }
 
 
-        public async Task<IActionResult> ReturnedVehicles(string searchString, string company, string model)
+        public async Task<IActionResult> ReturnedVehicles(string searchString, string company)
         {
             string Id = User.FindFirstValue("Id");
             var vehicles = await _vehicleCatalogueService.GetReturnedVehiclesByCustomerIdAsync(Id);
@@ -200,12 +196,11 @@ namespace Vehicle_Rent.Controllers
                     vehicleDetailVms.Add(vehicleDetailVm);
                 }
             }
-            vehicleDetailVms = Filter(vehicleDetailVms, searchString, company, model);
+            vehicleDetailVms = Filter(vehicleDetailVms, searchString, company);
             ViewBag.Name = "Returned Vehicles";
             ViewBag.Redirect = "ReturnedVehicles";
             ViewBag.Models = vehicleDetailVms.Select(b => b.ModelName).Distinct().ToList();
             ViewBag.Companies = vehicleDetailVms.Select(b => b.CompanyName).Distinct().ToList();
-            ViewBag.ModelValue = model;
             ViewBag.CompanyValue = company;
             return View("Vehicles", vehicleDetailVms);
         }
