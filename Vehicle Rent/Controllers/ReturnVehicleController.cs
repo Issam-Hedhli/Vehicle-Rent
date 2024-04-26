@@ -70,7 +70,7 @@ namespace Vehicle_Rent.Controllers
                 if (returnVehicleVM.Confirmation)
                 {
                     await _rentalService.ReturnVehicleCopy(returnVehicleVM, Id);
-                    return RedirectToAction("RentedVehicles", "VehicleCatalogue");
+                    return RedirectToAction("RentedVehicleCopies", "VehicleCatalogue");
                 }
                 else
                 {
