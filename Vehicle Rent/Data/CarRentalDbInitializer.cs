@@ -231,7 +231,7 @@ namespace Vehicle_Rent.Data
                         new RentalItem { Id = "7", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer4 },
                         new RentalItem { Id = "8", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer4 ,Ratings = rating5},
                         new RentalItem { Id = "7", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer5 },
-                        new RentalItem { Id = "8", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer5 ,Ratings = rating6},
+                        new RentalItem { Id = "9", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer5 ,Ratings = rating6},
                     });
 					await context.SaveChangesAsync();
 				}
