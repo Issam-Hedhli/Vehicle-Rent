@@ -17,25 +17,26 @@ namespace Vehicle_Rent.Data
 				var context = serviceScope.ServiceProvider.GetService<CarRentalDbContext>();
 				context.Database.EnsureCreated();
 
-				#region Company
-
-				if (!context.Companies.Any())
-				{
-					context.Companies.AddRange(new List<Company>()
-				{
+                #region Company
+                if (!context.Companies.Any())
+                {
+                    context.Companies.AddRange(new List<Company>()
+					{
 					new Company() { Id = "1", Name = "Toyota" },
 					new Company() { Id = "2", Name = "Honda" },
 					new Company() { Id = "3", Name = "Ford" },
 					new Company() { Id = "4", Name = "Chevrolet" },
-					new Company() { Id = "5", Name = "Nissan" }
-				});
+					new Company() { Id = "5", Name = "Nissan" },
+					new Company() { Id = "6", Name = "Audi" },
+					new Company() { Id = "7", Name = "Mercedes-Benz" }
+					});
 					await context.SaveChangesAsync();
 				}
-				#endregion
+                #endregion
 
-				#region VehicleModel
+                #region VehicleModel
 
-				if (!context.VModels.Any())
+                if (!context.VModels.Any())
 				{
 					context.VModels.AddRange(new List<VModel>()
 				{
@@ -43,35 +44,48 @@ namespace Vehicle_Rent.Data
 					new VModel() { Id = "2", Name = "Accord" },
 					new VModel() { Id = "3", Name = "F-150" },
 					new VModel() { Id = "4", Name = "Silverado" },
-					new VModel() { Id = "5", Name = "Altima" }
-				});
-					await context.SaveChangesAsync();
-				}
-				#endregion
-
-				#region Vehicle
-
-				if (!context.Vehicles.Any())
-				{
-                    #region Photos
-                    string image1 = "https://th.bing.com/th/id/R.2290c0734b0e128758268904b0354ef3?rik=99EUYUkZEODAqg&pid=ImgRaw&r=0";
-                    string image2 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFiaQZbDwtZQxmOw2E-0MOjtZPUDEmroPv9w&s";
-                    string image3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQD5QwhxumoqAQEYazQweYLwgWeQtee2_KcA&s";
-                    string image4 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFJAZK2UkDXFB9rJ6vW6BVaGv1mcAgr2m_7Q&s";
-                    string image5 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKz4vaMQU8Xqc8fw0hd1JKKARJPWoTJFyikw&s";
-                    #endregion
-
-                    context.Vehicles.AddRange(new List<Vehicle>()
-				{
-					new Vehicle() { Id = "1", Name="Toyota Camry", Description="A reliable and spacious sedan known for its comfortable ride and fuel efficiency. With a sleek exterior design and a reputation for longevity, the Camry offers a practical and enjoyable driving experience suitable for various needs, from daily commuting to family road trips.", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1") , Photo = image1},
-					new Vehicle() { Id = "2", Name="Honda Accord", Description="A versatile and stylish sedan renowned for its refined performance and advanced technology features. With its spacious interior, smooth handling, and reputation for reliability, the Accord offers a comfortable and enjoyable driving experience for both daily commutes and long journeys.\r\n\r\n\r\n\r\n\r\n\r\n\r\n", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2") , Photo = image2 },
-					new Vehicle() { Id = "3", Name="Ford F-150", Description="An iconic pickup truck celebrated for its rugged durability and impressive towing capabilities. Renowned for its versatility, it seamlessly transitions between workhorse duties and family adventures. With its powerful engine options and innovative features, the F-150 remains a top choice for those seeking strength, reliability, and versatility in a truck.", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3") , Photo = image3},
-					new Vehicle() { Id = "4", Name="Chevrolet Silverado", Description="A robust and dependable pickup truck known for its impressive towing capacity and rugged performance. With a spacious interior and a variety of trim options, it caters to diverse needs, from everyday work tasks to off-road adventures. Renowned for its durability and advanced technology features, the Silverado offers a combination of strength and comfort that makes it a popular choice among truck enthusiasts.", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4") , Photo = image4 },
-					new Vehicle() { Id = "5", Name="Nissan Altima", Description="A sleek and efficient sedan offering a balance of comfort, performance, and technology. With its modern design and fuel-efficient engine options, it provides a smooth and enjoyable driving experience. Renowned for its reliability and advanced safety features, the Altima is an excellent choice for those seeking a stylish and practical vehicle for daily commuting or long-distance travel.", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5") , Photo = image5}
-				});
+					new VModel() { Id = "5", Name = "Altima" },
+                    new VModel() { Id = "6", Name = "Auris" }, 
+					new VModel() { Id = "7", Name = "Mustang" },
+					new VModel() { Id = "8", Name = "Camaro" },
+					new VModel() { Id = "9", Name = "Galaxy" } 
+                });
 					await context.SaveChangesAsync();
 				}
                 #endregion
+
+                #region Vehicle
+
+                if (!context.Vehicles.Any())
+                {
+                    #region Photos
+                    string image1 = "https://th.bing.com/th/id/R.2290c0734b0e128758268904b0354ef3?rik=99EUYUkZEODAqg&pid=ImgRaw&r=0";
+                    string image2 = "https://www.groovecar.com/media/stock/images/stills/2016/honda/accord/sport-4dr-sedan-6m/2016-honda-accord-sport-4dr-sedan-6m-046-large.jpg";
+                    string image3 = "https://www.pixelstalk.net/wp-content/uploads/2016/10/Ford-F150-Wallpapers.jpg";
+                    string image4 = "https://th.bing.com/th/id/R.b2c40dd226ad91d6f4456bd7e92ed69d?rik=GhxTgSGw%2frJ1yQ&riu=http%3a%2f%2fs1.cdn.autoevolution.com%2fimages%2fgallery%2fCHEVROLET-Silverado-3500-HD-Crew-Cab-5138_4.jpg&ehk=eEeQV5SXEUHT9XSwo5iO2Uj%2fE8Txi%2bBEhTrITHLzobc%3d&risl=&pid=ImgRaw&r=0";
+                    string image5 = "https://i.ytimg.com/vi/bkqdyBtJh2I/maxresdefault.jpg";
+                    string image6 = "https://mediacloud.carbuyer.co.uk/image/private/s--OFG81nLs--/v1579612783/carbuyer/toyota_auris_hatchback_01.jpg";
+                    string image7 = "https://www.hdcarwallpapers.com/walls/ford_mustang_shelby_gt350_r-HD.jpg";
+                    string image8 = "https://www.perfectautocollection.com/imagetag/85/main/l/Used-2017-Mercedes-Benz-CLA-CLA-250-4MATIC.jpg";
+                    string image9 = "https://wallpapercave.com/wp/wp4286548.jpg";
+                    #endregion
+
+                    context.Vehicles.AddRange(new List<Vehicle>()
+                {
+                    new Vehicle() { Id = "1", Name="Toyota Camry", Description="A reliable and spacious sedan known for its comfortable ride and fuel efficiency. With a sleek exterior design and a reputation for longevity, the Camry offers a practical and enjoyable driving experience suitable for various needs, from daily commuting to family road trips.", Company = context.Companies.FirstOrDefault(c => c.Id == "1") , VModel = context.VModels.FirstOrDefault(m => m.Id == "1") , Photo = image1},
+                    new Vehicle() { Id = "2", Name="Honda Accord", Description="A versatile and stylish sedan renowned for its refined performance and advanced technology features. With its spacious interior, smooth handling, and reputation for reliability, the Accord offers a comfortable and enjoyable driving experience for both daily commutes and long journeys.\r\n\r\n\r\n\r\n\r\n\r\n\r\n", Company = context.Companies.FirstOrDefault(c => c.Id == "2") , VModel = context.VModels.FirstOrDefault(m => m.Id == "2") , Photo = image2 },
+                    new Vehicle() { Id = "3", Name="Ford F-150", Description="An iconic pickup truck celebrated for its rugged durability and impressive towing capabilities. Renowned for its versatility, it seamlessly transitions between workhorse duties and family adventures. With its powerful engine options and innovative features, the F-150 remains a top choice for those seeking strength, reliability, and versatility in a truck.", Company = context.Companies.FirstOrDefault(c => c.Id == "3") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "3") , Photo = image3},
+                    new Vehicle() { Id = "4", Name="Chevrolet Silverado", Description="A robust and dependable pickup truck known for its impressive towing capacity and rugged performance. With a spacious interior and a variety of trim options, it caters to diverse needs, from everyday work tasks to off-road adventures. Renowned for its durability and advanced technology features, the Silverado offers a combination of strength and comfort that makes it a popular choice among truck enthusiasts.", Company = context.Companies.FirstOrDefault(c => c.Id == "4") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "4") , Photo = image4 },
+                    new Vehicle() { Id = "5", Name="Nissan Altima", Description="A sleek and efficient sedan offering a balance of comfort, performance, and technology. With its modern design and fuel-efficient engine options, it provides a smooth and enjoyable driving experience. Renowned for its reliability and advanced safety features, the Altima is an excellent choice for those seeking a stylish and practical vehicle for daily commuting or long-distance travel.", Company = context.Companies.FirstOrDefault(c => c.Id == "5") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "5") , Photo = image5},
+                    new Vehicle() { Id = "6", Name="Toyota Auris", Description = "An innovative electric compact car designed for the eco-conscious urban driver. With its sleek and aerodynamic design, the Civic combines efficiency with style. Its electric motor provides instant torque and smooth acceleration, making every drive effortless and enjoyable. ", Company = context.Companies.FirstOrDefault(c => c.Id == "6") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "6") , Photo = image6 },
+                    new Vehicle() { Id = "7", Name="Audi Mustang", Description = "An iconic sports coupe that embodies the spirit of American muscle cars. With its muscular stance, aggressive styling, and powerful engine options, the Mustang commands attention on the road. Its refined interior features premium materials and advanced technology, ensuring both comfort and performance. ", Company = context.Companies.FirstOrDefault(c => c.Id == "7") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "7") , Photo = image7 },
+                    new Vehicle() { Id = "8", Name="Mercedes-Benz Camaro", Description = "A luxury convertible that combines elegance with performance. Its sleek lines and aerodynamic profile exude sophistication, while its powerful engine options deliver exhilarating performance on demand. The Camaro's luxurious interior features premium materials and state-of-the-art technology, creating a refined driving environment.", Company = context.Companies.FirstOrDefault(c => c.Id == "8") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "8") , Photo = image8 },
+                    new Vehicle() { Id = "9", Name="Ford Galaxy", Description = "A crossover SUV that redefines versatility and luxury in the automotive world. Combining BMW's renowned engineering prowess with the ruggedness of a capable SUV, the Rogue offers a driving experience that is both refined and adventurous. Its bold exterior design commands attention on the road, while its spacious and meticulously crafted interior provides comfort and convenience for both driver and passengers.", Company = context.Companies.FirstOrDefault(c => c.Id == "9") ,VModel = context.VModels.FirstOrDefault(m => m.Id == "9") , Photo = image9 }
+                });
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
 
                 #region VehicleCopy
                 if (!context.VehicleCopies.Any())
@@ -80,15 +94,15 @@ namespace Vehicle_Rent.Data
                     int k = 0;
                     for (int i = 1; i < 10; i++)
                     {
-                        for (int j = 1; j < 3; j++)
+                        for (int j = 1; j < 6; j++)
                         {
                             k++;
                             var vehicle = context.Vehicles.FirstOrDefault(v => v.Id == i.ToString());
                             if (vehicle != null)
                             {
-                                // Calculate rental price based on mileage and year
-                                int mileage = 5000 * j;   // Example mileage calculation
-                                int year = 2019 + j;      // Example year calculation
+                                
+                                int mileage = 5000 * j;  
+                                int year = 2015 + j;      
                                 int rentalPrice = CalculateRentalPrice(mileage, year);
 
                                 vehicleCopies.Add(new VehicleCopy()
@@ -110,19 +124,16 @@ namespace Vehicle_Rent.Data
                 // Fonction pour calculer le prix de location en fonction du kilométrage et de l'année
                 int CalculateRentalPrice(int mileage, int year)
                 {
-                    // Logique de calcul d'exemple
-                    int prixBase = 50;   // Prix de location de base
-                    int tauxKilometrage = 5; // Taux par kilomètre (en centimes)
-                    int tauxAge = 2;   // Taux par année d'âge (en centimes)
+                    
+                    int prixBase = 50;   
+                    int tauxKilometrage = 5; 
+                    int tauxAge = 2;   
 
-                    // Calcul des frais supplémentaires basés sur le kilométrage et l'année
                     int fraisKilometrage = mileage * tauxKilometrage;
                     int fraisAge = (DateTime.Now.Year - year) * tauxAge;
 
-                    // Calcul du prix de location total en mille
                     int totalRentalPrice = prixBase + fraisKilometrage + fraisAge;
 
-                    // Convertir le prix en mille (1 mille = 1000 centimes)
                     totalRentalPrice /= 1000;
 
                     return totalRentalPrice;
@@ -134,12 +145,17 @@ namespace Vehicle_Rent.Data
                     var vehicleCopy1 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "1");
                     var vehicleCopy2 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "2");
                     var vehicleCopy3 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "3");
+                    var vehicleCopy4 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "4");
+                    var vehicleCopy5 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "5");
+                    var vehicleCopy6 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "6");
                     context.Unavailabilities.AddRange(new List<Unavailability>()
                     {
                         new Unavailability() { Id="2", startDate= DateTime.Now.AddDays(1), endDate = DateTime.Now.AddDays(3),VehicleCopy=vehicleCopy1 },
                         new Unavailability() { Id="3", startDate= DateTime.Now.AddDays(5), endDate = DateTime.Now.AddDays(8),VehicleCopy=vehicleCopy1 },
                         new Unavailability() { Id="4", startDate= DateTime.Now.AddDays(10), endDate = DateTime.Now.AddDays(12),VehicleCopy = vehicleCopy2 },
-                        new Unavailability() { Id="5", startDate= DateTime.Now.AddDays(15), endDate = DateTime.Now.AddDays(17),VehicleCopy=vehicleCopy3 }
+                        new Unavailability() { Id="5", startDate= DateTime.Now.AddDays(15), endDate = DateTime.Now.AddDays(17),VehicleCopy=vehicleCopy3 },
+                        new Unavailability() { Id="1", startDate= DateTime.Now.AddDays(10), endDate = DateTime.Now.AddDays(10),VehicleCopy = vehicleCopy5 },
+                        new Unavailability() { Id="6", startDate= DateTime.Now.AddDays(15), endDate = DateTime.Now.AddDays(1),VehicleCopy=vehicleCopy6 }
 
                     });
                     context.SaveChanges();
@@ -165,11 +181,21 @@ namespace Vehicle_Rent.Data
 					var vehicleCopy1 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "1");
 					var vehicleCopy2 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "2");
 					var vehicleCopy3 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "3");
-					var customer1 = context.Users.FirstOrDefault(r => r.Id == "1");
-					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2"); 
-					var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "1");
+                    var vehicleCopy4 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "4");
+                    var vehicleCopy5 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "5");
+                    var vehicleCopy6 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "6");
+                    var customer1 = context.Users.FirstOrDefault(r => r.Id == "1");
+					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2");
+                    var customer3 = context.Users.FirstOrDefault(r => r.Id == "3");
+                    var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "1");
 					var returnedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "2");
-					var rating2 = new Rating()
+
+                    var rating1 = new Rating()
+                    {
+                        Value = 4,
+                        Comment = "Good service, Will rent again"
+                    };
+                    var rating2 = new Rating()
 					{
 						Value = 5,
 						Comment = "Enjoyed its rides"
@@ -185,8 +211,10 @@ namespace Vehicle_Rent.Data
 						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status=  borrowedStatus, User = customer2 }, 
 						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer2 ,Ratings=rating2},
 						new RentalItem { Id = "3", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer1 },
-						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 ,Ratings = rating4}
-					});
+						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 ,Ratings = rating4},
+                        new RentalItem { Id = "5", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer3 },
+                        new RentalItem { Id = "6", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer3 ,Ratings = rating1}
+                    });
 					await context.SaveChangesAsync();
 				}
 
