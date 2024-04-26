@@ -187,6 +187,8 @@ namespace Vehicle_Rent.Data
                     var customer1 = context.Users.FirstOrDefault(r => r.Id == "1");
 					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2");
                     var customer3 = context.Users.FirstOrDefault(r => r.Id == "3");
+                    var customer4 = context.Users.FirstOrDefault(r => r.Id == "4");
+                    var customer5 = context.Users.FirstOrDefault(r => r.Id == "5");
                     var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "1");
 					var returnedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "2");
 
@@ -206,6 +208,18 @@ namespace Vehicle_Rent.Data
 						Comment = "didn't really like it"
 					};
 
+                    var rating5 = new Rating()
+                    {
+                        Value = 4,
+                        Comment = "Really good, would recommend to others"
+                    };
+                    var rating6 = new Rating()
+                    {
+                        Value = 5,
+                        Comment = "best price-quality ratio"
+                    };
+
+                    
                     context.RentalItems.AddRange(new List<RentalItem>()
 					{
 						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status=  borrowedStatus, User = customer2 }, 
@@ -213,7 +227,11 @@ namespace Vehicle_Rent.Data
 						new RentalItem { Id = "3", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer1 },
 						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 ,Ratings = rating4},
                         new RentalItem { Id = "5", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer3 },
-                        new RentalItem { Id = "6", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer3 ,Ratings = rating1}
+                        new RentalItem { Id = "6", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer3 ,Ratings = rating1 },
+                        new RentalItem { Id = "7", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer4 },
+                        new RentalItem { Id = "8", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer4 ,Ratings = rating5},
+                        new RentalItem { Id = "7", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer5 },
+                        new RentalItem { Id = "8", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer5 ,Ratings = rating6},
                     });
 					await context.SaveChangesAsync();
 				}
