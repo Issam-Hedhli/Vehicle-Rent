@@ -70,7 +70,7 @@ namespace Vehicle_Rent.Controllers
         {
             var Id = User.FindFirstValue("Id");
             await _rentalService.RentVehicleCopy(rentVM.vehicleCopyReadVM.Id, Id, rentVM.startDate, rentVM.endDate);
-            var callbackUrl = Url.Action("VehicleCatalogue", "RentedVehicles", null, Request.Scheme);
+            var callbackUrl = Url.Action("VehicleCatalogue", "RentedVehicleCopies", null, Request.Scheme);
             var customer = await _profileService.GetCustomerByIdAsync(Id);
             await _emailSender.SendEmailAsync(
                 //email
@@ -87,7 +87,7 @@ namespace Vehicle_Rent.Controllers
                 + " "
                 + $" < a href =\"{callbackUrl}\">Rented Vechiles</a>.");
 
-            return RedirectToAction("RentedVehicles", "VehicleCatalogue");
+            return RedirectToAction("RentedVehicleCopies", "VehicleCatalogue");
         }
     }
 }

@@ -137,7 +137,7 @@ namespace Vehicle_Rent.Controllers
 
             return vehicleCopyReadVMs;
         }
-        public async Task<IActionResult> RentedVehicles()
+        public async Task<IActionResult> RentedVehicleCopies()
         {
             string Id = User.FindFirstValue("Id");
             var vehiclecopies = await _vehicleCatalogueService.GetCurrentlyRentedVehicleCopiesByUserIdAsync(Id);
@@ -173,7 +173,7 @@ namespace Vehicle_Rent.Controllers
             ViewBag.Title = "Rented Vehicle Copies";
             return View("vehiclecopies", vehiclecopyvms);       
         }
-        public async Task<IActionResult> ReturnedVehicles(string searchString, string company)
+        public async Task<IActionResult> ReturnedVehicleCopies(string searchString, string company)
         {
             string Id = User.FindFirstValue("Id");
             var vehicles = await _vehicleCatalogueService.GetReturnedVehiclesByCustomerIdAsync(Id);
@@ -194,7 +194,7 @@ namespace Vehicle_Rent.Controllers
             }
             vehicleDetailVms = Filter(vehicleDetailVms, searchString, company);
             ViewBag.Name = "Returned Vehicles";
-            ViewBag.Redirect = "ReturnedVehicles";
+            ViewBag.Redirect = "ReturnedVehicleCopies";
             ViewBag.Models = vehicleDetailVms.Select(b => b.ModelName).Distinct().ToList();
             ViewBag.Companies = vehicleDetailVms.Select(b => b.CompanyName).Distinct().ToList();
             ViewBag.CompanyValue = company;
