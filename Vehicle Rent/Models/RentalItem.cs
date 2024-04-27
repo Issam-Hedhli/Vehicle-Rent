@@ -10,7 +10,7 @@ namespace Vehicle_Rent.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
         [Required]
-        public DateTime StartDate { get; set; } = DateTime.Now;
+        public DateTime StartDate { get; set; } = DateTime.Today;
         [Required]
         public DateTime EndDate { get; set; }
         public string? UserId { get; set; } 

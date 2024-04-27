@@ -130,7 +130,7 @@ namespace Vehicle_Rent.Data
                     int tauxAge = 2;   
 
                     int fraisKilometrage = mileage * tauxKilometrage;
-                    int fraisAge = (DateTime.Now.Year - year) * tauxAge;
+                    int fraisAge = (DateTime.Today.Year - year) * tauxAge;
 
                     int totalRentalPrice = prixBase + fraisKilometrage + fraisAge;
 
@@ -150,12 +150,12 @@ namespace Vehicle_Rent.Data
                     var vehicleCopy6 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "6");
                     context.Unavailabilities.AddRange(new List<Unavailability>()
                     {
-                        new Unavailability() { Id="2", startDate= DateTime.Now.AddDays(1), endDate = DateTime.Now.AddDays(3),VehicleCopy=vehicleCopy1 },
-                        new Unavailability() { Id="3", startDate= DateTime.Now.AddDays(5), endDate = DateTime.Now.AddDays(8),VehicleCopy=vehicleCopy1 },
-                        new Unavailability() { Id="4", startDate= DateTime.Now.AddDays(10), endDate = DateTime.Now.AddDays(12),VehicleCopy = vehicleCopy2 },
-                        new Unavailability() { Id="5", startDate= DateTime.Now.AddDays(15), endDate = DateTime.Now.AddDays(17),VehicleCopy=vehicleCopy3 },
-                        new Unavailability() { Id="1", startDate= DateTime.Now.AddDays(10), endDate = DateTime.Now.AddDays(10),VehicleCopy = vehicleCopy5 },
-                        new Unavailability() { Id="6", startDate= DateTime.Now.AddDays(15), endDate = DateTime.Now.AddDays(1),VehicleCopy=vehicleCopy6 }
+                        new Unavailability() { Id="2", startDate= DateTime.Today.AddDays(1), endDate = DateTime.Today.AddDays(3),VehicleCopy=vehicleCopy1 },
+                        new Unavailability() { Id="3", startDate= DateTime.Today.AddDays(5), endDate = DateTime.Today.AddDays(8),VehicleCopy=vehicleCopy1 },
+                        new Unavailability() { Id="4", startDate= DateTime.Today.AddDays(10), endDate = DateTime.Today.AddDays(12),VehicleCopy = vehicleCopy2 },
+                        new Unavailability() { Id="5", startDate= DateTime.Today.AddDays(15), endDate = DateTime.Today.AddDays(17),VehicleCopy=vehicleCopy3 },
+                        new Unavailability() { Id="1", startDate= DateTime.Today.AddDays(10), endDate = DateTime.Today.AddDays(10),VehicleCopy = vehicleCopy5 },
+                        new Unavailability() { Id="6", startDate= DateTime.Today.AddDays(15), endDate = DateTime.Today.AddDays(1),VehicleCopy=vehicleCopy6 }
 
                     });
                     context.SaveChanges();

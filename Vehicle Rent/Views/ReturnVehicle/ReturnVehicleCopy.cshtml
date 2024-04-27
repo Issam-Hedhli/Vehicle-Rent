@@ -1,118 +1,68 @@
-﻿﻿@using Vehicle_Rent.ViewModels.Rent;
-@model RentVM;
+﻿@using Vehicle_Rent.ViewModels.ReturnVehicle;
+@model ReturnVehicleVM;
 
-<div class="site-section bg-light" id="contact-section">
-    <div class="container" style="margin-top:50px;">
-        <div class="row">
+<div class="site-section bg-light">
+    <div class="container" style="margin-top:80px;">
 
-
-            <div class="row justify-content-left text-center" style="display:flex;">
-                <div class="col-lg-8 mb-5" style="display:block;">
-
-                    <div class="col-7 text-left mb-5" style="margin-top:80px">
-                        <h4><strong>Great Choice!</strong></h4>
-                        <h5><strong>Please Use This Form To Rent This Car</strong></h5>
-                    </div>
-                    <form asp-action="Rent" asp-controller="" method="post">
-                        <div class="row align-items-center">
-                            <div class="mb-3 mb-md-0 col-md-5">
-                                <label for="startDate">Start Date</label>
-                                <input asp-for="startDate" type="date" class="form-control datepicker px-3">
-                                <span asp-validation-for="startDate" class="text-danger d-block mt-2"></span>
-                            </div>
-                            <div class="mb-3 mb-md-0 col-md-5">
-                                <label for="endDate">End Date</label>
-                                <input asp-for="endDate" type="date" class="form-control datepicker px-3">
-                                <span asp-validation-for="endDate" class="text-danger d-block mt-2"></span>
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center order-lg-2">
+                <p class="mb-5">We hope that you liked riding our car. To improve our services and our transparency, we ask our customers to give the experience a rating and a review.</p>
+                <form asp-action="ReturnVehicleCopy" asp-controller="ReturnVehicle">
+                    <div class="form-group row" style="display:flex;">
+                        <div class="col-md-12" style="display:flex; align-items:center;">
+                            <label for="rating">Rating:</label>
+                            <div class="rating" style="margin-left:auto; margin-right:auto;">
+                                <span class="star" data-value="1">&#9734;</span>
+                                <span class="star" data-value="2">&#9734;</span>
+                                <span class="star" data-value="3">&#9734;</span>
+                                <span class="star" data-value="4">&#9734;</span>
+                                <span class="star" data-value="5">&#9734;</span>
+                                <input asp-for="Rating" type="hidden" id="rating-value">
                             </div>
                         </div>
-                        <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-brown text-white py-3 px-5" style="width: 600px;">Go To CheckOut</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-4 ml-auto">
-                    <div class="bg-white p-3 p-md-5">
-                        <h3 class="text-black mb-4">Rent Details</h3>
-                        <ul class="list-unstyled footer-link">
-                            <div class="form-group row">
-                                <label for="totalRentDays" class="col-sm-6 col-form-label">Total Rental Days:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="totalRentDays" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="rentalPrice" class="col-sm-6 col-form-label">Rental Price Per Day:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="rentalPrice" value="50" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="totalCost" class="col-sm-6 col-form-label">Total Rental Cost:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="totalCost" readonly>
-                                </div>
-                            </div>
-                        </ul>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" asp-for="Review" placeholder="Write your review." rows="2"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="checkbox" asp-for="Confirmation" placeholder="Confirmation" /> Confirm the return
+                        </div>
+                    </div>
+
+                    <p>
+                        <button type="submit" class="btn btn-primary">
+                            Return the car
+                        </button>
+                    </p>
+                    @Html.ValidationMessageFor(model => model.Confirmation, "", new { @class = "text-danger" })
+                </form>
+            </div>
+            <div class="col-lg-6 ml-auto order-lg-1">
+                <h3 class="mb-4 section-heading"><strong>Return the car @Model.VehicleCopyReadVM.Vehicle.Name</strong></h3>
+                <div class="img-wrap-1 mb-5">
+                    <img src=@Model.VehicleCopyReadVM.Vehicle.Photo alt="Image" class="img-fluid" style="border-radius: 20px;">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
-    // Function to calculate total rental cost
-    function calculateTotalCost() {
-        var startDate = new Date(document.getElementById('startDate').value);
-        var endDate = new Date(document.getElementById('endDate').value);
-        var rentalPrice = parseFloat(document.getElementById('rentalPrice').value);
+    const stars = document.querySelectorAll('.star');
 
-        // Calculate the difference in days between start date and end date
-        var timeDiff = endDate.getTime() - startDate.getTime();
-        var totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-        // Calculate total rental cost
-        var totalCost = rentalPrice * totalDays;
-
-        // Set the calculated values in the input fields
-        document.getElementById('totalRentDays').value = totalDays;
-        document.getElementById('totalCost').value = totalCost.toFixed(2);
-    }
-
-    // Call the function when the page is loaded
-    document.addEventListener('DOMContentLoaded', function () {
-        calculateTotalCost();
-    });
-
-    // Call the function when the input fields change
-    document.getElementById('startDate').addEventListener('change', calculateTotalCost);
-    document.getElementById('endDate').addEventListener('change', calculateTotalCost);
-</script>
-
-
-
-
-<style>
-    .btn-brown {
-        background-color: #8B4513; /* Brown color */
-        color: #fff; /* White text color */
-        /* Add any other styles you need */
-    }
-</style>
-
-
-@section Scripts {
-    <script>
-        // Custom JavaScript validation
-        document.getElementById('rentForm').addEventListener('submit', function (event) {
-            var pickupDate = document.getElementById('cf-3').value;
-            var dropOffDate = document.getElementById('cf-4').value;
-
-            if (!pickupDate || !dropOffDate) {
-                alert('Please fill out all required fields.');
-                event.preventDefault();
-            }
+    stars.forEach((star) => {
+        star.addEventListener('click', () => {
+            const value = star.getAttribute('data-value');
+            document.getElementById('rating-value').value = value;
+            stars.forEach((s) => {
+                if (s.getAttribute('data-value') <= value) {
+                    s.innerHTML = '&#9733;';
+                } else {
+                    s.innerHTML = '&#9734;';
+                }
+            });
         });
-    </script>
-}
+    });
+</script>

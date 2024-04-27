@@ -5,20 +5,19 @@ namespace Vehicle_Rent.ViewModels.Rent
 {
     public class RentVM
     {
-        [Required(ErrorMessage = "The vehicleCopyReadVM field is required.")]
-        public VehicleCopyReadVM vehicleCopyReadVM { get; set; }
+        public VehicleCopyReadVM? vehicleCopyReadVM { get; set; }
 
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "The Start Date field is required.")]
         [FutureDate(ErrorMessage = "Start date must be in the future.")]
-        public DateTime startDate { get; set; } = DateTime.Now;
+        public DateTime startDate { get; set; } = DateTime.Today;
 
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "The End Date field is required.")]
         [DateGreaterThan(nameof(startDate), ErrorMessage = "End Date must be greater than Start Date.")]
-        public DateTime endDate { get; set; } = DateTime.Now.AddDays(3);
+        public DateTime endDate { get; set; } = DateTime.Today.AddDays(3);
     }
 
     public class FutureDateAttribute : ValidationAttribute
@@ -28,7 +27,7 @@ namespace Vehicle_Rent.ViewModels.Rent
             if (value != null)
             {
                 DateTime startDate = (DateTime)value;
-                if (startDate < DateTime.Now)
+                if (startDate.Date < DateTime.Today.Date)
                 {
                     return new ValidationResult(ErrorMessage);
                 }

@@ -13,16 +13,18 @@
                         <h4><strong>Great Choice!</strong></h4>
                         <h5><strong>Please Use This Form To Rent This Car</strong></h5>
                     </div>
-                    <form asp-action="Rent" asp-controller="" method="post">
+                    <form asp-action="RentVehicleCopy" asp-controller="RentVehicle" style="display:block;" method="post">
                         <div class="row align-items-center">
                             <div class="mb-3 mb-md-0 col-md-5">
                                 <label for="startDate">Start Date</label>
                                 <input asp-for="startDate" type="date" class="form-control datepicker px-3">
-                                <span asp-validation-for="startDate" class="text-danger d-block mt-2"></span>
                             </div>
                             <div class="mb-3 mb-md-0 col-md-5">
                                 <label for="endDate">End Date</label>
                                 <input asp-for="endDate" type="date" class="form-control datepicker px-3">
+                            </div>
+                            <div>
+                                <span asp-validation-for="startDate" class="text-danger d-block mt-2"></span>
                                 <span asp-validation-for="endDate" class="text-danger d-block mt-2"></span>
                             </div>
                         </div>

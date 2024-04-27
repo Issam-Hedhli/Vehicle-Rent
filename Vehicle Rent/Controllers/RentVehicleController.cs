@@ -45,11 +45,11 @@ namespace Vehicle_Rent.Controllers
         [HttpPost]
         public async Task<IActionResult> RentVehicleCopy (RentVM rentVM)
         {
+            var vehicleCopyId = HttpContext.Session.GetString("vehicleCopyId");
+            var vehicleCopy = await _vehicleCatalogueService.GetVehicleCopyByIdAsync(vehicleCopyId);
+            rentVM.vehicleCopyReadVM=_mapper.Map<VehicleCopyReadVM>(vehicleCopy);
             if (!ModelState.IsValid)
             {
-                var vehicleCopyId = HttpContext.Session.GetString("vehicleCopyId");
-                var vehicleCopy = await _vehicleCatalogueService.GetVehicleCopyByIdAsync(vehicleCopyId);
-                rentVM.vehicleCopyReadVM = _mapper.Map<VehicleCopyReadVM>(vehicleCopy);
                 return View(rentVM);
             }
             //nchouf el availability mtaa lvehicle copy
@@ -60,8 +60,8 @@ namespace Vehicle_Rent.Controllers
             //n3addih lecheckout
             var duration = (rentVM.endDate - rentVM.startDate).Days;
             var amount = duration * rentVM.vehicleCopyReadVM.RentalPrice;
-            var successUrl = Url.Action("StepUpRentVehicle", "RentVehicle", rentVM, Request.Scheme);
-            var cancelUrl = Url.Action("Index","Home", null,Request.Scheme);
+            var cancelUrl = Url.Action("StepUpRentVehicle", "RentVehicle", rentVM, Request.Scheme);
+            var successUrl = Url.Action("Index","Home", null,Request.Scheme);
             var currency = "usd";
             var session = _paymentService.CreateCheckOutSession(amount.ToString(), currency, successUrl, cancelUrl);
             return Redirect(session);

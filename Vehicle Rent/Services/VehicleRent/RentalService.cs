@@ -73,7 +73,7 @@ namespace Vehicle_Rent.Services.VehicleRent
                 throw new InvalidOperationException("No active rental found for the specified vehicle copy and user.");
             }
 
-            rentalItem.EndDate = DateTime.Now;
+            rentalItem.EndDate = DateTime.Today;
             rentalItem.Ratings = new Rating()
             {
                 Value = returnVehicleVM.Rating,
