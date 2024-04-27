@@ -115,7 +115,22 @@ namespace Vehicle_Rent.Controllers
             }
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
             var vehicleReadVM = _mapper.Map<VehicleReadVM>(vehicle);
-            vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice,DateTime.Parse(startDate),DateTime.Parse(endDate));
+            DateTime startDateParsed;
+            DateTime endDateParsed;
+            if (!DateTime.TryParse(startDate, out startDateParsed))
+            {
+                // Default to DateTime.MinValue if parsing fails
+                startDateParsed = DateTime.MinValue;
+            }
+
+            // Attempt to parse end date
+            if (!DateTime.TryParse(endDate, out endDateParsed))
+            {
+                // Default to DateTime.MaxValue if parsing fails
+                endDateParsed = DateTime.MaxValue;
+            }
+
+            vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice, startDateParsed, endDateParsed);
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
         }
