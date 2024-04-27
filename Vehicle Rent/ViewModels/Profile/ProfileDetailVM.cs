@@ -9,5 +9,7 @@ namespace Vehicle_Rent.ViewModels.Profile
         public string Image { get; set; }
         public List<VehicleReadVM>Images { get; set; }
         public int numberOfvehiclesInposession { get; set; }
+        public DateTime JoinedOn { get; set; }
+
     }
 }
