@@ -263,7 +263,14 @@ namespace Vehicle_Rent.Data
 				var customer = await userManager.FindByEmailAsync(customerEmail);
 				if (customer == null)
 				{
-					User newCustomer = new User { Id = "1", UserName = customerEmail, Email = customerEmail,Name="Issam", Image= "https://scontent.ftun10-1.fna.fbcdn.net/v/t39.30808-6/420193328_122126981744102705_859171868184661155_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=FXxEfc52dEwQ7kNvgF8uWPh&_nc_ht=scontent.ftun10-1.fna&oh=00_AfBJC5KYcPZu5qtfLkNFu3le8ACWKIpPSOTomn3B6aldSg&oe=6632B172" };
+					User newCustomer = new User 
+                    {
+                        Id = "1",
+                        UserName = customerEmail,
+                        Email = customerEmail,
+                        Name="Issam",
+                        Image= "https://scontent.ftun15-1.fna.fbcdn.net/v/t1.6435-9/120645766_3263034770470903_6610932504759370937_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=L7KSS-fN70cQ7kNvgGw3pm-&_nc_ht=scontent.ftun15-1.fna&oh=00_AfDvhMK2J3yV7MbmhSc_nX5Q0v8j3XJOtjT3OIw5T01trw&oe=66547D37"
+                    };
 					await userManager.CreateAsync(newCustomer, "Customer123!"); 
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
 				}
@@ -278,8 +285,8 @@ namespace Vehicle_Rent.Data
                         Id = "2",
                         UserName = secondaryCustomerEmail,
                         Email = secondaryCustomerEmail,
-                        Name="Issam",
-                        Image= "https://th.bing.com/th/id/OIP.Y1jVldJzHx7bwkOo-AnwFQHaLC?rs=1&pid=ImgDetMain"
+                        Name="Sami",
+                        Image= "https://scontent.ftun15-1.fna.fbcdn.net/v/t39.30808-6/289057250_4012267192331843_3921978455873349113_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=7cp6PyPFgpEQ7kNvgEZV23n&_nc_ht=scontent.ftun15-1.fna&oh=00_AfCAMQYUOxozqtNj_TRV0FmVnHwuQkTFMktsCEEZ8o7gxg&oe=6632F4A0"
                     };
 					await userManager.CreateAsync(newCustomer, "Customer123!");
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
