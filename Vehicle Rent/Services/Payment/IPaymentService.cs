@@ -2,6 +2,6 @@
 {
     public interface IPaymentService
     {
-        public string CreateCheckOutSession(string amount, string currency, string successUrl, string cancelUrl);
+        public string CreateCheckOutSession(string amount, string currency, string successUrl, string cancelUrl, string product);
     }
 }
