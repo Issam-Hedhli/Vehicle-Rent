@@ -1,68 +1,77 @@
-﻿@using Vehicle_Rent.ViewModels.ReturnVehicle;
-@model ReturnVehicleVM;
+﻿﻿@using Vehicle_Rent.ViewModels.Rent;
+@model RentVM;
 
-<div class="site-section bg-light">
-    <div class="container" style="margin-top:80px;">
-
-        <div class="row align-items-center">
-            <div class="col-lg-6 text-center order-lg-2">
-                <p class="mb-5">We hope that you liked riding our car. To improve our services and our transparency, we ask our customers to give the experience a rating and a review.</p>
-                <form asp-action="ReturnVehicleCopy" asp-controller="ReturnVehicle">
-                    <div class="form-group row" style="display:flex;">
-                        <div class="col-md-12" style="display:flex; align-items:center;">
-                            <label for="rating">Rating:</label>
-                            <div class="rating" style="margin-left:auto; margin-right:auto;">
-                                <span class="star" data-value="1">&#9734;</span>
-                                <span class="star" data-value="2">&#9734;</span>
-                                <span class="star" data-value="3">&#9734;</span>
-                                <span class="star" data-value="4">&#9734;</span>
-                                <span class="star" data-value="5">&#9734;</span>
-                                <input asp-for="Rating" type="hidden"  id="rating-value">
+<div class="site-section bg-light" id="contact-section">
+    <div class="container">
+        <div class="row justify-content-left text-center">
+            <div class="col-7 text-left mb-5" style="margin-top:80px">
+                <h4><strong>Great Choice, Please Use This Form To Rent This Car</strong></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mb-5">
+                <form asp-action="Rent" method="post">
+                    <div class="row align-items-center">
+                        <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="form-control-wrap">
+                                <input asp-for="startDate" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+                                <span asp-validation-for="startDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="form-control-wrap">
+                                <input asp-for="endDate" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+                                <span asp-validation-for="endDate" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <textarea class="form-control" asp-for="Review" placeholder="Write your review." rows="2"></textarea>
-                        </div>
-                        <div class="col-md-12">
-                            <input type="checkbox" asp-for="Confirmation" placeholder="Confirmation"/> Confirm the return
+                    <div class="listing-img mr-4" style="width:1000px; margin-top:30px;">
+                        <img src="~/images/car_7.jpg" alt="Image" height="300px">
+                    </div>
+                    <div class="form-group row" style="margin-top:50px;">
+                        <div class="col-md-6 mr-auto">
+                            <input type="submit" class="btn btn-block btn-brown text-white py-3 px-5" value="Go To CheckOut">
                         </div>
                     </div>
-                
-                    <p>
-                        <button type="submit" class="btn btn-primary">
-                            Return the car
-                        </button>
-                    </p>
-                    @Html.ValidationMessageFor(model => model.Confirmation, "", new { @class = "text-danger" })
                 </form>
             </div>
-            <div class="col-lg-6 ml-auto order-lg-1">
-                <h3 class="mb-4 section-heading"><strong>Return the car @Model.VehicleCopyReadVM.Vehicle.Name</strong></h3>
-                <div class="img-wrap-1 mb-5">
-                    <img src=@Model.VehicleCopyReadVM.Vehicle.Photo alt="Image" class="img-fluid" style="border-radius: 20px;">
+            <div class="col-lg-4 ml-auto">
+                <div class="bg-white p-3 p-md-5">
+                    <h3 class="text-black mb-4">Rent Details</h3>
+                    <ul class="list-unstyled footer-link">
+                        <div class="form-group row">
+                            <div id="totalDiv">
+                                <h5>Total $</h5>
+                            </div>
+                        </div>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<style>
+    .btn-brown {
+        background-color: #8B4513; /* Brown color */
+        color: #fff; /* White text color */
+        /* Add any other styles you need */
+    }
+</style>
 
-    <script>
-        const stars = document.querySelectorAll('.star');
 
-        stars.forEach((star) => {
-            star.addEventListener('click', () => {
-                const value = star.getAttribute('data-value');
-                document.getElementById('rating-value').value = value;
-                stars.forEach((s) => {
-                    if (s.getAttribute('data-value') <= value) {
-                        s.innerHTML = '&#9733;';
-                    } else {
-                        s.innerHTML = '&#9734;';
-                    }
-                });
-            });
-        });
-    </script>
+
+<script>
+    // Custom JavaScript validation
+    document.getElementById('rentForm').addEventListener('submit', function (event) {
+        var pickupDate = document.getElementById('cf-3').value;
+        var dropOffDate = document.getElementById('cf-4').value;
+
+        if (!pickupDate || !dropOffDate) {
+            alert('Please fill out all required fields.');
+            event.preventDefault();
+        }
+    });
+</script>
