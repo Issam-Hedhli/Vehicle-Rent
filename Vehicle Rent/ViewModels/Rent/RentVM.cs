@@ -12,14 +12,15 @@ namespace Vehicle_Rent.ViewModels.Rent
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "The Start Date field is required.")]
         [FutureDate(ErrorMessage = "Start date must be in the future.")]
-        public DateTime startDate { get; set; }
+        public DateTime startDate { get; set; } = DateTime.Now;
 
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "The End Date field is required.")]
         [DateGreaterThan(nameof(startDate), ErrorMessage = "End Date must be greater than Start Date.")]
-        public DateTime endDate { get; set; }
+        public DateTime endDate { get; set; } = DateTime.Now.AddDays(3);
     }
+
     public class FutureDateAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -36,5 +37,6 @@ namespace Vehicle_Rent.ViewModels.Rent
         }
     }
 }
-   
+
+
 
