@@ -20,6 +20,6 @@ namespace Vehicle_Rent.Models
 		public string? StatusId { get; set; }
 		public virtual AvailibilityStatus Status { get; set; }
         public string? RatingId { get; set; }
-        public virtual Rating Ratings { get; set; }
+        public virtual Rating Ratings { get; set; } = new Rating();
 	}
 }

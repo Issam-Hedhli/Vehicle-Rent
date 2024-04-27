@@ -16,8 +16,10 @@ namespace Vehicle_Rent.Repository.Specific
         {
             var customer = await _context.Set<User>()
                 .Include(r => r.Rentals)
-                .ThenInclude(vc => vc.VehicleCopy)
-                .ThenInclude(bc => bc.Vehicle)
+                    .ThenInclude(vc => vc.VehicleCopy)
+                        .ThenInclude(bc => bc.Vehicle)
+                .Include(r=>r.Rentals)
+                    .ThenInclude(r=>r.Ratings)
                 .FirstOrDefaultAsync(r => r.Id == id);
             return customer;
         }

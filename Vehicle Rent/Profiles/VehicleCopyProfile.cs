@@ -10,20 +10,38 @@ namespace Vehicle_Rent.Profiles
         public VehicleCopyProfile()
         {
             CreateMap<VehicleCopy, VehicleCopyReadVM>()
-                .ForMember(dest => dest.AverageRating, opt => opt.MapFrom(src => AverageRating(src.RentalItems)))
+                .ForMember(dest => dest.AverageRating, opt => opt.MapFrom(src => AverageRatingValue(src.RentalItems.Where(ri=>ri.StatusId=="2").ToList())))
                 .ForMember(dest=>dest.RentalItems,opt=>opt.MapFrom(src=>src.RentalItems.Where(ri=>ri.StatusId=="2").ToList()))
                 .ForMember(dest=>dest.Unavailabilities,opt=>opt.MapFrom(src=>src.Unavailabilities.ToList()));
         }
 
-        private object AverageRating(ICollection<RentalItem> rentalItems)
+
+        private int AverageRatingValue(List<RentalItem> rentalItems)
         {
-            
-            var ratings = rentalItems.Select(ri => ri.Ratings).Where(r=>r!=null).Select(r=>r.Value).Where(v=>v.Value!=null).ToList();
-            if (ratings.IsNullOrEmpty() )
+            if (rentalItems == null || !rentalItems.Any())
+                return 0;
+
+            var ratings = rentalItems.Select(r => r.Ratings?.Value)
+                                     .Where(r => r != null)
+                                     .ToList();
+
+            if (!ratings.Any())
+                return 0;
+
+            try
             {
-                return null;
+                return (int)ratings.Average();
             }
-            return (int)ratings.Average();
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
         }
+
+
+
+
+
     }
 }
