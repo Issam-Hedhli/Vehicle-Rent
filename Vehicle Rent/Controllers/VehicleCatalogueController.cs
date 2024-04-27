@@ -115,26 +115,12 @@ namespace Vehicle_Rent.Controllers
             }
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
             var vehicleReadVM = _mapper.Map<VehicleReadVM>(vehicle);
-            DateTime startDateParsed;
-            DateTime endDateParsed;
-            if (!DateTime.TryParse(startDate, out startDateParsed))
-            {
-                // Default to DateTime.MinValue if parsing fails
-                startDateParsed = DateTime.MinValue;
-            }
 
-            // Attempt to parse end date
-            if (!DateTime.TryParse(endDate, out endDateParsed))
-            {
-                // Default to DateTime.MaxValue if parsing fails
-                endDateParsed = DateTime.MaxValue;
-            }
-
-            vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice, startDateParsed, endDateParsed);
+            vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice, startDate, endDate);
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
         }
-        public List<VehicleCopyReadVM> Filter(List<VehicleCopyReadVM> vehicleCopyReadVMs, int minRentalPrice, int maxRentalPrice, DateTime startDate, DateTime endDate)
+        public List<VehicleCopyReadVM> Filter(List<VehicleCopyReadVM> vehicleCopyReadVMs, int minRentalPrice, int maxRentalPrice, string startDate, string endDate)
         {
             // Filter by rental price
             if (minRentalPrice > 0)
@@ -145,14 +131,16 @@ namespace Vehicle_Rent.Controllers
             {
                 vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc => vc.RentalPrice <= maxRentalPrice).ToList();
             }
-
+            if (!startDate.IsNullOrEmpty() && !endDate.IsNullOrEmpty())
+            {
+                vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc =>
+                    vc.Unavailabilities.All(u => u.endDate.Date < DateTime.Parse(startDate).Date || u.startDate.Date > DateTime.Parse(endDate).Date)).ToList();
+            }
             // Filter by availability
-            vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc =>
-                vc.Unavailabilities.All(u => u.endDate.Date < startDate.Date || u.startDate.Date > endDate.Date)).ToList();
 
             return vehicleCopyReadVMs;
         }
-        public async Task<IActionResult> RentedVehicleCopies(int minPrice, int maxPrice, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> RentedVehicleCopies(int minPrice, int maxPrice, string startDate, string endDate)
         {
             string Id = User.FindFirstValue("Id");
             var vehiclecopies = await _vehicleCatalogueService.GetCurrentlyRentedVehicleCopiesByUserIdAsync(Id);
@@ -189,7 +177,7 @@ namespace Vehicle_Rent.Controllers
             ViewBag.Title = "Rented Vehicle Copies";
             return View("vehiclecopies", vehiclecopyvms);       
         }
-        public async Task<IActionResult> ReturnedVehicleCopies(int minPrice, int maxPrice, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> ReturnedVehicleCopies(int minPrice, int maxPrice, string startDate, string endDate)
         {
             string Id = User.FindFirstValue("Id");
             var vehiclecopies = await _vehicleCatalogueService.GetReturnedVehicleCopiesByCustomerIdAsync(Id);

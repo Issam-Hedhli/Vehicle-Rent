@@ -39,13 +39,13 @@
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
                             <div class="form-control-wrap">
-                                <input name="startDate" type="text" id="cf-4" placeholder="Since" class="form-control datepicker px-3">
+                                <input name="startDate" type="text" id="cf-4-start" placeholder="Since" class="form-control datepicker px-3">
                                 <span class="icon icon-date_range"></span>
                             </div>
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
                             <div class="form-control-wrap">
-                                <input name="endDate" type="text" id="cf-4" placeholder="To" class="form-control datepicker px-3">
+                                <input name="endDate" type="text" id="cf-4-end" placeholder="To" class="form-control datepicker px-3">
                                 <span class="icon icon-date_range"></span>
                             </div>
                         </div>
@@ -125,4 +125,17 @@
 
 
 
+@section Scripts {
+<script>
+    function validateForm() {
+        var startDate = document.getElementById("cf-4-start").value;
+        var endDate = document.getElementById("cf-4-end").value;
 
+        if ((startDate !== "" && endDate === "") || (startDate === "" && endDate !== "")) {
+            alert("Please fill both Start Date and End Date.");
+            return false;
+        }
+        return true;
+    }
+</script>
+}
