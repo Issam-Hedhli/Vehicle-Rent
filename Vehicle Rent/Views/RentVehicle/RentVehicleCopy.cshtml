@@ -2,96 +2,56 @@
 @model RentVM;
 
 <div class="site-section bg-light" id="contact-section">
-    <div class="container" style="margin-top:50px;">
+    <div class="container">
+        <div class="row justify-content-left text-center">
+            <div class="col-7 text-left mb-5" style="margin-top:80px">
+                <h4><strong>Great Choice, Please Use This Form To Rent This Car</strong></h4>
+            </div>
+        </div>
         <div class="row">
-
-        
-            <div class="row justify-content-left text-center" style="display:flex;">
-                <div class="col-lg-8 mb-5" style="display:block;">
-
-                    <div class="col-7 text-left mb-5" style="margin-top:80px">
-                        <h4><strong>Great Choice!</strong></h4>
-                        <h5><strong>Please Use This Form To Rent This Car</strong></h5>
-                    </div>
-                    <form asp-action="Rent" asp-controller="" method="post">
-                        <div class="row align-items-center">
-                            <div class="mb-3 mb-md-0 col-md-5">
-                                <label for="startDate">Start Date</label>
-                                <input asp-for="startDate" type="date" class="form-control datepicker px-3">
-                                <span asp-validation-for="startDate" class="text-danger d-block mt-2"></span>
-                            </div>
-                            <div class="mb-3 mb-md-0 col-md-5">
-                                <label for="endDate">End Date</label>
-                                <input asp-for="endDate" type="date" class="form-control datepicker px-3">
-                                <span asp-validation-for="endDate" class="text-danger d-block mt-2"></span>
+            <div class="col-lg-8 mb-5">
+                <form asp-action="Rent" method="post">
+                    <div class="row align-items-center">
+                        <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="form-control-wrap">
+                                <input asp-for="startDate" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+                                <span asp-validation-for="startDate" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-brown text-white py-3 px-5" style="width: 600px;">Go To CheckOut</button>
+                        <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="form-control-wrap">
+                                <input asp-for="endDate" class="form-control datepicker px-3">
+                                <span class="icon icon-date_range"></span>
+                                <span asp-validation-for="endDate" class="text-danger"></span>
+                            </div>
                         </div>
-                    </form>
-                </div>
-                <div class="col-lg-4 ml-auto" >
-                    <div class="bg-white p-3 p-md-5">
-                        <h3 class="text-black mb-4">Rent Details</h3>
-                        <ul class="list-unstyled footer-link">
-                            <div class="form-group row">
-                                <label for="totalRentDays" class="col-sm-6 col-form-label">Total Rental Days:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="totalRentDays" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="rentalPrice" class="col-sm-6 col-form-label">Rental Price Per Day:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="rentalPrice" value="50" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="totalCost" class="col-sm-6 col-form-label">Total Rental Cost:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="totalCost" readonly>
-                                </div>
-                            </div>
-                        </ul>
                     </div>
+                    <div class="listing-img mr-4" style="width:1000px; margin-top:30px;">
+                        <img src="~/images/car_7.jpg" alt="Image" height="300px">
+                    </div>
+                    <div class="form-group row" style="margin-top:50px;">
+                        <div class="col-md-6 mr-auto">
+                            <input type="submit" class="btn btn-block btn-brown text-white py-3 px-5" value="Go To CheckOut">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4 ml-auto">
+                <div class="bg-white p-3 p-md-5">
+                    <h3 class="text-black mb-4">Rent Details</h3>
+                    <ul class="list-unstyled footer-link">
+                        <div class="form-group row">
+                            <div id="totalDiv">
+                                <h5>Total $</h5>
+                            </div>
+                        </div>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    // Function to calculate total rental cost
-    function calculateTotalCost() {
-        var startDate = new Date(document.getElementById('startDate').value);
-        var endDate = new Date(document.getElementById('endDate').value);
-        var rentalPrice = parseFloat(document.getElementById('rentalPrice').value);
-
-        // Calculate the difference in days between start date and end date
-        var timeDiff = endDate.getTime() - startDate.getTime();
-        var totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-        // Calculate total rental cost
-        var totalCost = rentalPrice * totalDays;
-
-        // Set the calculated values in the input fields
-        document.getElementById('totalRentDays').value = totalDays;
-        document.getElementById('totalCost').value = totalCost.toFixed(2);
-    }
-
-    // Call the function when the page is loaded
-    document.addEventListener('DOMContentLoaded', function () {
-        calculateTotalCost();
-    });
-
-    // Call the function when the input fields change
-    document.getElementById('startDate').addEventListener('change', calculateTotalCost);
-    document.getElementById('endDate').addEventListener('change', calculateTotalCost);
-</script>
-
-
-
 
 <style>
     .btn-brown {
@@ -102,7 +62,7 @@
 </style>
 
 
-@section Scripts {
+
 <script>
     // Custom JavaScript validation
     document.getElementById('rentForm').addEventListener('submit', function (event) {
@@ -115,4 +75,3 @@
         }
     });
 </script>
-}
