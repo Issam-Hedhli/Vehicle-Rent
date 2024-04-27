@@ -36,6 +36,8 @@
                         </button>
                     </p>
                     @Html.ValidationMessageFor(model => model.Confirmation, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                 </form>
             </div>
             <div class="col-lg-6 ml-auto order-lg-1">

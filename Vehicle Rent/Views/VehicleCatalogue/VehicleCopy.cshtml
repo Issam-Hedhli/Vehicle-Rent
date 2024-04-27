@@ -7,6 +7,11 @@
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-4 mb-md-0">
                     <h2 class="mb-0 text-white">Vehicle Copy of Chevrolet Camaro</h2>
+                    <h3 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h3>
+                    @foreach (var unavailability in Model.Unavailabilities)
+                    {
+                        <h3 class="mb-0 text-white">From @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd") </h3>
+                    }
                 </div>
                 <div class="col-lg-5 text-md-right">
                     <a asp-action="RentVehicleCopy" asp-controller="RentVehicle" asp-route-vehicleCopyId =@Model.Id class="btn btn-primary btn-white">Rent this car</a>
@@ -40,7 +45,7 @@
                             </blockquote>
                             <div style="display:flex; justify-content:space-between;">
                                 <div class="d-flex v-card align-items-center">
-                                    <img src=@rentalItem.User.Image alt="Image" class="img-fluid mr-3">
+                                    <img src=@rentalItem.User.Image alt="Image" style="height:60px;width:60px;" class="img-fluid mr-3">
                                     <div class="author-name" >
                                         <div style="flex-grow: 1;">
                                             <span class="d-block">@rentalItem.User.Name</span>

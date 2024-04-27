@@ -53,12 +53,12 @@ namespace Vehicle_Rent.Controllers
             {
                 return View(rentVM);
             }
-            //nchouf el availability mtaa lvehicle copy
-            //if (rentVM.startDate>rentVM.vehicleCopyReadVM.UnavailabilityStart || rentVM.endDate<rentVM.vehicleCopyReadVM.UnavailabilityEnd)
-            //{
-            //    return View(rentVM);
-            //}
-            //n3addih lecheckout
+            //ken mouch available
+            if (!ValidateAvailability(rentVM))
+            {
+                ModelState.AddModelError(string.Empty, "The vehicle copy is unavailable at this time");
+                return View(rentVM);
+            }
             var duration = (rentVM.endDate - rentVM.startDate).Days;
             var amount = duration * rentVM.vehicleCopyReadVM.RentalPrice;
             var successUrl = Url.Action("StepUpRentVehicle", "RentVehicle", new {startDate= rentVM.startDate, endDate=rentVM.endDate, vehicleCopyId=vehicleCopyId}, Request.Scheme);
@@ -67,6 +67,14 @@ namespace Vehicle_Rent.Controllers
             var session = _paymentService.CreateCheckOutSession(amount.ToString(), currency, successUrl, cancelUrl, vehicleCopy.Vehicle.Name);
             return Redirect(session);
         }
+
+        private bool ValidateAvailability(RentVM rentVM)
+        {
+            var unavailabilities = rentVM.vehicleCopyReadVM.Unavailabilities;
+
+            return unavailabilities.All(u => u.startDate >= rentVM.endDate || u.endDate <= rentVM.startDate);
+        }
+
         public async Task<IActionResult> StepUpRentVehicle (DateTime startDate, DateTime endDate, string vehicleCopyId)
         {
             var Id = User.FindFirstValue("Id");
