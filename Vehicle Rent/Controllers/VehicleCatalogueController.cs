@@ -30,10 +30,9 @@ namespace Vehicle_Rent.Controllers
             string id = User.FindFirstValue("Id");
             var vehicles = await _vehicleCatalogueService.GetAllVehiclesAsync();
             var vehicledetailVms = _mapper.Map<List<VehicleReadVM>>(vehicles);
-            vehicledetailVms = Filter(vehicledetailVms, searchString, company);
             ViewBag.Title = "Browse vehicles";
-            ViewBag.Models = vehicledetailVms.Select(m => m.ModelName).Distinct().ToList();
             ViewBag.Companies = vehicledetailVms.Select(c => c.CompanyName).Distinct().ToList();
+            vehicledetailVms = Filter(vehicledetailVms, searchString, company);
             //ViewBag.Redirect = "vehicles";
             return View(vehicledetailVms);
         }
