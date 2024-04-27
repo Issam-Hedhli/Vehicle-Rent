@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Vehicle_Rent.Services.Profile;
 using Vehicle_Rent.Services.VehicleCatalogue;
 using Vehicle_Rent.ViewModels.Profile;
+using Vehicle_Rent.ViewModels.VehicleCopyVM;
 using Vehicle_Rent.ViewModels.VehicleVM;
 
 namespace Vehicle_Rent.Controllers
@@ -25,10 +26,7 @@ namespace Vehicle_Rent.Controllers
             var Id = User.FindFirstValue("Id");
             var Customer = await _profileService.GetCustomerByIdAsync(Id);
             var profile = _mapper.Map<ProfileDetailVM>(Customer);
-            var returnedvehicles = await _vehicleCatalogueService.GetReturnedVehiclesByCustomerIdAsync(Id);
-            profile.Images = _mapper.Map<List<VehicleReadVM>>(returnedvehicles.Take(5).ToList());
-            var currentlyBorrowedvehicles = await _vehicleCatalogueService.GetRentedVehiclesByCustomerIdAsync(Id);
-            profile.numberOfvehiclesInposession = currentlyBorrowedvehicles.Count;
+           
             ViewBag.Title = "My Profile";
             return View(profile);
         }

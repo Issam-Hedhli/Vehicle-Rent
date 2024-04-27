@@ -263,7 +263,7 @@ namespace Vehicle_Rent.Data
 				var customer = await userManager.FindByEmailAsync(customerEmail);
 				if (customer == null)
 				{
-					User newCustomer = new User { Id = "1", UserName = customerEmail, Email = customerEmail,Name="Sami", Image= "https://scontent.ftun5-1.fna.fbcdn.net/v/t1.6435-9/120645766_3263034770470903_6610932504759370937_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=zfsHXV9ToLYAb6cQ9ho&_nc_ht=scontent.ftun5-1.fna&oh=00_AfAr5QEPUSx6fbsyFmRhKf1a4WBFnugVku-lt_fJN-M05A&oe=664BB337" };
+					User newCustomer = new User { Id = "1", UserName = customerEmail, Email = customerEmail,Name="Issam", Image= "https://scontent.ftun10-1.fna.fbcdn.net/v/t39.30808-6/420193328_122126981744102705_859171868184661155_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=FXxEfc52dEwQ7kNvgF8uWPh&_nc_ht=scontent.ftun10-1.fna&oh=00_AfBJC5KYcPZu5qtfLkNFu3le8ACWKIpPSOTomn3B6aldSg&oe=6632B172" };
 					await userManager.CreateAsync(newCustomer, "Customer123!"); 
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
 				}

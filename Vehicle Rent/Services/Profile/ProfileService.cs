@@ -14,7 +14,7 @@ namespace Vehicle_Rent.Services.Profile
         }
         public async Task<User> GetCustomerByIdAsync(string id)
         {
-            var customer = await _userRepository.GetByIdAsync(id);
+            var customer = await _userRepository.GetEagerCustomerByIdAsync(id);
             return customer;    
         }
     }
