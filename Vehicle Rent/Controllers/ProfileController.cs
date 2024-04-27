@@ -20,7 +20,6 @@ namespace Vehicle_Rent.Controllers
             _vehicleCatalogueService = vehicleCatalogueService;
             _mapper = mapper;
         }
-        [Authorize(Roles = "User")]
         public async Task<IActionResult> Index()
         {
             var Id = User.FindFirstValue("Id");
