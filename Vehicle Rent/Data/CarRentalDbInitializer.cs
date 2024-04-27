@@ -259,7 +259,7 @@ namespace Vehicle_Rent.Data
 
 				#region Users
 				// First Customer
-				string customerEmail = "customer@carrental.com";
+				string customerEmail = "issam.hedhli@ensi-uma.tn";
 				var customer = await userManager.FindByEmailAsync(customerEmail);
 				if (customer == null)
 				{
@@ -269,11 +269,18 @@ namespace Vehicle_Rent.Data
 				}
 
 				// Second Customer
-				string secondaryCustomerEmail = "secondCustomer@carrental.com";
+				string secondaryCustomerEmail = "samiellouze@hotmail.com";
 				var secondaryCustomer = await userManager.FindByEmailAsync(secondaryCustomerEmail);
                 if (secondaryCustomer == null)
                 {
-					User newCustomer = new User { Id = "2", UserName = secondaryCustomerEmail, Email = secondaryCustomerEmail,Name="Issam",Image= "https://th.bing.com/th/id/OIP.Y1jVldJzHx7bwkOo-AnwFQHaLC?rs=1&pid=ImgDetMain" };
+					User newCustomer = new User 
+                    { 
+                        Id = "2",
+                        UserName = secondaryCustomerEmail,
+                        Email = secondaryCustomerEmail,
+                        Name="Issam",
+                        Image= "https://th.bing.com/th/id/OIP.Y1jVldJzHx7bwkOo-AnwFQHaLC?rs=1&pid=ImgDetMain"
+                    };
 					await userManager.CreateAsync(newCustomer, "Customer123!");
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
 				}
