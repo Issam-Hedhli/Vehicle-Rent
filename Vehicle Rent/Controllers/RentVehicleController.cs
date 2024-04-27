@@ -61,10 +61,10 @@ namespace Vehicle_Rent.Controllers
             //n3addih lecheckout
             var duration = (rentVM.endDate - rentVM.startDate).Days;
             var amount = duration * rentVM.vehicleCopyReadVM.RentalPrice;
-            var cancelUrl = Url.Action("StepUpRentVehicle", "RentVehicle", new {startDate= rentVM.startDate, endDate=rentVM.endDate, vehicleCopyId=vehicleCopyId}, Request.Scheme);
-            var successUrl = Url.Action("Index","Home", null,Request.Scheme);
+            var successUrl = Url.Action("StepUpRentVehicle", "RentVehicle", new {startDate= rentVM.startDate, endDate=rentVM.endDate, vehicleCopyId=vehicleCopyId}, Request.Scheme);
+            var cancelUrl = Url.Action("Index","Home", null,Request.Scheme);
             var currency = "usd";
-            var session = _paymentService.CreateCheckOutSession(amount.ToString(), currency, successUrl, cancelUrl);
+            var session = _paymentService.CreateCheckOutSession(amount.ToString(), currency, successUrl, cancelUrl, vehicleCopy.Vehicle.Name);
             return Redirect(session);
         }
         public async Task<IActionResult> StepUpRentVehicle (DateTime startDate, DateTime endDate, string vehicleCopyId)
