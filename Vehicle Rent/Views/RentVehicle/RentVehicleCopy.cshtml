@@ -9,7 +9,7 @@
                     <div class="col-7 text-left mb-5" style="margin-top:80px">
                         <h4><strong>Great Choice!</strong></h4>
                         <h5><strong>Please Use This Form To Rent This Car</strong></h5>
-                        @if (Model.vehicleCopyReadVM.Unavailabilities != null)
+                        @if (Model.vehicleCopyReadVM.Unavailabilities != null && Model.vehicleCopyReadVM.Unavailabilities.Count>0)
                         {
                             <h3 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h3>
                             @foreach (var unavailability in Model.vehicleCopyReadVM.Unavailabilities)
