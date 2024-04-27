@@ -4,37 +4,37 @@
 <div class="site-section bg-light" id="contact-section">
     <div class="container" style="margin-top:50px;">
         <div class="row">
-
-
             <div class="row justify-content-left text-center" style="display:flex;">
                 <div class="col-lg-8 mb-5" style="display:block;">
-
                     <div class="col-7 text-left mb-5" style="margin-top:80px">
                         <h4><strong>Great Choice!</strong></h4>
                         <h5><strong>Please Use This Form To Rent This Car</strong></h5>
-                        <h3 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h3>
-                        @foreach (var unavailability in Model.vehicleCopyReadVM.Unavailabilities)
+                        @if (Model.vehicleCopyReadVM.Unavailabilities != null)
                         {
-                            <h3 class="mb-0 text-white">From @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd") </h3>
+                            <h3 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h3>
+                            @foreach (var unavailability in Model.vehicleCopyReadVM.Unavailabilities)
+                            {
+                                <h3 class="mb-0 text-white">From @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd") </h3>
+                            }
                         }
                     </div>
                     <form asp-action="RentVehicleCopy" asp-controller="RentVehicle" style="display:block;" method="post">
                         <div class="row align-items-center">
-                            <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="mb-3 mb-md-0 col-md-5" style="justify-content:space-between">
                                 <label for="startDate">Start Date</label>
-                                <input asp-for="startDate" type="date" class="form-control datepicker px-3">
+                                <input asp-for="startDate" style="margin-left:20px;" class="form-control px-3 start-date">
                             </div>
-                            <div class="mb-3 mb-md-0 col-md-5">
+                            <div class="mb-3 mb-md-0 col-md-5" style="justify-content:space-between;">
                                 <label for="endDate">End Date</label>
-                                <input asp-for="endDate" type="date" class="form-control datepicker px-3">
+                                <input asp-for="endDate" style="margin-left:20px;" class="form-control px-3 end-date">
                             </div>
-                            <div>
-                                <span asp-validation-for="startDate" class="text-danger d-block mt-2"></span>
-                                <span asp-validation-for="endDate" class="text-danger d-block mt-2"></span>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span asp-validation-for="startDate" type="text" class="text-danger d-block mt-2"></span>
+                                <span asp-validation-for="endDate" type="text" class="text-danger d-block mt-2"></span>
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-brown text-white py-3 px-5" style="width: 600px;">Go To CheckOut</button>
+                            <button type="submit" class="btn text-white py-3 px-5" style="width: 600px; background-color: #8B4513;color: #fff;">Go To CheckOut</button>
                         </div>
                     </form>
                 </div>
@@ -69,57 +69,30 @@
 </div>
 
 <script>
-    // Function to calculate total rental cost
+    // Get the start date and end date input elements
+    const startDateInput = document.querySelector('.start-date');
+    const endDateInput = document.querySelector('.end-date');
+
+    // Add event listeners to listen for changes in start date and end date
+    startDateInput.addEventListener('change', calculateTotalCost);
+    endDateInput.addEventListener('change', calculateTotalCost);
+
     function calculateTotalCost() {
-        var startDate = new Date(document.getElementById('startDate').value);
-        var endDate = new Date(document.getElementById('endDate').value);
-        var rentalPrice = parseFloat(document.getElementById('rentalPrice').value);
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
 
-        // Calculate the difference in days between start date and end date
-        var timeDiff = endDate.getTime() - startDate.getTime();
-        var totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        // Calculate the number of days between start date and end date
+        const timeDifference = endDate.getTime() - startDate.getTime();
+        const totalDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-        // Calculate total rental cost
-        var totalCost = rentalPrice * totalDays;
+        // Get the rental price per day
+        const rentalPrice = 50; // You can modify this value if needed
 
-        // Set the calculated values in the input fields
+        // Calculate the total rental cost
+        const totalCost = totalDays * rentalPrice;
+
+        // Update the total rental days and total rental cost input fields
         document.getElementById('totalRentDays').value = totalDays;
-        document.getElementById('totalCost').value = totalCost.toFixed(2);
+        document.getElementById('totalCost').value = totalCost;
     }
-
-    // Call the function when the page is loaded
-    document.addEventListener('DOMContentLoaded', function () {
-        calculateTotalCost();
-    });
-
-    // Call the function when the input fields change
-    document.getElementById('startDate').addEventListener('change', calculateTotalCost);
-    document.getElementById('endDate').addEventListener('change', calculateTotalCost);
 </script>
-
-
-
-
-<style>
-    .btn-brown {
-        background-color: #8B4513; /* Brown color */
-        color: #fff; /* White text color */
-        /* Add any other styles you need */
-    }
-</style>
-
-
-@section Scripts {
-    <script>
-        // Custom JavaScript validation
-        document.getElementById('rentForm').addEventListener('submit', function (event) {
-            var pickupDate = document.getElementById('cf-3').value;
-            var dropOffDate = document.getElementById('cf-4').value;
-
-            if (!pickupDate || !dropOffDate) {
-                alert('Please fill out all required fields.');
-                event.preventDefault();
-            }
-        });
-    </script>
-}

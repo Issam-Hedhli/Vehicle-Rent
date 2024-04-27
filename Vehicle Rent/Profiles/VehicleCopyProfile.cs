@@ -38,10 +38,5 @@ namespace Vehicle_Rent.Profiles
                 return 0;
             }
         }
-
-
-
-
-
     }
 }

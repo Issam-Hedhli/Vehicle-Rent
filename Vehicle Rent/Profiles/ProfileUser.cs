@@ -6,12 +6,15 @@ namespace Vehicle_Rent.Profiles
 {
     public class ProfileUser : Profile
     {
-        public ProfileUser() 
+        public ProfileUser()
         {
             CreateMap<User, ProfileDetailVM>()
-                .ForMember(dest => dest.numberOfvehicleCopiesInposession, opt => opt.MapFrom(src => src.Rentals.Where(r => r.StatusId == "1").Count()))
-                .ForMember(dest => dest.numberOfRentedVehicleCopies, opt => opt.MapFrom(src => src.Rentals.Where(r => r.StatusId == "2").Count()))
-                .ForMember(dest => dest.VehicleImages, opt => opt.MapFrom(src => src.Rentals.Select(r=>r.VehicleCopy).Select(vc=>vc.Vehicle).Select(v=>v.Photo).Distinct()));
+                .ForMember(dest => dest.numberOfvehicleCopiesInposession, opt => opt.MapFrom(src => src.Rentals.Count(r => r.StatusId == "1")))
+                .ForMember(dest => dest.numberOfRentedVehicleCopies, opt => opt.MapFrom(src => src.Rentals.Count(r => r.StatusId == "2")))
+                .ForMember(dest => dest.VehicleImages, opt => opt.MapFrom(src => src.Rentals
+                    .Select(r => r.VehicleCopy.Vehicle.Photo)
+                    .Distinct()));
         }
+
     }
 }

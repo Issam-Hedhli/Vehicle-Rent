@@ -17,7 +17,7 @@ namespace Vehicle_Rent.ViewModels.Rent
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "The End Date field is required.")]
         [DateGreaterThan(nameof(startDate), ErrorMessage = "End Date must be greater than Start Date.")]
-        public DateTime endDate { get; set; } = DateTime.Today.AddDays(3);
+        public DateTime endDate { get; set; } =DateTime.Today;
     }
 
     public class FutureDateAttribute : ValidationAttribute
