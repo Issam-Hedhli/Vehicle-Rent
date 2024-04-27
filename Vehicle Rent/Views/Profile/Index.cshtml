@@ -10,9 +10,9 @@
                 <h2 class="mb-4">@ViewBag.Title</h2>
             </div>
         </div>
-        <div class="row align-items-center justify-content-center"  >
+        <div class="row align-items-center justify-content-center">
             <div class="col-lg-8 col-md-12 mb-12" style="margin-bottom:10px; ">
-                <div class="post-entry-1 h-100 person-1" >
+                <div class="post-entry-1 h-100 person-1">
 
                     <img src="@Model.Image" alt="Image" style="width:150px;height:150px;">
 
@@ -40,7 +40,7 @@
 
                         </div>
                         <div style="display:flex; justify-content:space-between;">
-                            @foreach(var vehicle in Model.Vehicles.Take(5))
+                            @foreach (var vehicle in Model.Vehicles.Take(5))
                             {
                                 <a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId=@vehicle.Id>
                                     <img src=@vehicle.Photo />
@@ -49,9 +49,8 @@
                             }
                         </div>
                         <div style="height:50px;">
-
                         </div>
-                        <div class="form-group mt-3" >
+                        <div class="form-group mt-3">
                             <a asp-controller="VehicleCatalogue" asp-action="RentedVehicleCopies" a class="btn text-block py-3 px-5" style="width: 600px; background-color: #8B4513;color: #fff;">Go To Rental History</a>
                         </div>
                     </div>
@@ -60,5 +59,3 @@
         </div>
     </div>
 </div>
-
-

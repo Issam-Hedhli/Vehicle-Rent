@@ -26,7 +26,7 @@ namespace Vehicle_Rent.Controllers
             var Id = User.FindFirstValue("Id");
             var Customer = await _profileService.GetCustomerByIdAsync(Id);
             var profile = _mapper.Map<ProfileDetailVM>(Customer);
-           
+
             ViewBag.Title = "My Profile";
             return View(profile);
         }

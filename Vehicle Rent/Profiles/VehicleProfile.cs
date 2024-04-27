@@ -17,7 +17,7 @@ namespace Vehicle_Rent.Profiles
                 src.VehicleCopies
                     .SelectMany(ri => ri.RentalItems
                         .Select(r => r.Ratings))
-                    .Where(rating => rating != null)  
+                    .Where(rating => rating != null)
                     .ToList()));
         }
         private int AvailableVehicles(Vehicle Vehicle)
