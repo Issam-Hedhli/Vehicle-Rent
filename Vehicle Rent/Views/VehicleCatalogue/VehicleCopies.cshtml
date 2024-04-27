@@ -24,7 +24,7 @@
                                 </div>
                                 <div style="display:block;">
                                     <img src="@vehiclecopy.Vehicle.Photo" style="width:100px;height:70px; border-radius: 10px;" />
-                                    <h3 style="text-align:right;color:gold;">
+                                    <h3 style="text-align:center;margin-left:auto;color:gold;">
                                         @if (vehiclecopy.AverageRating != null)
                                         {
                                             @for (int i = 0; i < vehiclecopy.AverageRating; i++)
@@ -46,8 +46,7 @@
 
                                 <p> reviewed @vehiclecopy.RentalItems.Where(ri => ri.StatusId == "2").ToList().Count times</p>
                             </div>
-                            <div>
-
+                            <div style="height:120px;">
                                 @foreach (var unavailability in vehiclecopy.Unavailabilities)
                                 {
                                     <p>Unav from @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd")</p>
@@ -75,6 +74,7 @@
                                     <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Rent Vehicle Copy </a></p>
                                 </div>
                             }
+
 
                         </div>
 

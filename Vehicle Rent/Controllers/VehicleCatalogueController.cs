@@ -211,6 +211,10 @@ namespace Vehicle_Rent.Controllers
             }
             vehiclecopyvms = Filter(vehiclecopyvms, minPrice, maxPrice, startDate, endDate);
             ViewBag.Title = "Returned Vehicle Copies";
+            ViewBag.MinPrice = minPrice;
+            ViewBag.MaxPrice = maxPrice;
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
             return View("vehiclecopies", vehiclecopyvms);
         }
     }

@@ -12,7 +12,7 @@ namespace Vehicle_Rent.Services.Payment
         {
             _stripeSettings = stripeSettings.Value;
         }
-        public string CreateCheckOutSession(string amount, string currency, string successUrl, string cancelUrl)
+        public string CreateCheckOutSession(string amount, string currency, string successUrl, string cancelUrl, string product)
         {
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
             var options = new SessionCreateOptions
@@ -28,8 +28,8 @@ namespace Vehicle_Rent.Services.Payment
                             UnitAmount=Convert.ToInt32(amount) * 100,
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
-                                Name="Product Name",
-                                Description="Product Description"
+                                Name="Car Rental Project",
+                                Description=product
                             }
                         },
                         Quantity = 1

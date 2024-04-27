@@ -9,9 +9,9 @@ namespace Vehicle_Rent.Models
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
-		public int Value { get; set; }
-		public string Comment { get; set; }
-		public string RentalId { get; set; }
-		public virtual RentalItem RentalItem { get; set; }
+		public int? Value { get; set; }
+		public string? Comment { get; set; }
+		public string? RentalId { get; set; }
+		public virtual RentalItem RentalItem { get; set; } 
 	}
 }

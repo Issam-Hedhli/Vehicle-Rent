@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Encodings.Web;
 using Vehicle_Rent.Models;
 using Vehicle_Rent.Services.EmailSender;
 using Vehicle_Rent.Services.Payment;
@@ -60,32 +61,26 @@ namespace Vehicle_Rent.Controllers
             //n3addih lecheckout
             var duration = (rentVM.endDate - rentVM.startDate).Days;
             var amount = duration * rentVM.vehicleCopyReadVM.RentalPrice;
-            var cancelUrl = Url.Action("StepUpRentVehicle", "RentVehicle", rentVM, Request.Scheme);
-            var successUrl = Url.Action("Index","Home", null,Request.Scheme);
+            var successUrl = Url.Action("StepUpRentVehicle", "RentVehicle", new {startDate= rentVM.startDate, endDate=rentVM.endDate, vehicleCopyId=vehicleCopyId}, Request.Scheme);
+            var cancelUrl = Url.Action("Index","Home", null,Request.Scheme);
             var currency = "usd";
-            var session = _paymentService.CreateCheckOutSession(amount.ToString(), currency, successUrl, cancelUrl);
+            var session = _paymentService.CreateCheckOutSession(amount.ToString(), currency, successUrl, cancelUrl, vehicleCopy.Vehicle.Name);
             return Redirect(session);
         }
-        public async Task<IActionResult> StepUpRentVehicle (RentVM rentVM)
+        public async Task<IActionResult> StepUpRentVehicle (DateTime startDate, DateTime endDate, string vehicleCopyId)
         {
             var Id = User.FindFirstValue("Id");
-            await _rentalService.RentVehicleCopy(rentVM.vehicleCopyReadVM.Id, Id, rentVM.startDate, rentVM.endDate);
-            var callbackUrl = Url.Action("VehicleCatalogue", "RentedVehicleCopies", null, Request.Scheme);
+            await _rentalService.RentVehicleCopy(vehicleCopyId, Id, startDate, endDate);
+            var callbackUrl = Url.Action("RentedVehicleCopies", "VehicleCatalogue", null, Request.Scheme);
             var customer = await _profileService.GetCustomerByIdAsync(Id);
             await _emailSender.SendEmailAsync(
-                //email
+                // email
                 customer.Email,
-                //subject
+                // subject
                 "Confirmation of Rental",
-                //message
-                "Here is a mail confirming the rental of vehicle copy "
-                + rentVM.vehicleCopyReadVM.Id 
-                + "between the date " 
-                + rentVM.startDate.ToString("yyyy-MM-dd") 
-                + " and " 
-                + rentVM.endDate.ToString("yyyy-MM-dd")
-                + " "
-                + $" < a href =\"{callbackUrl}\">Rented Vechiles</a>.");
+                // message
+                $"Here is a mail confirming the rental of vehicle copy {vehicleCopyId} between the date {startDate.ToString("yyyy-MM-dd")} and {endDate.ToString("yyyy-MM-dd")} <a href=\"{HtmlEncoder.Default.Encode(callbackUrl)}\">Click here</a> to view details."
+            );
 
             return RedirectToAction("RentedVehicleCopies", "VehicleCatalogue");
         }
