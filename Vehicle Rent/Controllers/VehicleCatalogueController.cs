@@ -76,7 +76,7 @@ namespace Vehicle_Rent.Controllers
             }
             return View(vehicleCopyReadVM);
         }
-        public async Task<IActionResult> Vehicle(string vehicleId, int minPrice, int maxPrice, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> Vehicle(string vehicleId, int minPrice, int maxPrice, string startDate, string endDate)
         {
             if (vehicleId == null)
             {
@@ -115,7 +115,7 @@ namespace Vehicle_Rent.Controllers
             }
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
             var vehicleReadVM = _mapper.Map<VehicleReadVM>(vehicle);
-            vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice,startDate,endDate);
+            vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice,DateTime.Parse(startDate),DateTime.Parse(endDate));
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
         }
@@ -133,7 +133,7 @@ namespace Vehicle_Rent.Controllers
 
             // Filter by availability
             vehicleCopyReadVMs = vehicleCopyReadVMs.Where(vc =>
-                vc.Unavailabilities.All(u => u.endDate < startDate || u.startDate > endDate)).ToList();
+                vc.Unavailabilities.All(u => u.endDate.Date < startDate.Date || u.startDate.Date > endDate.Date)).ToList();
 
             return vehicleCopyReadVMs;
         }

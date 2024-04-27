@@ -65,13 +65,25 @@
 
                                 }
                                 else
-                                {
-                                    <p>
-                                        <a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId="@item.Id" class="btn btn-primary btn-sm">
+                                {   
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <p>
+                                            <a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId="@item.Id" class="btn btn-primary btn-sm">
                                                 Rent Now
-                                        </a>
-                                    </p>
-                                }
+                                            </a>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            <a asp-controller="Auth" asp-action="Login"  class="btn btn-primary btn-sm" style="background-color:darkred">
+                                                Login to Rent 
+                                            </a>
+                                        </p>
+                                    }
+
+                            }
 
                             </div>
                         </div>
