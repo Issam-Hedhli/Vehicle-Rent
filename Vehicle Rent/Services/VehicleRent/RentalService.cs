@@ -102,8 +102,8 @@ namespace Vehicle_Rent.Services.VehicleRent
             {
                 var rating = new Rating
                 {
-                    Value = returnVehicleVM.Rating ?? null,
-                    Comment = returnVehicleVM.Review,
+                    Value = returnVehicleVM.Rating,
+                    Comment = returnVehicleVM.Review
                 };
             }
         }

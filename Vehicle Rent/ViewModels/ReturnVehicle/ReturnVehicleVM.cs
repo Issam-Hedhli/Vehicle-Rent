@@ -6,8 +6,8 @@ namespace Vehicle_Rent.ViewModels.ReturnVehicle
     public class ReturnVehicleVM
     {
         public VehicleCopyReadVM? VehicleCopyReadVM { get; set; }
-        public string? Review { get; set; }
-        public int? Rating { get; set; }
+        public string Review { get; set; }
+        public int Rating { get; set; }
         [MustBeTrue(ErrorMessage = "You must confirm the return.")]
         public bool Confirmation { get; set; }
     }

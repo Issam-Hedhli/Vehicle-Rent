@@ -10,7 +10,7 @@
             </div>
         </div>
        
-        <h3 style="margin-bottom:40px;"><strong>Rented Vehicle Copies </strong></h3>
+        @* <h3 style="margin-bottom:40px;"><strong>Rented Vehicle Copies </strong></h3> *@
         <div class="row" style="margin-top:60px;">
             @foreach (var vehiclecopy in Model)
             {
@@ -18,17 +18,22 @@
                     <div class="listing d-block align-items-stretch">
                         <div class="listing-contents h-100">
                             <div style="display:flex; justify-content:space-between;">
-                                <h3>Last Rented @vehiclecopy.RentalItems.Select(ri=>ri.StartDate).ToList().Max().ToString("yyyy-MM-dd")</h3>
-                                <h3 style="text-align:right;color:gold;">
-                                    @if (vehiclecopy.AverageRating != null)
-                                    {
-                                        @for (int i = 0; i < vehiclecopy.AverageRating; i++)
+                                <div>
+                                    <h3>Last Rented </h3>
+                                    <h3>@vehiclecopy.RentalItems.Select(ri => ri.StartDate).ToList().Max().ToString("yyyy-MM-dd")</h3>
+                                </div>
+                                <div style="display:block;">
+                                    <img src="@vehiclecopy.Vehicle.Photo" style="width:100px;height:70px; border-radius: 10px;" />
+                                    <h3 style="text-align:right;color:gold;">
+                                        @if (vehiclecopy.AverageRating != null)
                                         {
-                                            <span>★</span>
+                                            @for (int i = 0; i < vehiclecopy.AverageRating; i++)
+                                            {
+                                                <span>★</span>
+                                            }
                                         }
-                                    }
-                                </h3>
-                                <img src=@vehiclecopy.Vehicle.Photo style="width:50px;height:35px;" />
+                                    </h3>
+                                </div>
                             </div>
                             <div style="display:flex; justify-content:space-between">
 
@@ -36,12 +41,6 @@
                                 {
                                     <p>
                                         You rented this before
-                                    </p>
-                                }
-                                else
-                                {
-                                    <p>
-
                                     </p>
                                 }
 
@@ -73,7 +72,7 @@
                             else
                             {
                                 <div style="text-align:center;">
-                                    <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Rent Vehicle </a></p>
+                                    <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Rent Vehicle Copy </a></p>
                                 </div>
                             }
 

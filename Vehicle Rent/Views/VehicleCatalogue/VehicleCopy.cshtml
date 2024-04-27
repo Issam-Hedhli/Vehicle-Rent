@@ -27,8 +27,16 @@
                     @if (rentalItem.Ratings!=null)
                     {
                         <div class="testimonial-2">
-                            <blockquote class="mb-4">
+                            <blockquote class="mb-4" style="display:flex;">
                                 <p>" @rentalItem.Ratings.Comment "</p>
+                                <div style="margin-left:auto;">
+                                    <h7 style="white-space: nowrap;">
+                                        @for (int i = 0; i < rentalItem.Ratings.Value; i++)
+                                        {
+                                            <span style="color:gold;  letter-spacing: 1px;">★</span>
+                                        }
+                                    </h7>
+                                </div>
                             </blockquote>
                             <div style="display:flex; justify-content:space-between;">
                                 <div class="d-flex v-card align-items-center">
@@ -40,14 +48,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <h7 style="white-space: nowrap;">
-                                        @for (int i = 0; i < rentalItem.Ratings.Value; i++)
-                                        {
-                                            <span style="color:gold;  letter-spacing: 1px;">★</span>
-                                        }
-                                    </h7>
-                                </div>
+
                             </div>
                         </div>
                     }
