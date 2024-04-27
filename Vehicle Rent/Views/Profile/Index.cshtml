@@ -10,28 +10,42 @@
                 <h2 class="mb-4">@ViewBag.Title</h2>
             </div>
         </div>
-        <div class="row align-items-stretch">
+        <div class="row align-items-center justify-content-center"  >
+            <div class="col-lg-8 col-md-12 mb-12" style="margin-bottom:10px; ">
+                <div class="post-entry-1 h-100 person-1" >
 
-            <div class="col-lg-12 col-md-8 mb-10" style="margin-bottom:10px;">
-                <div class="post-entry-1 h-100 person-1">
-
-                    <img src="@Model.Image" alt="Image"
-                         class="img-fluid">
+                    <img src="@Model.Image" alt="Image" style="width:150px;height:150px;">
 
                     <div class="post-entry-1-contents">
-                        <div style="display:flex">
-                            <span class="meta">Client</span>
+                        <div style="display:flex; justify-content:space-between;">
                             <h2>@Model.Name</h2>
+                            <p>
+                                Joined the platform on @Model.JoinedOn.ToString("yyyy-MM-dd")
+                            </p>
+
                         </div>
-                       
-                        <p>@Model.UserName</p>
-                        <p>
-                            Joined the platform on @Model.JoinedOn.ToString("yyyy-MM-dd")
-                        </p>
-                   
-                        <p>Vehicles in possession : @Model.numberOfvehicleCopiesInposession</p>
-                        <p>Returned Vehicles : @Model.numberOfRentedVehicleCopies</p>
-                      
+                        <div style="display:flex; justify-content:space-between;">
+
+                            <p>
+                                @Model.UserName
+                            </p>
+                            <div style="display:block;">
+                                <p>
+                                    Vehicles in possession : @Model.numberOfvehicleCopiesInposession
+                                </p>
+                                <p>
+                                    Returned Vehicles : @Model.numberOfRentedVehicleCopies
+                                </p>
+                            </div>
+
+                        </div>
+                        <div style="display:flex;">
+                            @foreach(var image in Model.VehicleImages.Take(4))
+                            {
+                                <img src=@image />
+                            }
+                        </div>
+                        
                     </div>
                 </div>
             </div>
