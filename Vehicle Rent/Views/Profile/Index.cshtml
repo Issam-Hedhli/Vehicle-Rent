@@ -16,7 +16,7 @@
 
                     <img src="@Model.Image" alt="Image" style="width:150px;height:150px;">
 
-                    <div class="post-entry-1-contents" style="height:300px;">
+                    <div class="post-entry-1-contents" style="height:400px;">
                         <div style="display:flex; justify-content:space-between;">
                             <h2>@Model.Name</h2>
                             <p>
@@ -39,18 +39,24 @@
                             </div>
 
                         </div>
-                        <div style="display:flex;">
-                            @foreach(var image in Model.VehicleImages.Take(4))
+                        <div style="display:flex; justify-content:space-between;">
+                            @foreach(var vehicle in Model.Vehicles.Take(5))
                             {
-                                <img src=@image />
+                                <a asp-controller="VehicleCatalogue" asp-action="Vehicle" asp-route-vehicleId=@vehicle.Id>
+                                    <img src=@vehicle.Photo />
+
+                                </a>
                             }
                         </div>
-                        
+                        <div style="height:50px;">
+
+                        </div>
+                        <div class="form-group mt-3" >
+                            <a asp-controller="VehicleCatalogue" asp-action="RentedVehicleCopies" a class="btn text-block py-3 px-5" style="width: 600px; background-color: #8B4513;color: #fff;">Go To Rental History</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-
         </div>
     </div>
 </div>
