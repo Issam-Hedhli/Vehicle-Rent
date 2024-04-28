@@ -64,9 +64,9 @@
                                     <li>
                                         <a class="nav-link" asp-controller="Profile" asp-action="Index">@User.FindFirstValue("UserName").ToLower()</a>
                                     </li>
-                                   @*  <li style="margin-left:20px;margin-right:10px;">
+                                    <li style="margin-left:20px;margin-right:10px;">
                                         <img src=@User.FindFirstValue("Image") style="border-radius: 50%;border-color:green;width: 30px; height: 30px;margin-bottom:5px;" />
-                                    </li> *@
+                                    </li>
                                     <li class="nav-item "> <a class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a></li> 
                                 }
                                 else

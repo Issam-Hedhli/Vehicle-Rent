@@ -105,7 +105,7 @@ namespace Vehicle_Rent.Controllers
                         }
                         else
                         {
-                            ViewBag.ErrorMessage = "Could not create the new user";
+                            ViewBag.ErrorMessage = "Could not create the new user, try a password with 8 characters or more with one letter caps and a special character!";
                             return View(registervm);
                         }
                     }

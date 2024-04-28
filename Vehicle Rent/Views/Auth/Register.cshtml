@@ -49,12 +49,7 @@
 
                             
 
-                            @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
-                            {
-                                <div class="alert alert-danger" role="alert">
-                                    @ViewData["ErrorMessage"]
-                                </div>
-                            }
+
                             <div style="display:flex;">
                                 <div style="display:flex; ">
                                     <h6>
@@ -70,6 +65,12 @@
                                     <input type="submit" value="Register" class="btn btn-primary btn-md text-white" style="margin-left:350px;">
                                 </div>
                             </div>
+                            @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["ErrorMessage"]
+                                </div>
+                            }
                         </form>
                     </div>
                 </div>
