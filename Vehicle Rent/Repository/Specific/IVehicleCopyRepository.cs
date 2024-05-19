@@ -9,5 +9,7 @@ namespace Vehicle_Rent.Repository.Specific
 
         //public Task<VehicleCopy> GetEagerVehicleCopyById(string id);
         Task<List<VehicleCopy>> GetVehiclesCopiesByVehicleCopy(string vehicleId);
+
+        Task<List<VehicleCopy>> GetAllVehicleCopies();
     }
 }

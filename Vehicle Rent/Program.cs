@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Vehicle_Rent.Data;
 using Vehicle_Rent.Models;
 using Vehicle_Rent.Repository.Specific;
+using Vehicle_Rent.Services;
 using Vehicle_Rent.Services.EmailSender;
 using Vehicle_Rent.Services.Payment;
 using Vehicle_Rent.Services.Profile;
@@ -57,6 +58,9 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
 #endregion
+
+builder.Services.AddHostedService<BackgroundRefresh>();
+
 
 
 #region Authorization

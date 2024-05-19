@@ -11,10 +11,10 @@
                         <h5><strong>Please Use This Form To Rent This Car</strong></h5>
                         @if (Model.vehicleCopyReadVM.Unavailabilities != null && Model.vehicleCopyReadVM.Unavailabilities.Count>0)
                         {
-                            <h3 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h3>
+                            <h6 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h6>
                             @foreach (var unavailability in Model.vehicleCopyReadVM.Unavailabilities)
                             {
-                                <h3 class="mb-0 text-white">From @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd") </h3>
+                                <h6 class="mb-0 text-black">From @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd") </h6>
                             }
                         }
                     </div>
@@ -28,14 +28,16 @@
                                 <label for="endDate">End Date</label>
                                 <input asp-for="endDate" style="margin-left:20px;" class="form-control px-3 end-date">
                             </div>
-                            <div style="display:flex; justify-content:space-between;">
-                                <span asp-validation-for="startDate" type="text" class="text-danger d-block mt-2"></span>
-                                <span asp-validation-for="endDate" type="text" class="text-danger d-block mt-2"></span>
-                            </div>
                         </div>
                         <div class="form-group mt-3">
                             <button type="submit" class="btn text-block py-3 px-5" style="width: 600px; background-color: #8B4513;color: #fff;">Go To CheckOut</button>
                         </div>
+                        @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewData["ErrorMessage"]
+                            </div>
+                        }
                     </form>
                 </div>
                 <div class="col-lg-4 ml-auto">

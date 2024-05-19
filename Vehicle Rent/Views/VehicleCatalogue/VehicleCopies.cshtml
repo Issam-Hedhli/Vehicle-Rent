@@ -19,6 +19,7 @@
                         <div class="listing-contents h-100">
                             <div style="display:flex; justify-content:space-between;">
                                 <div>
+                                    <h7>Id @vehiclecopy.Id</h7>
                                     <h3>Last Rented </h3>
                                     <h3>@vehiclecopy.RentalItems.Select(ri => ri.StartDate).ToList().Max().ToString("yyyy-MM-dd")</h3>
                                 </div>
@@ -44,9 +45,9 @@
                                     </p>
                                 }
 
-                                <p> reviewed @vehiclecopy.RentalItems.Where(ri => ri.StatusId == "2").ToList().Count times</p>
+                                <p> borrowed by people @vehiclecopy.RentalItems.Where(ri=>ri.StatusId=="2").ToList().Count() times</p>
                             </div>
-                            <div style="height:120px;">
+                            <div>
                                 @foreach (var unavailability in vehiclecopy.Unavailabilities)
                                 {
                                     <p>Unav from @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd")</p>
@@ -65,13 +66,13 @@
                             @if (vehiclecopy.IsBeingRented)
                             {
                                 <div style="text-align:center;">
-                                    <p><a asp-controller="ReturnVehicle" asp-action="ReturnVehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" >Return Vehicle</a></p>
+                                    <p><a asp-controller="ReturnVehicle" asp-action="ReturnVehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Return this Vehicle copy</a></p>
                                 </div>
                             }
                             else
                             {
                                 <div style="text-align:center;">
-                                    <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Rent Vehicle Copy </a></p>
+                                    <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" >Rent this Vehicle Copy </a></p>
                                 </div>
                             }
 

@@ -62,7 +62,7 @@ namespace Vehicle_Rent.Controllers
                     .Where(ri => ri.UserId == Id)
                     .Where(ri => ri.StatusId == "2")
                     .ToList();
-                vehicleCopyReadVM.RentalItems = previousRentalItemsByUser;
+                //vehicleCopyReadVM.RentalItems = previousRentalItemsByUser;
                 vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
                 //IsBeingRented
                 var actualRentalItemsByUser = rentalItems
@@ -70,7 +70,7 @@ namespace Vehicle_Rent.Controllers
                     .Where(ri => ri.StatusId == "1")
                     .ToList();  
                 vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
-                vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
+                //vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
 
             }
             return View(vehicleCopyReadVM);
@@ -83,6 +83,7 @@ namespace Vehicle_Rent.Controllers
             }
             List<VehicleCopy> vehicleCopies = await _vehicleCatalogueService.GetVehiclesCopiesByVehicleId(vehicleId);
             HttpContext.Session.SetString("vehicleId",vehicleId);
+
             List<VehicleCopyReadVM> vehicleCopyReadVms = new List<VehicleCopyReadVM>();
             string Id = User.FindFirstValue("Id");
             if (!string.IsNullOrEmpty(Id))
@@ -96,7 +97,7 @@ namespace Vehicle_Rent.Controllers
                         .Where(ri => ri.UserId == Id)
                         .Where(ri => ri.StatusId == "2")
                         .ToList();
-                    vehicleCopyReadVM.RentalItems=previousRentalItemsByUser;
+                    //vehicleCopyReadVM.RentalItems=previousRentalItemsByUser;
                     vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
                     //IsBeingRented
                     var actualRentalItemsByUser = rentalItems
@@ -104,7 +105,7 @@ namespace Vehicle_Rent.Controllers
                         .Where(ri => ri.StatusId == "1")
                         .ToList();
                     vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
-                    vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
+                    //vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
                     vehicleCopyReadVms.Add(vehicleCopyReadVM);
                 }
             }
@@ -114,7 +115,18 @@ namespace Vehicle_Rent.Controllers
             }
             var vehicle = await _vehicleCatalogueService.GetVehicleByIdAsync(vehicleId);
             var vehicleReadVM = _mapper.Map<VehicleReadVM>(vehicle);
-
+            if (startDate == null && endDate != null)
+            {
+                vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
+                ViewData["ErrorMessage"] = "If you set end Date, you need to set start date!";
+                return View("Vehicle",vehicleReadVM);
+            }
+            else if (startDate != null && endDate == null)
+            {
+                vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
+                ViewData["ErrorMessage"] = "If you set start Date, you need to set end Date!";
+                return View("Vehicle",vehicleReadVM);
+            }
             vehicleCopyReadVms = Filter(vehicleCopyReadVms, minPrice, maxPrice, startDate, endDate);
             vehicleReadVM.VehicleCopyReadVMs = vehicleCopyReadVms;
             return View("Vehicle",vehicleReadVM);
@@ -155,14 +167,12 @@ namespace Vehicle_Rent.Controllers
                         .Where(ri => ri.UserId == Id)
                         .Where(ri => ri.StatusId == "2")
                         .ToList();
-                    vehicleCopyReadVM.RentalItems = previousRentalItemsByUser;
                     vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
-                    //IsBeingRented
                     var actualRentalItemsByUser = rentalItems
                         .Where(ri => ri.UserId == Id)
                         .Where(ri => ri.StatusId == "1")
                         .ToList();
-                    vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
+                    //vehicleCopyReadVM.RentalItems=actualRentalItemsByUser;
                     vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
                     vehiclecopyvms.Add(vehicleCopyReadVM);
                 }
@@ -192,14 +202,14 @@ namespace Vehicle_Rent.Controllers
                         .Where(ri => ri.UserId == Id)
                         .Where(ri => ri.StatusId == "2")
                         .ToList();
-                    vehicleCopyReadVM.RentalItems = previousRentalItemsByUser;
+                    //vehicleCopyReadVM.RentalItems = previousRentalItemsByUser;
                     vehicleCopyReadVM.WasAlreadyRented = previousRentalItemsByUser.Any();
                     //IsBeingRented
                     var actualRentalItemsByUser = rentalItems
                         .Where(ri => ri.UserId == Id)
                         .Where(ri => ri.StatusId == "1")
                         .ToList();
-                    vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
+                    //vehicleCopyReadVM.RentalItems.AddRange(actualRentalItemsByUser);
                     vehicleCopyReadVM.IsBeingRented = actualRentalItemsByUser.Any();
                     vehiclecopyvms.Add(vehicleCopyReadVM);
                 }

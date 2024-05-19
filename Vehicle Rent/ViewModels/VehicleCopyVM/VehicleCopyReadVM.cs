@@ -7,7 +7,7 @@ namespace Vehicle_Rent.ViewModels.VehicleCopyVM
         public string Id { get; set; }
         public int RentalPrice { get; set; }
         public Vehicle Vehicle { get; set; }
-        public int AverageRating { get; set; }
+        public int? AverageRating { get; set; }
         public bool WasAlreadyRented { get; set; }
         public bool IsBeingRented { get; set; }
         public List<RentalItem> RentalItems { get; set; } = new List<RentalItem>();

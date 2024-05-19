@@ -28,6 +28,10 @@ namespace Vehicle_Rent.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var errorMessage = string.Join(" | ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+                ViewData["ErrorMessage"] = errorMessage;
                 return View(loginViewModel);
             }
 
@@ -61,7 +65,10 @@ namespace Vehicle_Rent.Controllers
         {
             if (!ModelState.IsValid)
             {
-
+                var errorMessage = string.Join(" | ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+                                ViewData["ErrorMessage"] = errorMessage;
                 return View(registervm);
             }
             else

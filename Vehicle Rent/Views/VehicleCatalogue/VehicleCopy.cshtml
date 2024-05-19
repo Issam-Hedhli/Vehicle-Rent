@@ -6,11 +6,14 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-4 mb-md-0">
-                    <h2 class="mb-0 text-white">Vehicle Copy of Chevrolet Camaro</h2>
-                    <h3 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h3>
-                    @foreach (var unavailability in Model.Unavailabilities)
+                    <h2 class="mb-0 text-white">Vehicle Copy of @Model.Vehicle.Name</h2>
+                    @if (Model.Unavailabilities.Count>0)
                     {
-                        <h3 class="mb-0 text-white">From @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd") </h3>
+                        <h3 class="mb-0 text-white" style="margin-top:10px;">Unavailability Zones:</h3>
+                        @foreach (var unavailability in Model.Unavailabilities)
+                        {
+                            <h3 class="mb-0 text-white">From @unavailability.startDate.ToString("yyyy-MM-dd") to @unavailability.endDate.ToString("yyyy-MM-dd") </h3>
+                        }
                     }
                 </div>
                 <div class="col-lg-5 text-md-right">

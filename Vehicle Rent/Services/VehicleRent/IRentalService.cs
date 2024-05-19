@@ -7,5 +7,8 @@ namespace Vehicle_Rent.Services.VehicleRent
 	{
 		public Task RentVehicleCopy(string vehicleCopyId, string userId, DateTime startDate, DateTime endDate);
 		public Task ReturnVehicleCopy(ReturnVehicleVM returnVehicleVM, string userId);
-	}
+		public Task UpdateVehicleCopies();
+
+
+    }
 }

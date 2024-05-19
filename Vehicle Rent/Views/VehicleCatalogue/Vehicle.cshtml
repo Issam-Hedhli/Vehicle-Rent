@@ -27,34 +27,26 @@
         </div>
         <div class="row align-items-center justify-content-center" style="margin-bottom:20px;">
             <div class="col-lg-10">
-                <form asp-controller="VehicleCatalogue" asp-action="Vehicle" class="trip-form">
+                <form asp-controller="VehicleCatalogue" asp-action="Vehicle" class="trip-form" style="display:block;align-items:center;">
                     <div class="row align-items-center">
                         <div class="mb-3 mb-md-0 col-md-2">
                             @if (ViewBag.MinPriceValue!=null)
                             {
-                                <input name="minPrice" value=@ViewBag.MinPrice type="number" class="form-control" style="font-size: 14px; padding: 10px;" placeholder="↓ Min Price">
-                                </input>
-
+                                <input name="minPrice" value=@ViewBag.MinPrice type="number" min=0 class="form-control" style="font-size: 14px; padding: 10px;" placeholder="↓ Min Price"></input>
                             }
                             else
                             {
-                                <input name="minPrice"  type="number" class="form-control" style="font-size: 14px; padding: 10px;" placeholder="↓ Min Price">
-                                </input>
-
-
+                                <input name="minPrice"  type="number" class="form-control" min=0 style="font-size: 14px; padding: 10px;" placeholder="↓ Min Price"></input>
                             }
                         </div>
                         <div class="mb-3 mb-md-0 col-md-2">
                             @if (ViewBag.MaxPriceValue != null)
                             {
-                                <input name="maxPrice" value=@ViewBag.MaxPriceValue type="number" class="form-control" style="font-size: 14px; padding: 10px;" placeholder="↑ Max Price">
-                                </input>
-
+                                <input name="maxPrice" value=@ViewBag.MaxPriceValue type="number" class="form-control" style="font-size: 14px; padding: 10px;" placeholder="↑ Max Price"></input>
                             }
                             else
                             {
-                                <input name="maxPrice" type="number" class="form-control" style="font-size: 14px; padding: 10px;" placeholder="↑ Max Price">
-                                </input>
+                                <input name="maxPrice" type="number" class="form-control" style="font-size: 14px; padding: 10px;" placeholder="↑ Max Price"></input>
                             }
                         </div>
                         <div class="mb-3 mb-md-0 col-md-3">
@@ -62,12 +54,10 @@
                                 @if (ViewBag.StartDate!=null)
                                 {
                                     <input name="startDate" type="text" id="cf-4-start" value=@ViewBag.StartDate placeholder="Since" class="form-control datepicker px-3"></input>
-
                                 }
                                 else
                                 {
                                     <input name="startDate" type="text" id="cf-4-start"  placeholder="Since" class="form-control datepicker px-3"></input>
-
                                 }
                                 <span class="icon icon-date_range"></span>
                             </div>
@@ -81,7 +71,6 @@
                                 else
                                 {
                                     <input name="endDate"  type="text" id="cf-4-end" placeholder="To" class="form-control datepicker px-3">
-
                                 }
                                 <span class="icon icon-date_range"></span>
                             </div>
@@ -91,44 +80,62 @@
                         </div>
                     </div>
                 </form>
+                @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewData["ErrorMessage"]
+                    </div>
+                }
             </div>
         </div>
-        <h3 style="margin-bottom:40px;"><strong>Ratings </strong></h3>
+        <h3 style="margin-bottom:20px;margin-top:60px;"><strong>Vehicle Copies </strong></h3>
             <div class="row" style="margin-top:60px;">
                 @foreach (var vehiclecopy in Model.VehicleCopyReadVMs)
                 {
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="listing d-block align-items-stretch">
                     <div class="listing-contents h-100">
-                        <div style="display:flex; justify-content:space-between;">
-                            <h3>Rental Price: @vehiclecopy.RentalPrice</h3>
-                                <h3 style="text-align:center;margin-left:auto;color:gold;">
-                                    @if (vehiclecopy.AverageRating != null)
-                                    {
-                                        @for (int i = 0; i < vehiclecopy.AverageRating; i++)
-                                        {
-                                            <span>★</span>
-                                        }
-                                    }
-                                </h3>
-                            </div>
                         <div style="display:flex; justify-content:space-between">
-
-                        @if ( vehiclecopy.IsBeingRented)
-                        {
-                        <p>
-                            You are renting this 
-                        </p>
-                        }
-                        else if (vehiclecopy.WasAlreadyRented)
-                        {
-                        <p>
-                            Rented before
-                        </p>      
-                        }
-                            <p> reviewed @vehiclecopy.RentalItems.Where(ri=>ri.StatusId=="2").ToList().Count times</p>
+                            <h7>Id @vehiclecopy.Id</h7>
+                            @if (vehiclecopy.IsBeingRented)
+                            {
+                                <p>
+                                    You are renting this
+                                </p>
+                            }
+                            else if (vehiclecopy.WasAlreadyRented)
+                            {
+                                <p>
+                                    Rented before
+                                </p>
+                            }
                         </div>
-                        <div style="height:120px;">
+                        <div style="display:flex; justify-content:space-between;">
+                        <h3>Rental Price: @vehiclecopy.RentalPrice</h3>
+                            <h3 style="text-align:center;margin-left:auto;color:gold;">
+                                @if (vehiclecopy.AverageRating != null)
+                                {
+                                    @for (int i = 0; i < vehiclecopy.AverageRating; i++)
+                                    {
+                                        <span>★</span>
+                                    }
+                                }
+                            </h3>
+                        </div>
+
+                        <div >
+
+                            @if (vehiclecopy.RentalItems.Where(ri => ri.StatusId == "2").ToList().Count()>1)
+                            {
+                                <p> borrowed by people @vehiclecopy.RentalItems.Where(ri=>ri.StatusId=="2").ToList().Count() times</p>
+                            }
+                            else if (vehiclecopy.RentalItems.Where(ri => ri.StatusId == "2").ToList().Count()==1)
+                            {
+                                 <p> borrowed by people 1 time</p>
+
+                            }
+                        </div>
+                        <div>
 
                             @foreach (var unavailability in vehiclecopy.Unavailabilities)
                             {
@@ -148,18 +155,17 @@
                         @if (vehiclecopy.IsBeingRented)
                         {
                             <div style="text-align:center;">
-                                <p><a asp-controller="ReturnVehicle" asp-action="ReturnVehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" >Return vehicle copy </a></p>
+                                    <p><a asp-controller="ReturnVehicle" asp-action="ReturnVehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Return this vehicle copy </a></p>
                             </div>
                         }
                         else
                         {
                         <div style="text-align:center;">
-                            <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" style="background-color:brown; border-color:brown;">Rent this Vehicle Copy </a></p>
+                            <p><a asp-controller="VehicleCatalogue" asp-action="VehicleCopy" asp-route-vehicleCopyId=@vehiclecopy.Id class="btn btn-primary btn-sm" >Rent this Vehicle Copy </a></p>
                         </div>
                         }
 
                     </div>
-
                 </div>
                 </div>
                 }
@@ -179,10 +185,13 @@
 
         // Get today's date
         var today = new Date();
+        today.setHours(0, 0, 0, 0);
 
         // Parse user input into Date objects (assuming format YYYY-MM-DD)
         var startDate = new Date(startDateInput.value);
+        startDate.setHours(0, 0, 0, 0);
         var endDate = new Date(endDateInput.value);
+        endDate.setHours(0, 0, 0, 0);
 
         // Check if startDate is in the future or today
         if (startDate < today) {

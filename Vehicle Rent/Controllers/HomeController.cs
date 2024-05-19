@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using Vehicle_Rent.Models;
 using Vehicle_Rent.Services.VehicleCatalogue;
+using Vehicle_Rent.Services.VehicleRent;
 using Vehicle_Rent.ViewModels;
 using Vehicle_Rent.ViewModels.VehicleVM;
 

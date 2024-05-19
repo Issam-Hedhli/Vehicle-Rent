@@ -12,6 +12,19 @@ namespace Vehicle_Rent.Repository.Specific
 		{
 		}
 
+        public async Task<List<VehicleCopy>> GetAllVehicleCopies()
+        {
+            var vehicleCopies = await _context.Set<VehicleCopy>()
+                .Include(vc => vc.RentalItems)
+                    .ThenInclude(ri => ri.User)
+                .Include(vc => vc.RentalItems)
+                    .ThenInclude(ri => ri.Ratings)
+                .Include(vc => vc.Unavailabilities)
+                .Include(vc => vc.Vehicle)
+                .ToListAsync();
+            return vehicleCopies.ToList(); ;
+        }
+
         public async Task<VehicleCopy> GetVehicleCopyByIdAsync(string vehicleCopyId)
         {
             var vehicleCopy= await _context.Set<VehicleCopy>()

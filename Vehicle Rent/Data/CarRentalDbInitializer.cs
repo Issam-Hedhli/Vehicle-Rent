@@ -86,7 +86,6 @@ namespace Vehicle_Rent.Data
                 }
                 #endregion
 
-
                 #region VehicleCopy
                 if (!context.VehicleCopies.Any())
                 {
@@ -139,28 +138,6 @@ namespace Vehicle_Rent.Data
                     return totalRentalPrice;
                 }
 
-                #region Unavailability
-                if (!context.Unavailabilities.Any())
-                {
-                    var vehicleCopy1 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "1");
-                    var vehicleCopy2 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "2");
-                    var vehicleCopy3 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "3");
-                    var vehicleCopy4 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "4");
-                    var vehicleCopy5 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "5");
-                    var vehicleCopy6 = context.Set<VehicleCopy>().FirstOrDefault(vc => vc.Id == "6");
-                    context.Unavailabilities.AddRange(new List<Unavailability>()
-                    {
-                        new Unavailability() { Id="2", startDate= DateTime.Today.AddDays(1), endDate = DateTime.Today.AddDays(3),VehicleCopy=vehicleCopy1 },
-                        new Unavailability() { Id="3", startDate= DateTime.Today.AddDays(5), endDate = DateTime.Today.AddDays(8),VehicleCopy=vehicleCopy1 },
-                        new Unavailability() { Id="4", startDate= DateTime.Today.AddDays(10), endDate = DateTime.Today.AddDays(12),VehicleCopy = vehicleCopy2 },
-                        new Unavailability() { Id="5", startDate= DateTime.Today.AddDays(15), endDate = DateTime.Today.AddDays(17),VehicleCopy=vehicleCopy3 },
-                        new Unavailability() { Id="1", startDate= DateTime.Today.AddDays(10), endDate = DateTime.Today.AddDays(10),VehicleCopy = vehicleCopy5 },
-                        new Unavailability() { Id="6", startDate= DateTime.Today.AddDays(15), endDate = DateTime.Today.AddDays(1),VehicleCopy=vehicleCopy6 }
-
-                    });
-                    context.SaveChanges();
-                }
-                #endregion
 
                 #region availabilityStatus
                 if (!context.AvailibilityStatuses.Any())
@@ -186,9 +163,6 @@ namespace Vehicle_Rent.Data
                     var vehicleCopy6 = context.VehicleCopies.FirstOrDefault(vc => vc.Id == "6");
                     var customer1 = context.Users.FirstOrDefault(r => r.Id == "1");
 					var customer2 = context.Users.FirstOrDefault(r => r.Id == "2");
-                    var customer3 = context.Users.FirstOrDefault(r => r.Id == "3");
-                    var customer4 = context.Users.FirstOrDefault(r => r.Id == "4");
-                    var customer5 = context.Users.FirstOrDefault(r => r.Id == "5");
                     var borrowedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "1");
 					var returnedStatus = context.AvailibilityStatuses.FirstOrDefault(a => a.Id == "2");
 
@@ -222,24 +196,21 @@ namespace Vehicle_Rent.Data
                     
                     context.RentalItems.AddRange(new List<RentalItem>()
 					{
-						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status=  borrowedStatus, User = customer2 }, 
-						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer2 ,Ratings=rating2},
-						new RentalItem { Id = "3", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer1 },
-						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 ,Ratings = rating4},
-                        new RentalItem { Id = "5", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer3 },
-                        new RentalItem { Id = "6", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer3 ,Ratings = rating1 },
-                        new RentalItem { Id = "7", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer4 },
-                        new RentalItem { Id = "8", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer4 ,Ratings = rating5},
-                        new RentalItem { Id = "9", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer5 },
-                        new RentalItem { Id = "10", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer5 ,Ratings = rating6},
+						new RentalItem { Id = "1", VehicleCopy = vehicleCopy1, Status=  borrowedStatus, User = customer2, StartDate=DateTime.Today.AddDays(-1),EndDate=DateTime.Today.AddDays(4) }, 
+						new RentalItem { Id = "2", VehicleCopy = vehicleCopy2, Status = returnedStatus, User = customer2 ,Ratings=rating2,StartDate=DateTime.Today.AddDays(-2),EndDate=DateTime.Today.AddDays(-1)},
+						new RentalItem { Id = "3", VehicleCopy = vehicleCopy3, Status = borrowedStatus, User = customer1,StartDate=DateTime.Today.AddDays(-1),EndDate=DateTime.Today.AddDays(4) },
+						new RentalItem { Id = "4", VehicleCopy = vehicleCopy1, Status = returnedStatus, User = customer1 ,Ratings = rating4,StartDate=DateTime.Today.AddDays(-4),EndDate=DateTime.Today.AddDays(-2)}
                     });
 					await context.SaveChangesAsync();
 				}
 
-				#endregion
+                #endregion
 
-			}
-		}
+                #region Unavailability
+
+                #endregion
+            }
+        }
 
 
 		public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationbuilder)
@@ -259,7 +230,7 @@ namespace Vehicle_Rent.Data
 
 				#region Users
 				// First Customer
-				string customerEmail = "issam.hedhli@ensi-uma.tn";
+				string customerEmail = "customer@carrental.com";
 				var customer = await userManager.FindByEmailAsync(customerEmail);
 				if (customer == null)
 				{
@@ -269,14 +240,14 @@ namespace Vehicle_Rent.Data
                         UserName = customerEmail,
                         Email = customerEmail,
                         Name="Issam",
-                        Image= "https://scontent.ftun15-1.fna.fbcdn.net/v/t1.6435-9/120645766_3263034770470903_6610932504759370937_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=L7KSS-fN70cQ7kNvgGw3pm-&_nc_ht=scontent.ftun15-1.fna&oh=00_AfDvhMK2J3yV7MbmhSc_nX5Q0v8j3XJOtjT3OIw5T01trw&oe=66547D37"
+                        Image= "https://th.bing.com/th/id/OIP.AWX4OdiKNkWcQw80HEUh7gAAAA?rs=1&pid=ImgDetMain"
                     };
 					await userManager.CreateAsync(newCustomer, "Customer123!"); 
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
 				}
 
 				// Second Customer
-				string secondaryCustomerEmail = "samiellouze@hotmail.com";
+				string secondaryCustomerEmail = "secondcustomer@carrental.com";
 				var secondaryCustomer = await userManager.FindByEmailAsync(secondaryCustomerEmail);
                 if (secondaryCustomer == null)
                 {
@@ -286,7 +257,7 @@ namespace Vehicle_Rent.Data
                         UserName = secondaryCustomerEmail,
                         Email = secondaryCustomerEmail,
                         Name="Sami",
-                        Image= "https://scontent.ftun15-1.fna.fbcdn.net/v/t39.30808-6/289057250_4012267192331843_3921978455873349113_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=7cp6PyPFgpEQ7kNvgEZV23n&_nc_ht=scontent.ftun15-1.fna&oh=00_AfCAMQYUOxozqtNj_TRV0FmVnHwuQkTFMktsCEEZ8o7gxg&oe=6632F4A0"
+                        Image= "https://th.bing.com/th/id/OIP.R93ZE6WfRg_77hOiPczYfQAAAA?rs=1&pid=ImgDetMain"
                     };
 					await userManager.CreateAsync(newCustomer, "Customer123!");
 					await userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);

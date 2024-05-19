@@ -31,19 +31,6 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
             return vehicleCopies.Where(vc => vc.RentalItems.Any(ri => ri.StatusId == "1")).ToList();
         }
 
-        public async Task<List<Vehicle>> GetRentedVehiclesByCustomerIdAsync(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                throw new ArgumentException("Customer is NULL or EMPTY", nameof(id));
-
-            var customer = await _userRepository.GetEagerCustomerByIdAsync(id);
-            var vehicles = customer?.Rentals
-                .Where(bi => bi.StatusId == "1")
-                .Select(r => r.VehicleCopy?.Vehicle)
-                .ToList() ?? new List<Vehicle>();
-
-            return vehicles;
-        }
 
         public async Task<List<VehicleCopy>> GetReturnedVehicleCopiesByCustomerIdAsync(string? id)
         {
@@ -53,19 +40,6 @@ namespace Vehicle_Rent.Services.VehicleCatalogue
             return vehicleCopies.Where(vc => vc.RentalItems.Any(ri => ri.StatusId == "2")).ToList();
         }
 
-        public async Task<List<Vehicle>> GetReturnedVehiclesByCustomerIdAsync(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                throw new ArgumentException("Reader ID cannot be null or empty", nameof(id));
-
-            var user = await _userRepository.GetEagerCustomerByIdAsync(id);
-            var vehicles = user?.Rentals
-                .Where(bi => bi.StatusId == "1")
-                .Select(r => r.VehicleCopy?.Vehicle)
-                .ToList() ?? new List<Vehicle>();
-
-            return vehicles;
-        }
 
         public async Task<Vehicle> GetVehicleByIdAsync(string vehicleId)
 		{

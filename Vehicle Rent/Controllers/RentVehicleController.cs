@@ -54,12 +54,16 @@ namespace Vehicle_Rent.Controllers
             rentVM.vehicleCopyReadVM=_mapper.Map<VehicleCopyReadVM>(vehicleCopy);
             if (!ModelState.IsValid)
             {
+                var errorMessage = string.Join(" | ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+                                ViewData["ErrorMessage"] = errorMessage;
                 return View(rentVM);
             }
             //ken mouch available
             if (!ValidateAvailability(rentVM))
             {
-                ModelState.AddModelError(string.Empty, "The vehicle copy is unavailable at this time");
+                ViewData["ErrorMessage"]="The vehicle copy is unavailable at this time";
                 return View(rentVM);
             }
             var duration = (rentVM.endDate - rentVM.startDate).Days;

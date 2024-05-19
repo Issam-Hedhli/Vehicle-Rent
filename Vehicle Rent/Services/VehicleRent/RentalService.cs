@@ -42,10 +42,12 @@ namespace Vehicle_Rent.Services.VehicleRent
                 Status=statusborrowed
             };
             await _rentalItemRepository.AddAsync(rentalItem);
+            await _rentalItemRepository.SaveChangesAsync();
             var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleCopy.IdVehicle);
             var vehiclecopies = vehicle.VehicleCopies;
             var validvehiclecopies = vehiclecopies.Where(vc => !vc.RentalItems.Any(ri => ri.StatusId == "1")).ToList();
             await _vehicleRepository.UpdateAsync(vehicleCopy.IdVehicle, vehicle);
+            await _vehicleRepository.SaveChangesAsync();
             //update availability
             await UpdateVehicleCopy(vehicleCopyId);
 
@@ -82,21 +84,11 @@ namespace Vehicle_Rent.Services.VehicleRent
             rentalItem.Status = await _availabilityStatusRepository.GetByIdAsync("2");
 
             await _rentalItemRepository.UpdateAsync(rentalItem.Id, rentalItem);
+            await _rentalItemRepository.SaveChangesAsync();
 
             //fazet el unavailability
             await UpdateVehicleCopy(vehicleCopyId);
 
-
-
-
-            //var vehicleId = vehicleCopy.IdVehicle;
-            //var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
-
-            //var activeRentalsExist = vehicle.VehicleCopies.Any(vc => vc.Id != vehicleCopyId && vc.RentalItems.Any(ri => ri.StatusId == "1"));
-
-            //vehicle.IsAvailable = !activeRentalsExist;
-
-            //await _vehicleRepository.UpdateAsync(vehicleId, vehicle);
 
             if (!string.IsNullOrEmpty(returnVehicleVM.Review))
             {
@@ -125,7 +117,7 @@ namespace Vehicle_Rent.Services.VehicleRent
             foreach (Unavailability unavailability in vehicleCopy.Unavailabilities)
             {
                 await _unavailabilityRepository.DeleteAsync(unavailability.Id);
-
+                await _unavailabilityRepository.SaveChangesAsync();
             }
             if (mergedPeriods.Count > 0)
             {
@@ -133,6 +125,7 @@ namespace Vehicle_Rent.Services.VehicleRent
                 {
                     var unavailability = new Unavailability() { startDate = unav.Item1, endDate = unav.Item2, VehicleCopy = vehicleCopy };
                     await _unavailabilityRepository.AddAsync(unavailability);
+                    await _unavailabilityRepository.SaveChangesAsync();
                 }
             }
         }
@@ -163,6 +156,15 @@ namespace Vehicle_Rent.Services.VehicleRent
             }
             mergedPeriods.Add(currentPeriod); // Add the last period
             return mergedPeriods;
+        }
+
+        public async Task UpdateVehicleCopies()
+        {
+            var vehiclecopies = await _vehicleCopyRepository.GetAllVehicleCopies();
+            foreach (var vehiclecopy in vehiclecopies)
+            {
+                await UpdateVehicleCopy(vehiclecopy.Id);
+            }
         }
     }
 }
